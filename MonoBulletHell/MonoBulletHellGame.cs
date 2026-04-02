@@ -4,12 +4,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.GameObjects;
+using MonoBulletHell.Services;
 
 namespace MonoBulletHell;
 
 public class MonoBulletHellGame : Game
 {
     private readonly ContentManager _content;
+
+    private readonly InputService _inputService;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -20,6 +23,8 @@ public class MonoBulletHellGame : Game
     {
         _content = Content;
         _content.RootDirectory = "Content";
+
+        _inputService = new InputService();
 
         _graphics = new GraphicsDeviceManager(this);
 
@@ -41,16 +46,19 @@ public class MonoBulletHellGame : Game
 
         var shipSprite = atlas.CreateSprite("ship");
         shipSprite.CenterOrigin();
-        _ship = new Ship(shipSprite);
+        _ship = new Ship(_inputService, shipSprite);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
-            Keyboard.GetState().IsKeyDown(Keys.Escape))
+        if (_inputService.Keyboard.WasKeyJustPressed(Keys.Escape))
+        {
             Exit();
+        }
 
-        // TODO: Add your update logic here
+        _inputService.Update();
+
+        _ship.Update(gameTime);
 
         base.Update(gameTime);
     }
