@@ -51,14 +51,16 @@ public class MonoBulletHellGame : Game
 
     protected override void Update(GameTime gameTime)
     {
+        _inputService.Update();
+
         if (_inputService.Keyboard.WasKeyJustPressed(Keys.Escape))
         {
             Exit();
         }
 
-        _inputService.Update();
+        var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-        _ship.Update(gameTime);
+        _ship.Update(deltaTime);
 
         base.Update(gameTime);
     }

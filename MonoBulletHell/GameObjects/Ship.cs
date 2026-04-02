@@ -7,7 +7,7 @@ namespace MonoBulletHell.GameObjects;
 
 public class Ship
 {
-    private const float MoveSpeed = 5f;
+    private const float MoveSpeed = 200f;
 
     private readonly InputService _inputService;
 
@@ -23,11 +23,11 @@ public class Ship
         _position = new Vector2(32f, 32f);
     }
 
-    public void Update(GameTime gameTime)
+    public void Update(float deltaTime)
     {
         if (HasInput(out var inputDirection))
         {
-            _position += inputDirection * MoveSpeed;
+            _position += inputDirection * MoveSpeed * deltaTime;
         }
     }
 
