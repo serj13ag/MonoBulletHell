@@ -3,8 +3,8 @@
   "Regions": [
     {
       "name": "ship",
-      "x": 16,
-      "y": 0,
+      "x": 96,
+      "y": 304,
       "width": 16,
       "height": 16
     }
