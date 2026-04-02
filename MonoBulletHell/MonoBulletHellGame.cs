@@ -13,6 +13,7 @@ public class MonoBulletHellGame : Game
     private readonly ContentManager _content;
 
     private readonly InputService _inputService;
+    private readonly TimeService _timeService;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -25,6 +26,7 @@ public class MonoBulletHellGame : Game
         _content.RootDirectory = "Content";
 
         _inputService = new InputService();
+        _timeService = new TimeService();
 
         _graphics = new GraphicsDeviceManager(this);
 
@@ -46,21 +48,20 @@ public class MonoBulletHellGame : Game
 
         var shipSprite = atlas.CreateSprite("ship");
         shipSprite.CenterOrigin();
-        _ship = new Ship(_inputService, shipSprite);
+        _ship = new Ship(_inputService, _timeService, shipSprite);
     }
 
     protected override void Update(GameTime gameTime)
     {
         _inputService.Update();
+        _timeService.Update(gameTime);
 
         if (_inputService.Keyboard.WasKeyJustPressed(Keys.Escape))
         {
             Exit();
         }
 
-        var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-        _ship.Update(deltaTime);
+        _ship.Update();
 
         base.Update(gameTime);
     }

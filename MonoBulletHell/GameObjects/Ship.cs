@@ -10,24 +10,26 @@ public class Ship
     private const float MoveSpeed = 200f;
 
     private readonly InputService _inputService;
+    private readonly TimeService _timeService;
 
     private readonly Sprite _sprite;
 
     private Vector2 _position;
 
-    public Ship(InputService inputService, Sprite sprite)
+    public Ship(InputService inputService, TimeService timeService, Sprite sprite)
     {
         _inputService = inputService;
+        _timeService = timeService;
 
         _sprite = sprite;
         _position = new Vector2(32f, 32f);
     }
 
-    public void Update(float deltaTime)
+    public void Update()
     {
         if (HasInput(out var inputDirection))
         {
-            _position += inputDirection * MoveSpeed * deltaTime;
+            _position += inputDirection * MoveSpeed * _timeService.DeltaTime;
         }
     }
 
