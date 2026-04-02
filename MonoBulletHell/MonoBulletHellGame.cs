@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.GameObjects;
 using MonoBulletHell.Services;
 
@@ -14,6 +13,7 @@ public class MonoBulletHellGame : Game
 
     private readonly InputService _inputService;
     private readonly TimeService _timeService;
+    private readonly ContentService _contentService;
 
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
@@ -27,6 +27,7 @@ public class MonoBulletHellGame : Game
 
         _inputService = new InputService();
         _timeService = new TimeService();
+        _contentService = new ContentService();
 
         _graphics = new GraphicsDeviceManager(this);
 
@@ -35,20 +36,16 @@ public class MonoBulletHellGame : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
-
         base.Initialize();
+
+        _ship = new Ship(_inputService, _timeService, _contentService);
     }
 
     protected override void LoadContent()
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        var atlas = TextureAtlas.FromFile(_content, "images/atlas-definition.json");
-
-        var shipSprite = atlas.CreateSprite("ship");
-        shipSprite.CenterOrigin();
-        _ship = new Ship(_inputService, _timeService, shipSprite);
+        _contentService.Load(_content);
     }
 
     protected override void Update(GameTime gameTime)

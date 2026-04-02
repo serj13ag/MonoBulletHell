@@ -16,12 +16,12 @@ public class Ship
 
     private Vector2 _position;
 
-    public Ship(InputService inputService, TimeService timeService, Sprite sprite)
+    public Ship(InputService inputService, TimeService timeService, ContentService contentService)
     {
         _inputService = inputService;
         _timeService = timeService;
 
-        _sprite = sprite;
+        _sprite = contentService.GetShipSprite();
         _position = new Vector2(32f, 32f);
     }
 
