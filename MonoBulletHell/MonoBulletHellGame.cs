@@ -4,12 +4,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MonoBulletHell;
 
-public class Game1 : Game
+public class MonoBulletHellGame : Game
 {
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
 
-    public Game1()
+    public MonoBulletHellGame()
     {
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
