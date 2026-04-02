@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MonoBulletHell.Data;
+namespace MonoBulletHell.Core.Graphics.Data;
 
 [Serializable]
 public class TextureAtlasData

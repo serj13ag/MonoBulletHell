@@ -1,6 +1,6 @@
 using System;
 
-namespace MonoBulletHell.Data;
+namespace MonoBulletHell.Core.Graphics.Data;
 
 [Serializable]
 public class TextureRegionData

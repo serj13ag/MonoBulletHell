@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using MonoBulletHell.Data;
+using MonoBulletHell.Core.Graphics.Data;
 using Newtonsoft.Json;
 
 namespace MonoBulletHell.Core.Graphics;
