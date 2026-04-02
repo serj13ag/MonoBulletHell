@@ -13,8 +13,8 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin images/atlas-definition.xml
-/copy:images/atlas-definition.xml
+#begin images/atlas-definition.json
+/copy:images/atlas-definition.json
 
 #begin images/kenney_tilemap.png
 /importer:TextureImporter

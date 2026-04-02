@@ -1,0 +1,12 @@
+{
+  "Texture": "images/kenney_tilemap",
+  "Regions": [
+    {
+      "name": "ship",
+      "x": 16,
+      "y": 0,
+      "width": 16,
+      "height": 16
+    }
+  ]
+}

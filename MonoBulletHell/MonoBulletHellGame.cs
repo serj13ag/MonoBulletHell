@@ -36,7 +36,7 @@ public class MonoBulletHellGame : Game
     {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        var atlas = TextureAtlas.FromFile(_content, "images/atlas-definition.xml");
+        var atlas = TextureAtlas.FromFile(_content, "images/atlas-definition.json");
 
         _shipSprite = atlas.CreateSprite("ship");
     }
