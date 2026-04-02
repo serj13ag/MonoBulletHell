@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas>
+    <Texture>images/kenney_tilemap</Texture>
+    <Regions>
+        <Region name="ship" x="16" y="0" width="16" height="16"/>
+    </Regions>
+</TextureAtlas>
