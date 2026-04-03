@@ -30,6 +30,9 @@ public class MonoBulletHellGame : Game
         _contentService = new ContentService();
 
         _graphics = new GraphicsDeviceManager(this);
+        _graphics.PreferredBackBufferWidth = 1920;
+        _graphics.PreferredBackBufferHeight = 1080;
+        _graphics.IsFullScreen = false;
 
         IsMouseVisible = true;
     }
@@ -67,7 +70,7 @@ public class MonoBulletHellGame : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        _spriteBatch.Begin();
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         _ship.Draw(_spriteBatch);
         _spriteBatch.End();
 

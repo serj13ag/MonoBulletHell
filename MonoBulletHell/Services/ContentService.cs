@@ -14,8 +14,11 @@ public class ContentService
 
     public Sprite GetShipSprite()
     {
-        var shipSprite = _atlas.CreateSprite("ship");
-        shipSprite.CenterOrigin();
-        return shipSprite;
+        return _atlas.CreateSprite("ship");
+    }
+
+    public Sprite GetShipCoreSprite()
+    {
+        return _atlas.CreateSprite("shipCore");
     }
 }

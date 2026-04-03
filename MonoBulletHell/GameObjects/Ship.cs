@@ -12,7 +12,8 @@ public class Ship
     private readonly InputService _inputService;
     private readonly TimeService _timeService;
 
-    private readonly Sprite _sprite;
+    private readonly Sprite _shipSprite;
+    private readonly Sprite _coreSprite;
 
     private Vector2 _position;
 
@@ -21,7 +22,9 @@ public class Ship
         _inputService = inputService;
         _timeService = timeService;
 
-        _sprite = contentService.GetShipSprite();
+        _shipSprite = GetShipSprite(contentService);
+        _coreSprite = GetCoreSprite(contentService);
+
         _position = new Vector2(32f, 32f);
     }
 
@@ -35,7 +38,8 @@ public class Ship
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        _sprite.Draw(spriteBatch, _position);
+        _shipSprite.Draw(spriteBatch, _position);
+        _coreSprite.Draw(spriteBatch, _position);
     }
 
     private bool HasInput(out Vector2 inputDirection)
@@ -69,5 +73,22 @@ public class Ship
 
         inputDirection.Normalize();
         return true;
+    }
+
+    private static Sprite GetShipSprite(ContentService contentService)
+    {
+        var sprite = contentService.GetShipSprite();
+        sprite.CenterOrigin();
+        sprite.Scale = new Vector2(4f, 4f);
+        return sprite;
+    }
+
+    private static Sprite GetCoreSprite(ContentService contentService)
+    {
+        var sprite = contentService.GetShipCoreSprite();
+        sprite.CenterOrigin();
+        sprite.Color = Color.Red;
+        sprite.Scale = new Vector2(2f, 2f);
+        return sprite;
     }
 }
