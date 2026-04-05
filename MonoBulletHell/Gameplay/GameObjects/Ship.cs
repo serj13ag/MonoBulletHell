@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Gameplay.Services;
+using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.GameObjects;
@@ -45,7 +46,9 @@ public class Ship
     {
         if (HasDirectionalInput(out var inputDirection))
         {
-            _position += inputDirection * MoveSpeed * _timeService.DeltaTime;
+            var newPosition = _position + inputDirection * MoveSpeed * _timeService.DeltaTime;
+            ScreenHelper.ClampToVirtualBounds(ref newPosition);
+            _position = newPosition;
         }
 
         if (_inputService.Shoot()) // TODO: add cooldown

@@ -8,4 +8,27 @@ public static class ScreenHelper
     {
         return position.X < 0 || position.Y < 0 || position.X > Constants.VirtualWidth || position.Y > Constants.VirtualHeight;
     }
+
+    public static void ClampToVirtualBounds(ref Vector2 position)
+    {
+        if (position.X < 0)
+        {
+            position.X = 0;
+        }
+
+        if (position.Y < 0)
+        {
+            position.Y = 0;
+        }
+
+        if (position.X > Constants.VirtualWidth)
+        {
+            position.X = Constants.VirtualWidth;
+        }
+
+        if (position.Y > Constants.VirtualHeight)
+        {
+            position.Y = Constants.VirtualHeight;
+        }
+    }
 }
