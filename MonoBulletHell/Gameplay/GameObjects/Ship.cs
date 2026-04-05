@@ -9,8 +9,8 @@ namespace MonoBulletHell.Gameplay.GameObjects;
 
 public class Ship
 {
-    private const float MoveSpeed = 200f;
-    private const float BulletSpeed = 600f;
+    private const float MoveSpeed = 400f; // TODO: to config
+    private const float BulletSpeed = 1200f; // TODO: to config
 
     private readonly Vector2 _bulletSpawnOffset = new Vector2(0f, -32f);
 
