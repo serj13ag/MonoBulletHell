@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace MonoBulletHell.Services;
+namespace MonoBulletHell.Gameplay.Services;
 
 public class TimeService
 {

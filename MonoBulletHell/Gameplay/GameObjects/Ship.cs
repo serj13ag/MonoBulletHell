@@ -1,9 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
 
-namespace MonoBulletHell.GameObjects;
+namespace MonoBulletHell.Gameplay.GameObjects;
 
 public class Ship
 {

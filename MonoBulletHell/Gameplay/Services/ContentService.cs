@@ -1,7 +1,7 @@
 using Microsoft.Xna.Framework.Content;
 using MonoBulletHell.Core.Graphics;
 
-namespace MonoBulletHell.Services;
+namespace MonoBulletHell.Gameplay.Services;
 
 public class ContentService
 {

@@ -2,8 +2,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Scenes;
-using MonoBulletHell.GameObjects;
 using MonoBulletHell.Gameplay.Factories;
+using MonoBulletHell.Gameplay.GameObjects;
+using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Scenes;
