@@ -10,8 +10,8 @@ public class Ship
 {
     private const float MoveSpeed = 200f;
 
-    private readonly InputService _inputService;
-    private readonly TimeService _timeService;
+    private readonly IInputService _inputService;
+    private readonly ITimeService _timeService;
 
     private readonly Sprite _shipSprite;
     private readonly Sprite _coreSprite;
@@ -24,7 +24,7 @@ public class Ship
         set => _position = value;
     }
 
-    public Ship(InputService inputService, TimeService timeService, ContentService contentService)
+    public Ship(IInputService inputService, ITimeService timeService, IContentService contentService)
     {
         _inputService = inputService;
         _timeService = timeService;
@@ -82,7 +82,7 @@ public class Ship
         return true;
     }
 
-    private static Sprite GetShipSprite(ContentService contentService)
+    private static Sprite GetShipSprite(IContentService contentService)
     {
         var sprite = contentService.GetShipSprite();
         sprite.CenterOrigin();
@@ -90,7 +90,7 @@ public class Ship
         return sprite;
     }
 
-    private static Sprite GetCoreSprite(ContentService contentService)
+    private static Sprite GetCoreSprite(IContentService contentService)
     {
         var sprite = contentService.GetShipCoreSprite();
         sprite.CenterOrigin();

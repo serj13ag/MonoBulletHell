@@ -2,7 +2,14 @@ using Microsoft.Xna.Framework;
 
 namespace MonoBulletHell.Gameplay.Services;
 
-public class TimeService
+public interface ITimeService
+{
+    float DeltaTime { get; }
+
+    void Update(GameTime gameTime);
+}
+
+public class TimeService : ITimeService
 {
     private float _deltaTime;
 

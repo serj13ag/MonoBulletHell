@@ -3,7 +3,18 @@ using MonoBulletHell.Core.Input;
 
 namespace MonoBulletHell.Services;
 
-public class InputService
+public interface IInputService
+{
+    KeyboardInputInfo Keyboard { get; }
+
+    void Update();
+    bool MoveUp();
+    bool MoveDown();
+    bool MoveLeft();
+    bool MoveRight();
+}
+
+public class InputService : IInputService
 {
     private readonly KeyboardInputInfo _keyboard;
 

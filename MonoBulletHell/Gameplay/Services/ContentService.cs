@@ -3,7 +3,14 @@ using MonoBulletHell.Core.Graphics;
 
 namespace MonoBulletHell.Gameplay.Services;
 
-public class ContentService
+public interface IContentService
+{
+    void Load(ContentManager content);
+    Sprite GetShipSprite();
+    Sprite GetShipCoreSprite();
+}
+
+public class ContentService : IContentService
 {
     private TextureAtlas _atlas;
 

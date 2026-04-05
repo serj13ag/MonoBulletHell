@@ -8,8 +8,8 @@ namespace MonoBulletHell;
 
 public class MonoBulletHellGame : Game
 {
-    private readonly InputService _inputService;
-    private SceneService _sceneService;
+    private readonly IInputService _inputService;
+    private ISceneService _sceneService;
 
     public MonoBulletHellGame()
     {

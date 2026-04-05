@@ -7,17 +7,25 @@ using MonoBulletHell.Scenes;
 
 namespace MonoBulletHell.Services;
 
-public class SceneService
+public interface ISceneService
+{
+    void ChangeScene(SceneType sceneType);
+    void Update(GameTime gameTime);
+    void Draw(GameTime gameTime);
+}
+
+public class SceneService : ISceneService
 {
     private readonly ContentManager _content;
     private readonly GraphicsDevice _graphicsDevice;
     private readonly SpriteBatch _spriteBatch;
-    private readonly InputService _inputService;
+    private readonly IInputService _inputService;
 
     private BaseScene _nextScene;
     private BaseScene _activeScene;
 
-    public SceneService(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, InputService inputService)
+    public SceneService(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch,
+        IInputService inputService)
     {
         _content = content;
         _graphicsDevice = graphicsDevice;

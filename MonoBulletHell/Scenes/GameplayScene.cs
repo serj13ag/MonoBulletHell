@@ -11,14 +11,14 @@ namespace MonoBulletHell.Scenes;
 
 public class GameplayScene : BaseScene
 {
-    private readonly TimeService _timeService;
-    private readonly ContentService _contentService;
-    private readonly GameFactory _gameFactory;
+    private readonly ITimeService _timeService;
+    private readonly IContentService _contentService;
+    private readonly IGameFactory _gameFactory;
 
     private Ship _ship;
 
     public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch,
-        InputService inputService)
+        IInputService inputService)
         : base(content, graphicsDevice, spriteBatch)
     {
         _timeService = new TimeService();

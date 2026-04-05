@@ -5,13 +5,18 @@ using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Factories;
 
-public class GameFactory
+public interface IGameFactory
 {
-    private readonly InputService _inputService;
-    private readonly TimeService _timeService;
-    private readonly ContentService _contentService;
+    Ship CreateShip(Vector2 position);
+}
 
-    public GameFactory(InputService inputService, TimeService timeService, ContentService contentService)
+public class GameFactory : IGameFactory
+{
+    private readonly IInputService _inputService;
+    private readonly ITimeService _timeService;
+    private readonly IContentService _contentService;
+
+    public GameFactory(IInputService inputService, ITimeService timeService, IContentService contentService)
     {
         _inputService = inputService;
         _timeService = timeService;
