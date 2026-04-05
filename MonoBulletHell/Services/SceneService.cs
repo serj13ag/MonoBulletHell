@@ -1,7 +1,6 @@
 using System;
+using LightInject;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Scenes;
 
@@ -16,35 +15,30 @@ public interface ISceneService
 
 public class SceneService : ISceneService
 {
-    private readonly ContentManager _content;
-    private readonly GraphicsDevice _graphicsDevice;
-    private readonly SpriteBatch _spriteBatch;
-    private readonly IInputService _inputService;
+    private readonly Func<Scope> _scopeFactory;
 
-    private BaseScene _nextScene;
+    private Scope _sceneScope;
+
+    private SceneType? _nextSceneType;
+    private SceneType? _activeSceneType;
     private BaseScene _activeScene;
 
-    public SceneService(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch,
-        IInputService inputService)
+    public SceneService(Func<Scope> scopeFactory)
     {
-        _content = content;
-        _graphicsDevice = graphicsDevice;
-        _spriteBatch = spriteBatch;
-        _inputService = inputService;
+        _scopeFactory = scopeFactory;
     }
 
     public void ChangeScene(SceneType sceneType)
     {
-        var nextScene = CreateScene(sceneType);
-        if (_activeScene != nextScene)
+        if (_activeSceneType != sceneType)
         {
-            _nextScene = nextScene;
+            _nextSceneType = sceneType;
         }
     }
 
     public void Update(GameTime gameTime)
     {
-        if (_nextScene != null)
+        if (_nextSceneType != null)
         {
             TransitionScene();
         }
@@ -57,25 +51,25 @@ public class SceneService : ISceneService
         _activeScene?.Draw(gameTime);
     }
 
-    private BaseScene CreateScene(SceneType sceneType)
-    {
-        BaseScene scene = sceneType switch
-        {
-            SceneType.Gameplay => new GameplayScene(_content, _graphicsDevice, _spriteBatch, _inputService), // TODO: add factory
-            _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null),
-        };
-        return scene;
-    }
-
     private void TransitionScene()
     {
         _activeScene?.UnloadContent();
         _activeScene?.Exit();
 
+        _sceneScope?.Dispose();
+
         GC.Collect();
 
-        _activeScene = _nextScene;
-        _nextScene = null;
+        _sceneScope = _scopeFactory.Invoke();
+        BaseScene nextScene = _nextSceneType switch
+        {
+            SceneType.Gameplay => _sceneScope.GetInstance<GameplayScene>(),
+            _ => throw new ArgumentOutOfRangeException(),
+        };
+
+        _activeScene = nextScene;
+        _activeSceneType = _nextSceneType;
+        _nextSceneType = null;
 
         _activeScene?.Initialize();
         _activeScene?.LoadContent();

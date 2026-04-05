@@ -8,12 +8,14 @@ namespace MonoBulletHell;
 
 public class MonoBulletHellGame : Game
 {
-    private readonly IInputService _inputService;
+    private readonly CompositionRoot _root;
+
+    private IInputService _inputService;
     private ISceneService _sceneService;
 
     public MonoBulletHellGame()
     {
-        _inputService = new InputService();
+        _root = new CompositionRoot();
 
         var graphics = new GraphicsDeviceManager(this);
         graphics.PreferredBackBufferWidth = Constants.VirtualWidth;
@@ -30,7 +32,10 @@ public class MonoBulletHellGame : Game
         base.Initialize();
 
         var spriteBatch = new SpriteBatch(GraphicsDevice);
-        _sceneService = new SceneService(Content, GraphicsDevice, spriteBatch, _inputService);
+        _root.Initialize(Content, GraphicsDevice, spriteBatch);
+
+        _inputService = _root.GetInstance<IInputService>();
+        _sceneService = _root.GetInstance<ISceneService>();
 
         _sceneService.ChangeScene(SceneType.Gameplay);
     }

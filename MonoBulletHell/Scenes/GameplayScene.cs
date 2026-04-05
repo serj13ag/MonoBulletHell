@@ -5,27 +5,26 @@ using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.GameObjects;
 using MonoBulletHell.Gameplay.Services;
-using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Scenes;
 
 public class GameplayScene : BaseScene
 {
-    private readonly ITimeService _timeService;
     private readonly IContentService _contentService;
-    private readonly IGameFactory _gameFactory;
+    private readonly ITimeService _timeService;
     private readonly IBulletService _bulletService;
+    private readonly IGameFactory _gameFactory;
 
     private Ship _ship;
 
-    public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch,
-        IInputService inputService)
+    public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, ITimeService timeService,
+        IContentService contentService, IBulletService bulletService, IGameFactory gameFactory)
         : base(content, graphicsDevice, spriteBatch)
     {
-        _timeService = new TimeService();
-        _contentService = new ContentService();
-        _bulletService = new BulletService(_timeService, _contentService);
-        _gameFactory = new GameFactory(inputService, _timeService, _contentService, _bulletService);
+        _contentService = contentService;
+        _timeService = timeService;
+        _bulletService = bulletService;
+        _gameFactory = gameFactory;
     }
 
     public override void LoadContent()
@@ -63,7 +62,7 @@ public class GameplayScene : BaseScene
         _ship.Draw(SpriteBatch);
 
         _bulletService.Draw(SpriteBatch);
-        
+
         SpriteBatch.End();
     }
 }
