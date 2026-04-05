@@ -17,6 +17,12 @@ public class Ship
 
     private Vector2 _position;
 
+    public Vector2 Position
+    {
+        get => _position;
+        set => _position = value;
+    }
+
     public Ship(InputService inputService, TimeService timeService, ContentService contentService)
     {
         _inputService = inputService;

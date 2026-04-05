@@ -3,16 +3,16 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.GameObjects;
+using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Scenes;
 
 public class GameplayScene : BaseScene
 {
-    private readonly InputService _inputService;
-
     private readonly TimeService _timeService;
     private readonly ContentService _contentService;
+    private readonly GameFactory _gameFactory;
 
     private Ship _ship;
 
@@ -20,10 +20,9 @@ public class GameplayScene : BaseScene
         InputService inputService)
         : base(content, graphicsDevice, spriteBatch)
     {
-        _inputService = inputService;
-
         _timeService = new TimeService();
         _contentService = new ContentService();
+        _gameFactory = new GameFactory(inputService, _timeService, _contentService);
     }
 
     public override void LoadContent()
@@ -37,7 +36,7 @@ public class GameplayScene : BaseScene
     {
         base.Enter();
 
-        _ship = new Ship(_inputService, _timeService, _contentService);
+        _ship = _gameFactory.CreateShip(new Vector2(32f, 32f));
     }
 
     public override void Update(GameTime gameTime)
