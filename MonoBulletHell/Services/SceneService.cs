@@ -61,7 +61,7 @@ public class SceneService : ISceneService
     {
         BaseScene scene = sceneType switch
         {
-            SceneType.Gameplay => new GameplayScene(_content, _graphicsDevice, _spriteBatch, _inputService),
+            SceneType.Gameplay => new GameplayScene(_content, _graphicsDevice, _spriteBatch, _inputService), // TODO: add factory
             _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null),
         };
         return scene;
