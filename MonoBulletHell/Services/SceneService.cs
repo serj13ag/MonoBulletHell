@@ -38,9 +38,10 @@ public class SceneService : ISceneService
 
     public void Update(GameTime gameTime)
     {
-        if (_nextSceneType != null)
+        if (_nextSceneType.HasValue)
         {
-            TransitionScene();
+            TransitionScene(_nextSceneType.Value);
+            _nextSceneType = null;
         }
 
         _activeScene?.Update(gameTime);
@@ -51,7 +52,7 @@ public class SceneService : ISceneService
         _activeScene?.Draw(gameTime);
     }
 
-    private void TransitionScene()
+    private void TransitionScene(SceneType nextSceneType)
     {
         _activeScene?.UnloadContent();
         _activeScene?.Exit();
@@ -61,18 +62,21 @@ public class SceneService : ISceneService
         GC.Collect();
 
         _sceneScope = _scopeFactory.Invoke();
-        BaseScene nextScene = _nextSceneType switch
-        {
-            SceneType.Gameplay => _sceneScope.GetInstance<GameplayScene>(),
-            _ => throw new ArgumentOutOfRangeException(),
-        };
 
-        _activeScene = nextScene;
-        _activeSceneType = _nextSceneType;
-        _nextSceneType = null;
+        _activeScene = GetNextScene(nextSceneType, _sceneScope);
+        _activeSceneType = nextSceneType;
 
         _activeScene?.Initialize();
         _activeScene?.LoadContent();
         _activeScene?.Enter();
+    }
+
+    private static BaseScene GetNextScene(SceneType sceneType, Scope sceneScope)
+    {
+        return sceneType switch
+        {
+            SceneType.Gameplay => sceneScope.GetInstance<GameplayScene>(),
+            _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null),
+        };
     }
 }
