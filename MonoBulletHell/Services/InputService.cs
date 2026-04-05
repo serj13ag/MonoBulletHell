@@ -12,6 +12,8 @@ public interface IInputService
     bool MoveDown();
     bool MoveLeft();
     bool MoveRight();
+
+    bool Shoot();
 }
 
 public class InputService : IInputService
@@ -52,5 +54,10 @@ public class InputService : IInputService
     {
         return _keyboard.IsKeyDown(Keys.Right) ||
                _keyboard.IsKeyDown(Keys.D);
+    }
+
+    public bool Shoot()
+    {
+        return _keyboard.IsKeyDown(Keys.Space);
     }
 }

@@ -9,9 +9,13 @@ namespace MonoBulletHell.Gameplay.GameObjects;
 public class Ship
 {
     private const float MoveSpeed = 200f;
+    private const float BulletSpeed = 600f;
+
+    private readonly Vector2 _bulletSpawnOffset = new Vector2(0f, -32f);
 
     private readonly IInputService _inputService;
     private readonly ITimeService _timeService;
+    private readonly IBulletService _bulletService;
 
     private readonly Sprite _shipSprite;
     private readonly Sprite _coreSprite;
@@ -24,12 +28,14 @@ public class Ship
         set => _position = value;
     }
 
-    public Ship(IInputService inputService, ITimeService timeService, IContentService contentService)
+    public Ship(IInputService inputService, ITimeService timeService, IContentService contentService,
+        IBulletService bulletService)
     {
         _inputService = inputService;
         _timeService = timeService;
+        _bulletService = bulletService;
 
-        _shipSprite = GetShipSprite(contentService);
+        _shipSprite = GetShipSprite(contentService); // TODO: init with sprites
         _coreSprite = GetCoreSprite(contentService);
 
         _position = new Vector2(32f, 32f);
@@ -37,9 +43,14 @@ public class Ship
 
     public void Update()
     {
-        if (HasInput(out var inputDirection))
+        if (HasDirectionalInput(out var inputDirection))
         {
             _position += inputDirection * MoveSpeed * _timeService.DeltaTime;
+        }
+
+        if (_inputService.Shoot()) // TODO: add cooldown
+        {
+            _bulletService.SpawnBullet(_position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed);
         }
     }
 
@@ -49,7 +60,7 @@ public class Ship
         _coreSprite.Draw(spriteBatch, _position);
     }
 
-    private bool HasInput(out Vector2 inputDirection)
+    private bool HasDirectionalInput(out Vector2 inputDirection)
     {
         inputDirection = Vector2.Zero;
 

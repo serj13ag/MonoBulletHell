@@ -14,6 +14,7 @@ public class GameplayScene : BaseScene
     private readonly ITimeService _timeService;
     private readonly IContentService _contentService;
     private readonly IGameFactory _gameFactory;
+    private readonly IBulletService _bulletService;
 
     private Ship _ship;
 
@@ -23,7 +24,8 @@ public class GameplayScene : BaseScene
     {
         _timeService = new TimeService();
         _contentService = new ContentService();
-        _gameFactory = new GameFactory(inputService, _timeService, _contentService);
+        _bulletService = new BulletService(_timeService, _contentService);
+        _gameFactory = new GameFactory(inputService, _timeService, _contentService, _bulletService);
     }
 
     public override void LoadContent()
@@ -45,6 +47,7 @@ public class GameplayScene : BaseScene
         base.Update(gameTime);
 
         _timeService.Update(gameTime);
+        _bulletService.Update();
 
         _ship.Update();
     }
@@ -59,6 +62,8 @@ public class GameplayScene : BaseScene
 
         _ship.Draw(SpriteBatch);
 
+        _bulletService.Draw(SpriteBatch);
+        
         SpriteBatch.End();
     }
 }

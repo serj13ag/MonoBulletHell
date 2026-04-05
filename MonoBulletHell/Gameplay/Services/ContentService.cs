@@ -6,8 +6,10 @@ namespace MonoBulletHell.Gameplay.Services;
 public interface IContentService
 {
     void Load(ContentManager content);
+
     Sprite GetShipSprite();
     Sprite GetShipCoreSprite();
+    Sprite GetBulletSprite();
 }
 
 public class ContentService : IContentService
@@ -27,5 +29,10 @@ public class ContentService : IContentService
     public Sprite GetShipCoreSprite()
     {
         return _atlas.CreateSprite("shipCore");
+    }
+
+    public Sprite GetBulletSprite()
+    {
+        return _atlas.CreateSprite("bullet");
     }
 }
