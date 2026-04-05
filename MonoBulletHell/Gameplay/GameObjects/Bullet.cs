@@ -41,6 +41,6 @@ public class Bullet
     public void SetDirection(Vector2 value)
     {
         _direction = value;
-        _sprite.Rotation = _direction.GetRotation(SpriteBaseRotation);
+        _sprite.Rotation = GameMathHelper.GetRotation(_direction, SpriteBaseRotation);
     }
 }

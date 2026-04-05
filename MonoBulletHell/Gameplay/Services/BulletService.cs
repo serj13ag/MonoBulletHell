@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Gameplay.GameObjects;
+using MonoBulletHell.Helpers;
 
 namespace MonoBulletHell.Gameplay.Services;
 
@@ -19,6 +20,7 @@ public class BulletService : IBulletService
     private readonly IContentService _contentService;
 
     private readonly List<Bullet> _bullets = new List<Bullet>(512);
+    private readonly List<Bullet> _bulletsToDestroy = new List<Bullet>(128);
 
     public BulletService(ITimeService timeService, IContentService contentService)
     {
@@ -31,9 +33,19 @@ public class BulletService : IBulletService
         foreach (var bullet in _bullets)
         {
             bullet.Update();
+
+            if (ScreenHelper.IsOutOfVirtualBounds(bullet.Position))
+            {
+                _bulletsToDestroy.Add(bullet);
+            }
         }
 
-        // TODO: destroy bullets out of screen
+        foreach (var bulletToDestroy in _bulletsToDestroy)
+        {
+            _bullets.Remove(bulletToDestroy);
+        }
+
+        _bulletsToDestroy.Clear();
     }
 
     public void Draw(SpriteBatch spriteBatch)

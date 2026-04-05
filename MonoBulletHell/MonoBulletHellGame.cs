@@ -16,8 +16,8 @@ public class MonoBulletHellGame : Game
         _inputService = new InputService();
 
         var graphics = new GraphicsDeviceManager(this);
-        graphics.PreferredBackBufferWidth = 768;
-        graphics.PreferredBackBufferHeight = 1024;
+        graphics.PreferredBackBufferWidth = Constants.VirtualWidth;
+        graphics.PreferredBackBufferHeight = Constants.VirtualHeight;
         graphics.IsFullScreen = false;
 
         Content.RootDirectory = "Content";
