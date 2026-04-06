@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
@@ -13,6 +14,9 @@ public interface IGameFactory
 
 public class GameFactory : IGameFactory
 {
+    private const float ShipSpriteScale = 4f;
+    private const float CoreSpriteScale = 2f;
+
     private readonly IInputService _inputService;
     private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
@@ -33,17 +37,48 @@ public class GameFactory : IGameFactory
 
     public Ship CreateShip(Vector2 position)
     {
-        var ship = new Ship(_inputService, _debugService, _timeService, _contentService, _bulletService);
+        var ship = new Ship(_inputService, _debugService, _timeService, _bulletService)
+        {
+            Position = position,
+        };
+
+        ship.AddSprite(GetShipSprite(_contentService), Vector2.Zero);
+        ship.AddSprite(GetCoreSprite(_contentService), Vector2.Zero);
+
         _gameContext.RegisterShip(ship);
-        ship.Position = position;
         return ship;
     }
 
     public Enemy CreateEnemy(Vector2 position)
     {
-        var enemy = new Enemy(_debugService, _timeService, _contentService, _bulletService);
+        var enemy = new Enemy(_debugService, _timeService, _bulletService)
+        {
+            Position = position,
+        };
+
+        var sprite = _contentService.CreateSprite("enemy");
+        sprite.CenterOrigin();
+        sprite.Scale = new Vector2(8f, 8f);
+        enemy.AddSprite(sprite, new Vector2(0f, -25f));
+
         _gameContext.RegisterEnemy(enemy);
-        enemy.Position = position;
         return enemy;
+    }
+
+    private static Sprite GetShipSprite(IContentService contentService)
+    {
+        var sprite = contentService.CreateSprite("ship");
+        sprite.CenterOrigin();
+        sprite.Scale = new Vector2(ShipSpriteScale, ShipSpriteScale);
+        return sprite;
+    }
+
+    private static Sprite GetCoreSprite(IContentService contentService)
+    {
+        var sprite = contentService.CreateSprite("shipCore");
+        sprite.CenterOrigin();
+        sprite.Color = Color.Red;
+        sprite.Scale = new Vector2(CoreSpriteScale, CoreSpriteScale);
+        return sprite;
     }
 }

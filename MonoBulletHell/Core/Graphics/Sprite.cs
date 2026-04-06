@@ -8,7 +8,12 @@ public class Sprite
     private readonly TextureRegion _region;
 
     public Color Color { get; set; } = Color.White;
+
+    /// <summary>
+    /// Rotation in radians
+    /// </summary>
     public float Rotation { get; set; } = 0.0f;
+
     public Vector2 Scale { get; set; } = Vector2.One;
     public Vector2 Origin { get; set; } = Vector2.Zero;
     public SpriteEffects Effects { get; set; } = SpriteEffects.None;
@@ -27,8 +32,8 @@ public class Sprite
         Origin = new Vector2(_region.Width, _region.Height) * 0.5f;
     }
 
-    public void Draw(SpriteBatch spriteBatch, Vector2 position)
+    public void Draw(SpriteBatch spriteBatch, Vector2 position, float rotation = 0f)
     {
-        _region.Draw(spriteBatch, position, Color, Rotation, Origin, Scale, Effects, LayerDepth);
+        _region.Draw(spriteBatch, position, Color, Rotation + rotation, Origin, Scale, Effects, LayerDepth);
     }
 }

@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core;
-using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;
@@ -9,12 +7,9 @@ using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Entities;
 
-public class Ship : IEntityWithCollider
+public class Ship : EntityWithSprites, IEntityWithCollider
 {
     private const float ColliderRadius = 10f;
-
-    private const float ShipSpriteScale = 4f;
-    private const float CoreSpriteScale = 2f;
 
     private const float MoveSpeed = 400f; // TODO: to config
     private const float BulletSpeed = 1200f; // TODO: to config
@@ -27,54 +22,34 @@ public class Ship : IEntityWithCollider
     private readonly ITimeService _timeService;
     private readonly IBulletService _bulletService;
 
-    private readonly Sprite _shipSprite;
-    private readonly Sprite _coreSprite;
-
-    private Vector2 _position;
     private Circle _collider;
-
-    public Vector2 Position
-    {
-        get => _position;
-        set => _position = value;
-    }
 
     public Circle Collider => _collider;
 
-    public Ship(IInputService inputService, IDebugService debugService, ITimeService timeService, IContentService contentService,
-        IBulletService bulletService)
+    public Ship(IInputService inputService, IDebugService debugService, ITimeService timeService, IBulletService bulletService)
     {
         _inputService = inputService;
         _debugService = debugService;
         _timeService = timeService;
         _bulletService = bulletService;
-
-        _shipSprite = GetShipSprite(contentService); // TODO: init with sprites
-        _coreSprite = GetCoreSprite(contentService);
     }
 
     public void Update()
     {
         if (HasDirectionalInput(out var inputDirection))
         {
-            var newPosition = _position + inputDirection * MoveSpeed * _timeService.DeltaTime;
+            var newPosition = Position + inputDirection * MoveSpeed * _timeService.DeltaTime;
             ScreenHelper.ClampToVirtualBounds(ref newPosition);
-            _position = newPosition;
+            Position = newPosition;
         }
 
         if (_inputService.Shoot()) // TODO: add cooldown
         {
-            _bulletService.SpawnBullet(_position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed, BulletDamage, true);
+            _bulletService.SpawnBullet(Position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed, BulletDamage, true);
         }
 
-        _collider = new Circle(_position.X, _position.Y, ColliderRadius);
+        _collider = new Circle(Position.X, Position.Y, ColliderRadius);
         _debugService.DrawCircle(_collider.Location, _collider.Radius, Color.GreenYellow, 2f, 10);
-    }
-
-    public void Draw(SpriteBatch spriteBatch)
-    {
-        _shipSprite.Draw(spriteBatch, _position);
-        _coreSprite.Draw(spriteBatch, _position);
     }
 
     public void TakeDamage(int damage)
@@ -113,22 +88,5 @@ public class Ship : IEntityWithCollider
 
         inputDirection.Normalize();
         return true;
-    }
-
-    private static Sprite GetShipSprite(IContentService contentService)
-    {
-        var sprite = contentService.CreateSprite("ship");
-        sprite.CenterOrigin();
-        sprite.Scale = new Vector2(ShipSpriteScale, ShipSpriteScale);
-        return sprite;
-    }
-
-    private static Sprite GetCoreSprite(IContentService contentService)
-    {
-        var sprite = contentService.CreateSprite("shipCore");
-        sprite.CenterOrigin();
-        sprite.Color = Color.Red;
-        sprite.Scale = new Vector2(CoreSpriteScale, CoreSpriteScale);
-        return sprite;
     }
 }
