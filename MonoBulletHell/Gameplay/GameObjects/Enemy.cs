@@ -20,12 +20,15 @@ public class Enemy
     private readonly Sprite _sprite;
 
     private Vector2 _position;
+    private Circle _collider;
 
     public Vector2 Position
     {
         get => _position;
         set => _position = value;
     }
+
+    public Circle Collider => _collider;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IContentService contentService,
         IBulletService bulletService)
@@ -39,13 +42,18 @@ public class Enemy
 
     public void Update()
     {
-        var enemyBounds = new Circle(_position.X, _position.Y, ColliderRadius);
-        _debugService.DrawCircle(enemyBounds.Location, enemyBounds.Radius, Color.GreenYellow, 2f, 10);
+        _collider = new Circle(_position.X, _position.Y, ColliderRadius);
+        _debugService.DrawCircle(_collider.Location, _collider.Radius, Color.GreenYellow, 2f, 10);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
         _sprite.Draw(spriteBatch, _position + SpriteOffset);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        // TODO: implement
     }
 
     private static Sprite GetEnemySprite(IContentService contentService)

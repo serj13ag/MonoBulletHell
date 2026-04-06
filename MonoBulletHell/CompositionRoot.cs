@@ -2,6 +2,7 @@ using System;
 using LightInject;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoBulletHell.Gameplay;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Scenes;
@@ -50,6 +51,8 @@ public class CompositionRoot
         _container.Register<IContentService, ContentService>(new PerScopeLifetime());
         _container.Register<ITimeService, TimeService>(new PerScopeLifetime());
         _container.Register<IBulletService, BulletService>(new PerScopeLifetime());
+
+        _container.Register<IGameContext, GameContext>(new PerScopeLifetime());
 
         _container.Register<IGameFactory, GameFactory>(new PerScopeLifetime());
     }

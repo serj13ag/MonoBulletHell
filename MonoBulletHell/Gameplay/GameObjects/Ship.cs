@@ -17,6 +17,7 @@ public class Ship
 
     private const float MoveSpeed = 400f; // TODO: to config
     private const float BulletSpeed = 1200f; // TODO: to config
+    private const int BulletDamage = 1; // TODO: to config
 
     private readonly Vector2 _bulletSpawnOffset = new Vector2(0f, -32f);
 
@@ -59,7 +60,7 @@ public class Ship
 
         if (_inputService.Shoot()) // TODO: add cooldown
         {
-            _bulletService.SpawnBullet(_position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed);
+            _bulletService.SpawnBullet(_position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed, BulletDamage);
         }
 
         var shipBounds = new Circle(_position.X, _position.Y, ColliderRadius);
