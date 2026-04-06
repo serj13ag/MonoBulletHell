@@ -10,6 +10,11 @@ namespace MonoBulletHell.Gameplay.GameObjects;
 
 public class Ship
 {
+    private const float ColliderRadius = 10f;
+
+    private const float ShipSpriteScale = 4f;
+    private const float CoreSpriteScale = 2f;
+
     private const float MoveSpeed = 400f; // TODO: to config
     private const float BulletSpeed = 1200f; // TODO: to config
 
@@ -41,8 +46,6 @@ public class Ship
 
         _shipSprite = GetShipSprite(contentService); // TODO: init with sprites
         _coreSprite = GetCoreSprite(contentService);
-
-        _position = new Vector2(32f, 32f);
     }
 
     public void Update()
@@ -59,7 +62,7 @@ public class Ship
             _bulletService.SpawnBullet(_position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed);
         }
 
-        var shipBounds = new Circle(_position.X, _position.Y, 10f);
+        var shipBounds = new Circle(_position.X, _position.Y, ColliderRadius);
         _debugService.DrawCircle(shipBounds.Location, shipBounds.Radius, Color.GreenYellow, 2f, 10);
     }
 
@@ -106,7 +109,7 @@ public class Ship
     {
         var sprite = contentService.CreateSprite("ship");
         sprite.CenterOrigin();
-        sprite.Scale = new Vector2(4f, 4f);
+        sprite.Scale = new Vector2(ShipSpriteScale, ShipSpriteScale);
         return sprite;
     }
 
@@ -115,7 +118,7 @@ public class Ship
         var sprite = contentService.CreateSprite("shipCore");
         sprite.CenterOrigin();
         sprite.Color = Color.Red;
-        sprite.Scale = new Vector2(2f, 2f);
+        sprite.Scale = new Vector2(CoreSpriteScale, CoreSpriteScale);
         return sprite;
     }
 }

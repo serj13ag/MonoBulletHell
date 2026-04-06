@@ -38,7 +38,7 @@ public class GameFactory : IGameFactory
 
     public Enemy CreateEnemy(Vector2 position)
     {
-        var enemy = new Enemy(_timeService, _contentService, _bulletService);
+        var enemy = new Enemy(_debugService, _timeService, _contentService, _bulletService);
         enemy.Position = position;
         return enemy;
     }
