@@ -30,6 +30,7 @@ public class Bullet
 
     public float Speed { get; init; }
     public int Damage { get; init; }
+    public bool IsPlayer { get; init; }
 
     public Circle Collider => _collider;
 

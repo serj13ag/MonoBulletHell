@@ -2,13 +2,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.GameObjects;
 
-public class Ship
+public class Ship : IColliding
 {
     private const float ColliderRadius = 10f;
 
@@ -30,12 +31,15 @@ public class Ship
     private readonly Sprite _coreSprite;
 
     private Vector2 _position;
+    private Circle _collider;
 
     public Vector2 Position
     {
         get => _position;
         set => _position = value;
     }
+
+    public Circle Collider => _collider;
 
     public Ship(IInputService inputService, IDebugService debugService, ITimeService timeService, IContentService contentService,
         IBulletService bulletService)
@@ -60,17 +64,22 @@ public class Ship
 
         if (_inputService.Shoot()) // TODO: add cooldown
         {
-            _bulletService.SpawnBullet(_position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed, BulletDamage);
+            _bulletService.SpawnBullet(_position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed, BulletDamage, true);
         }
 
-        var shipBounds = new Circle(_position.X, _position.Y, ColliderRadius);
-        _debugService.DrawCircle(shipBounds.Location, shipBounds.Radius, Color.GreenYellow, 2f, 10);
+        _collider = new Circle(_position.X, _position.Y, ColliderRadius);
+        _debugService.DrawCircle(_collider.Location, _collider.Radius, Color.GreenYellow, 2f, 10);
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
         _shipSprite.Draw(spriteBatch, _position);
         _coreSprite.Draw(spriteBatch, _position);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        // TODO: implement
     }
 
     private bool HasDirectionalInput(out Vector2 inputDirection)

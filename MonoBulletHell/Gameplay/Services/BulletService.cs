@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.GameObjects;
+using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Helpers;
 
 namespace MonoBulletHell.Gameplay.Services;
@@ -12,7 +13,7 @@ public interface IBulletService
     void Update();
     void Draw(SpriteBatch spriteBatch);
 
-    void SpawnBullet(Vector2 position, Vector2 direction, float speed, int damage);
+    void SpawnBullet(Vector2 position, Vector2 direction, float speed, int damage, bool isPlayer);
 }
 
 public class BulletService : IBulletService
@@ -20,7 +21,7 @@ public class BulletService : IBulletService
     private readonly IGameContext _gameContext;
     private readonly IBulletFactory _bulletFactory;
 
-    private readonly List<Bullet> _bullets = new List<Bullet>(512);
+    private readonly List<Bullet> _bullets = new List<Bullet>(256);
     private readonly List<Bullet> _bulletsToDestroy = new List<Bullet>(128);
 
     public BulletService(IGameContext gameContext, IBulletFactory bulletFactory)
@@ -35,13 +36,18 @@ public class BulletService : IBulletService
         {
             bullet.Update();
 
-            if (IsColliding(bullet, _gameContext.Enemy))
+            if (ScreenHelper.IsOutOfVirtualBounds(bullet.Position))
+            {
+                _bulletsToDestroy.Add(bullet);
+            }
+            else if (bullet.IsPlayer && IsColliding(bullet, _gameContext.Enemy)) // TODO: refactor
             {
                 _gameContext.Enemy.TakeDamage(bullet.Damage);
                 _bulletsToDestroy.Add(bullet);
             }
-            else if (ScreenHelper.IsOutOfVirtualBounds(bullet.Position))
+            else if (!bullet.IsPlayer && IsColliding(bullet, _gameContext.Ship))
             {
+                _gameContext.Ship.TakeDamage(bullet.Damage);
                 _bulletsToDestroy.Add(bullet);
             }
         }
@@ -62,14 +68,14 @@ public class BulletService : IBulletService
         }
     }
 
-    public void SpawnBullet(Vector2 position, Vector2 direction, float speed, int damage)
+    public void SpawnBullet(Vector2 position, Vector2 direction, float speed, int damage, bool isPlayer)
     {
-        var bullet = _bulletFactory.CreateBullet(position, direction, speed, damage);
+        var bullet = _bulletFactory.CreateBullet(position, direction, speed, damage, isPlayer);
         _bullets.Add(bullet);
     }
 
-    private static bool IsColliding(Bullet bullet, Enemy enemy)
+    private static bool IsColliding(Bullet bullet, IColliding collidingObject)
     {
-        return bullet.Collider.Intersects(enemy.Collider);
+        return bullet.Collider.Intersects(collidingObject.Collider);
     }
 }

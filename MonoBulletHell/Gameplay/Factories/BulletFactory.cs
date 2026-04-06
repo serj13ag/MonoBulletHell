@@ -7,7 +7,7 @@ namespace MonoBulletHell.Gameplay.Factories;
 
 public interface IBulletFactory
 {
-    Bullet CreateBullet(Vector2 position, Vector2 direction, float speed, int damage);
+    Bullet CreateBullet(Vector2 position, Vector2 direction, float speed, int damage, bool isPlayer);
 }
 
 public class BulletFactory : IBulletFactory
@@ -23,13 +23,14 @@ public class BulletFactory : IBulletFactory
         _contentService = contentService;
     }
 
-    public Bullet CreateBullet(Vector2 position, Vector2 direction, float speed, int damage)
+    public Bullet CreateBullet(Vector2 position, Vector2 direction, float speed, int damage, bool isPlayer)
     {
         var bullet = new Bullet(_debugService, _timeService, _contentService)
         {
             Position = position,
             Speed = speed,
             Damage = damage,
+            IsPlayer = isPlayer,
         };
 
         bullet.SetDirection(direction);

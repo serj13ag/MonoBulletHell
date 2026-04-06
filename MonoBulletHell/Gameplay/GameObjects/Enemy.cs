@@ -2,13 +2,18 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.GameObjects;
 
-public class Enemy
+public class Enemy : IColliding
 {
+    private const float ShootCooldown = 0.5f;
+    private const float BulletSpeed = 800;
+    private const int BulletDamage = 1;
+
     private const float ColliderRadius = 45f;
     private const float SpriteScale = 8f;
     private static readonly Vector2 SpriteOffset = new Vector2(0f, -25f);
@@ -21,6 +26,8 @@ public class Enemy
 
     private Vector2 _position;
     private Circle _collider;
+
+    private float _timeTillShoot;
 
     public Vector2 Position
     {
@@ -42,6 +49,8 @@ public class Enemy
 
     public void Update()
     {
+        HandleShooting();
+
         _collider = new Circle(_position.X, _position.Y, ColliderRadius);
         _debugService.DrawCircle(_collider.Location, _collider.Radius, Color.GreenYellow, 2f, 10);
     }
@@ -54,6 +63,19 @@ public class Enemy
     public void TakeDamage(int damage)
     {
         // TODO: implement
+    }
+
+    private void HandleShooting()
+    {
+        if (_timeTillShoot <= 0f)
+        {
+            _bulletService.SpawnBullet(_position, Vector2.UnitY, BulletSpeed, BulletDamage, false);
+            _timeTillShoot += ShootCooldown;
+        }
+        else
+        {
+            _timeTillShoot -= _timeService.DeltaTime;
+        }
     }
 
     private static Sprite GetEnemySprite(IContentService contentService)
