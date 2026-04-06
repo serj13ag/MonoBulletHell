@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;
@@ -15,6 +16,7 @@ public class Ship
     private readonly Vector2 _bulletSpawnOffset = new Vector2(0f, -32f);
 
     private readonly IInputService _inputService;
+    private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
     private readonly IBulletService _bulletService;
 
@@ -29,10 +31,11 @@ public class Ship
         set => _position = value;
     }
 
-    public Ship(IInputService inputService, ITimeService timeService, IContentService contentService,
+    public Ship(IInputService inputService, IDebugService debugService, ITimeService timeService, IContentService contentService,
         IBulletService bulletService)
     {
         _inputService = inputService;
+        _debugService = debugService;
         _timeService = timeService;
         _bulletService = bulletService;
 
@@ -55,6 +58,9 @@ public class Ship
         {
             _bulletService.SpawnBullet(_position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed);
         }
+
+        var shipBounds = new Circle(_position.X, _position.Y, 10f);
+        _debugService.DrawCircle(shipBounds.Location, shipBounds.Radius, Color.GreenYellow, 2f, 10);
     }
 
     public void Draw(SpriteBatch spriteBatch)

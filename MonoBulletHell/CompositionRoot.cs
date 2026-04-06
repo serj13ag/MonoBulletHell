@@ -37,6 +37,7 @@ public class CompositionRoot
     {
         _container.Register<IInputService, InputService>(new PerContainerLifetime());
         _container.Register<ISceneService, SceneService>(new PerContainerLifetime());
+        _container.Register<IDebugService, DebugService>(new PerContainerLifetime());
 
         // Scope factory
         _container.Register<Func<Scope>>(c => c.BeginScope);

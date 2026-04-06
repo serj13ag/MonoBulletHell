@@ -12,6 +12,7 @@ public class MonoBulletHellGame : Game
 
     private IInputService _inputService;
     private ISceneService _sceneService;
+    private IDebugService _debugService;
 
     public MonoBulletHellGame()
     {
@@ -36,6 +37,7 @@ public class MonoBulletHellGame : Game
 
         _inputService = _root.GetInstance<IInputService>();
         _sceneService = _root.GetInstance<ISceneService>();
+        _debugService = _root.GetInstance<IDebugService>();
 
         _sceneService.ChangeScene(SceneType.Gameplay);
     }
@@ -43,6 +45,7 @@ public class MonoBulletHellGame : Game
     protected override void Update(GameTime gameTime)
     {
         _inputService.Update();
+        _debugService.Update();
 
         if (_inputService.Keyboard.WasKeyJustPressed(Keys.Escape))
         {
@@ -57,6 +60,7 @@ public class MonoBulletHellGame : Game
     protected override void Draw(GameTime gameTime)
     {
         _sceneService.Draw(gameTime);
+        _debugService.Render();
 
         base.Draw(gameTime);
     }
