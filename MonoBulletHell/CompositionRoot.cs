@@ -55,5 +55,6 @@ public class CompositionRoot
         _container.Register<IGameContext, GameContext>(new PerScopeLifetime());
 
         _container.Register<IGameFactory, GameFactory>(new PerScopeLifetime());
+        _container.Register<IBulletFactory, BulletFactory>(new PerScopeLifetime());
     }
 }

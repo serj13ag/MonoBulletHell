@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.GameObjects;
 using MonoBulletHell.Helpers;
-using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Services;
 
@@ -17,21 +17,16 @@ public interface IBulletService
 
 public class BulletService : IBulletService
 {
-    private readonly IDebugService _debugService;
-    private readonly ITimeService _timeService;
-    private readonly IContentService _contentService;
     private readonly IGameContext _gameContext;
+    private readonly IBulletFactory _bulletFactory;
 
     private readonly List<Bullet> _bullets = new List<Bullet>(512);
     private readonly List<Bullet> _bulletsToDestroy = new List<Bullet>(128);
 
-    public BulletService(IDebugService debugService, ITimeService timeService, IContentService contentService,
-        IGameContext gameContext)
+    public BulletService(IGameContext gameContext, IBulletFactory bulletFactory)
     {
-        _debugService = debugService;
-        _timeService = timeService;
-        _contentService = contentService;
         _gameContext = gameContext;
+        _bulletFactory = bulletFactory;
     }
 
     public void Update()
@@ -69,14 +64,7 @@ public class BulletService : IBulletService
 
     public void SpawnBullet(Vector2 position, Vector2 direction, float speed, int damage)
     {
-        var bullet = new Bullet(_debugService, _timeService, _contentService)
-        {
-            Position = position,
-            Speed = speed,
-            Damage = damage,
-        }; // TODO: to factory
-        bullet.SetDirection(direction);
-
+        var bullet = _bulletFactory.CreateBullet(position, direction, speed, damage);
         _bullets.Add(bullet);
     }
 
