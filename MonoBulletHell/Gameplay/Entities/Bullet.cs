@@ -2,13 +2,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 
-namespace MonoBulletHell.Gameplay.GameObjects;
+namespace MonoBulletHell.Gameplay.Entities;
 
-public class Bullet
+public class Bullet : IEntityWithCollider
 {
     private const float SpriteBaseRotation = 180f;
     private const float ColliderRadius = 6f;

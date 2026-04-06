@@ -7,9 +7,9 @@ using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 
-namespace MonoBulletHell.Gameplay.GameObjects;
+namespace MonoBulletHell.Gameplay.Entities;
 
-public class Ship : IColliding
+public class Ship : IEntityWithCollider
 {
     private const float ColliderRadius = 10f;
 

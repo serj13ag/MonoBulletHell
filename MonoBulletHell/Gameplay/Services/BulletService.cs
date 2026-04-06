@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
-using MonoBulletHell.Gameplay.GameObjects;
 using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Helpers;
 
@@ -74,8 +74,8 @@ public class BulletService : IBulletService
         _bullets.Add(bullet);
     }
 
-    private static bool IsColliding(Bullet bullet, IColliding collidingObject)
+    private static bool IsColliding(IEntityWithCollider bullet, IEntityWithCollider entityWithCollider)
     {
-        return bullet.Collider.Intersects(collidingObject.Collider);
+        return bullet.Collider.Intersects(entityWithCollider.Collider);
     }
 }

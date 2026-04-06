@@ -6,9 +6,9 @@ using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
 
-namespace MonoBulletHell.Gameplay.GameObjects;
+namespace MonoBulletHell.Gameplay.Entities;
 
-public class Enemy : IColliding
+public class Enemy : IEntityWithCollider
 {
     private const float ShootCooldown = 0.5f;
     private const float BulletSpeed = 800;

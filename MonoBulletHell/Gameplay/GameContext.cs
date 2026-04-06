@@ -1,4 +1,4 @@
-using MonoBulletHell.Gameplay.GameObjects;
+using MonoBulletHell.Gameplay.Entities;
 
 namespace MonoBulletHell.Gameplay;
 

@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using MonoBulletHell.Gameplay.GameObjects;
+using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
 
