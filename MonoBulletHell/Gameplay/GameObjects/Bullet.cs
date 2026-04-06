@@ -23,7 +23,7 @@ public class Bullet
     {
         _timeService = timeService;
 
-        _sprite = contentService.GetBulletSprite();
+        _sprite = contentService.CreateSprite("bullet");
         _sprite.CenterOrigin();
         _sprite.Color = Color.Red;
     }

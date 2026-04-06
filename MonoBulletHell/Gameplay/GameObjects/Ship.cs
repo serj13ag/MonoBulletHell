@@ -98,7 +98,7 @@ public class Ship
 
     private static Sprite GetShipSprite(IContentService contentService)
     {
-        var sprite = contentService.GetShipSprite();
+        var sprite = contentService.CreateSprite("ship");
         sprite.CenterOrigin();
         sprite.Scale = new Vector2(4f, 4f);
         return sprite;
@@ -106,7 +106,7 @@ public class Ship
 
     private static Sprite GetCoreSprite(IContentService contentService)
     {
-        var sprite = contentService.GetShipCoreSprite();
+        var sprite = contentService.CreateSprite("shipCore");
         sprite.CenterOrigin();
         sprite.Color = Color.Red;
         sprite.Scale = new Vector2(2f, 2f);

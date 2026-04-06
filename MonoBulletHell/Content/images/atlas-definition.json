@@ -16,6 +16,13 @@
       "height": 16
     },
     {
+      "name": "enemy",
+      "x": 0,
+      "y": 256,
+      "width": 16,
+      "height": 16
+    },
+    {
       "name": "bullet",
       "x": 32,
       "y": 48,

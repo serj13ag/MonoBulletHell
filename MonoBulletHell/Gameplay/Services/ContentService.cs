@@ -7,9 +7,7 @@ public interface IContentService
 {
     void Load(ContentManager content);
 
-    Sprite GetShipSprite();
-    Sprite GetShipCoreSprite();
-    Sprite GetBulletSprite();
+    Sprite CreateSprite(string spriteName);
 }
 
 public class ContentService : IContentService
@@ -21,18 +19,8 @@ public class ContentService : IContentService
         _atlas = TextureAtlas.FromFile(content, "images/atlas-definition.json");
     }
 
-    public Sprite GetShipSprite()
+    public Sprite CreateSprite(string spriteName)
     {
-        return _atlas.CreateSprite("ship");
-    }
-
-    public Sprite GetShipCoreSprite()
-    {
-        return _atlas.CreateSprite("shipCore");
-    }
-
-    public Sprite GetBulletSprite()
-    {
-        return _atlas.CreateSprite("bullet");
+        return _atlas.CreateSprite(spriteName);
     }
 }

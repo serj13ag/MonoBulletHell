@@ -16,6 +16,7 @@ public class GameplayScene : BaseScene
     private readonly IGameFactory _gameFactory;
 
     private Ship _ship;
+    private Enemy _enemy;
 
     public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, ITimeService timeService,
         IContentService contentService, IBulletService bulletService, IGameFactory gameFactory)
@@ -38,7 +39,8 @@ public class GameplayScene : BaseScene
     {
         base.Enter();
 
-        _ship = _gameFactory.CreateShip(new Vector2(32f, 32f));
+        _ship = _gameFactory.CreateShip(new Vector2(Constants.VirtualWidth / 2f, 900f));
+        _enemy = _gameFactory.CreateEnemy(new Vector2(Constants.VirtualWidth / 2f, 100f));
     }
 
     public override void Update(GameTime gameTime)
@@ -49,6 +51,7 @@ public class GameplayScene : BaseScene
         _bulletService.Update();
 
         _ship.Update();
+        _enemy.Update();
     }
 
     public override void Draw(GameTime gameTime)
@@ -60,6 +63,7 @@ public class GameplayScene : BaseScene
         SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
         _ship.Draw(SpriteBatch);
+        _enemy.Draw(SpriteBatch);
 
         _bulletService.Draw(SpriteBatch);
 
