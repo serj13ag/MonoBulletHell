@@ -11,6 +11,8 @@ public interface IInputService
 
     void SetExitOnEscapeKeyPressed(bool value);
 
+    bool PausePressed();
+
     bool MoveUp();
     bool MoveDown();
     bool MoveLeft();
@@ -49,6 +51,11 @@ public class InputService : IInputService
     public void SetExitOnEscapeKeyPressed(bool value)
     {
         _exitOnEscape = value;
+    }
+
+    public bool PausePressed()
+    {
+        return _keyboard.WasKeyJustPressed(Keys.Escape);
     }
 
     public bool MoveUp()
