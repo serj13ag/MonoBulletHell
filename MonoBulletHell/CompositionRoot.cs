@@ -1,5 +1,6 @@
 using System;
 using LightInject;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Gameplay;
@@ -7,6 +8,7 @@ using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Scenes;
 using MonoBulletHell.Services;
+using MonoGameGum;
 
 namespace MonoBulletHell;
 
@@ -14,10 +16,11 @@ public class CompositionRoot
 {
     private readonly ServiceContainer _container;
 
-    public CompositionRoot()
+    public CompositionRoot(Game game)
     {
         _container = new ServiceContainer();
 
+        _container.RegisterInstance(game); // TODO: create service?
         RegisterGlobal();
         RegisterGameplay();
     }
@@ -36,6 +39,8 @@ public class CompositionRoot
 
     private void RegisterGlobal()
     {
+        _container.RegisterInstance(GumService.Default);
+
         _container.Register<IInputService, InputService>(new PerContainerLifetime());
         _container.Register<ISceneService, SceneService>(new PerContainerLifetime());
         _container.Register<IDebugService, DebugService>(new PerContainerLifetime());
@@ -47,6 +52,7 @@ public class CompositionRoot
     private void RegisterGameplay()
     {
         _container.Register<GameplayScene>(new PerScopeLifetime());
+        _container.Register<TitleScene>(new PerScopeLifetime());
 
         _container.Register<IContentService, ContentService>(new PerScopeLifetime());
         _container.Register<ITimeService, TimeService>(new PerScopeLifetime());

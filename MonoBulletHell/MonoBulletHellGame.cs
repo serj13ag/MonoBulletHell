@@ -1,8 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Gum.Forms.Controls;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoBulletHell.Scenes;
 using MonoBulletHell.Services;
+using MonoGameGum;
 
 namespace MonoBulletHell;
 
@@ -16,7 +19,7 @@ public class MonoBulletHellGame : Game
 
     public MonoBulletHellGame()
     {
-        _root = new CompositionRoot();
+        _root = new CompositionRoot(this);
 
         var graphics = new GraphicsDeviceManager(this);
         graphics.PreferredBackBufferWidth = Constants.VirtualWidth;
@@ -39,7 +42,9 @@ public class MonoBulletHellGame : Game
         _sceneService = _root.GetInstance<ISceneService>();
         _debugService = _root.GetInstance<IDebugService>();
 
-        _sceneService.ChangeScene(SceneType.Gameplay);
+        InitializeGum(Content);
+
+        _sceneService.ChangeScene(SceneType.Title);
     }
 
     protected override void Update(GameTime gameTime)
@@ -63,5 +68,21 @@ public class MonoBulletHellGame : Game
         _debugService.Render();
 
         base.Draw(gameTime);
+    }
+
+    private void InitializeGum(ContentManager content)
+    {
+        var gumService = _root.GetInstance<GumService>();
+
+        gumService.Initialize(this);
+        gumService.ContentLoader.XnaContentManager = content;
+
+        FrameworkElement.KeyboardsForUiControl.Add(gumService.Keyboard);
+        FrameworkElement.GamePadsForUiControl.AddRange(gumService.Gamepads);
+        FrameworkElement.TabReverseKeyCombos.Add(new KeyCombo() { PushedKey = Keys.Up });
+        FrameworkElement.TabKeyCombos.Add(new KeyCombo() { PushedKey = Keys.Down });
+
+        gumService.CanvasWidth = GraphicsDevice.PresentationParameters.BackBufferWidth;
+        gumService.CanvasHeight = GraphicsDevice.PresentationParameters.BackBufferHeight;
     }
 }

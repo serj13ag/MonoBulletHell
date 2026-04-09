@@ -75,6 +75,7 @@ public class SceneService : ISceneService
     {
         return sceneType switch
         {
+            SceneType.Title => sceneScope.GetInstance<TitleScene>(),
             SceneType.Gameplay => sceneScope.GetInstance<GameplayScene>(),
             _ => throw new ArgumentOutOfRangeException(nameof(sceneType), sceneType, null),
         };
