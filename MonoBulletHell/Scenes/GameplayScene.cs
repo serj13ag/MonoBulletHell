@@ -5,11 +5,13 @@ using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.Services;
+using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Scenes;
 
 public class GameplayScene : BaseScene
 {
+    private readonly IInputService _inputService;
     private readonly IContentService _contentService;
     private readonly ITimeService _timeService;
     private readonly IBulletService _bulletService;
@@ -18,14 +20,23 @@ public class GameplayScene : BaseScene
     private Ship _ship;
     private Enemy _enemy;
 
-    public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, ITimeService timeService,
-        IContentService contentService, IBulletService bulletService, IGameFactory gameFactory)
+    public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch,
+        IInputService inputService, ITimeService timeService, IContentService contentService, IBulletService bulletService,
+        IGameFactory gameFactory)
         : base(content, graphicsDevice, spriteBatch)
     {
+        _inputService = inputService;
         _contentService = contentService;
         _timeService = timeService;
         _bulletService = bulletService;
         _gameFactory = gameFactory;
+    }
+
+    public override void Initialize()
+    {
+        base.Initialize();
+
+        _inputService.SetExitOnEscapeKeyPressed(false);
     }
 
     public override void LoadContent()

@@ -8,6 +8,9 @@ public interface IInputService
     KeyboardInputInfo Keyboard { get; }
 
     void Update();
+
+    void SetExitOnEscapeKeyPressed(bool value);
+
     bool MoveUp();
     bool MoveDown();
     bool MoveLeft();
@@ -18,18 +21,34 @@ public interface IInputService
 
 public class InputService : IInputService
 {
+    private readonly IGameService _gameService;
+
     private readonly KeyboardInputInfo _keyboard;
+
+    private bool _exitOnEscape;
 
     public KeyboardInputInfo Keyboard => _keyboard;
 
-    public InputService()
+    public InputService(IGameService gameService)
     {
+        _gameService = gameService;
+
         _keyboard = new KeyboardInputInfo();
     }
 
     public void Update()
     {
         _keyboard.Update();
+
+        if (_exitOnEscape && _keyboard.WasKeyJustPressed(Keys.Escape))
+        {
+            _gameService.Exit();
+        }
+    }
+
+    public void SetExitOnEscapeKeyPressed(bool value)
+    {
+        _exitOnEscape = value;
     }
 
     public bool MoveUp()

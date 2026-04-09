@@ -16,16 +16,18 @@ public class TitleScene : BaseScene
     private const string StartButtonText = "START GAME";
     private const string QuitButtonText = "QUIT";
 
-    private readonly Game _game;
+    private readonly IGameService _gameService;
     private readonly GumService _gumService;
+    private readonly IInputService _inputService;
     private readonly ISceneService _sceneService;
 
-    public TitleScene(Game game, ContentManager contentManager, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch,
-        GumService gumService, ISceneService sceneService)
+    public TitleScene(IGameService gameService, ContentManager contentManager, GraphicsDevice graphicsDevice,
+        SpriteBatch spriteBatch, GumService gumService, IInputService inputService, ISceneService sceneService)
         : base(contentManager, graphicsDevice, spriteBatch)
     {
-        _game = game;
+        _gameService = gameService;
         _gumService = gumService;
+        _inputService = inputService;
         _sceneService = sceneService;
     }
 
@@ -33,7 +35,7 @@ public class TitleScene : BaseScene
     {
         base.Initialize();
 
-        // Core.ExitOnEscape = true; TODO: impl
+        _inputService.SetExitOnEscapeKeyPressed(true);
 
         InitializeUi();
     }
@@ -99,6 +101,6 @@ public class TitleScene : BaseScene
 
     private void OnQuitButtonClicked(object o, EventArgs eventArgs)
     {
-        _game.Exit();
+        _gameService.Exit();
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoBulletHell.Scenes;
 using MonoBulletHell.Services;
@@ -35,8 +34,7 @@ public class MonoBulletHellGame : Game
     {
         base.Initialize();
 
-        var spriteBatch = new SpriteBatch(GraphicsDevice);
-        _root.Initialize(Content, GraphicsDevice, spriteBatch);
+        _root.Initialize(Content, GraphicsDevice);
 
         _inputService = _root.GetInstance<IInputService>();
         _sceneService = _root.GetInstance<ISceneService>();
@@ -51,11 +49,6 @@ public class MonoBulletHellGame : Game
     {
         _inputService.Update();
         _debugService.Update();
-
-        if (_inputService.Keyboard.WasKeyJustPressed(Keys.Escape))
-        {
-            Exit();
-        }
 
         _sceneService.Update(gameTime);
 

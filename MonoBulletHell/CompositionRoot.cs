@@ -20,16 +20,15 @@ public class CompositionRoot
     {
         _container = new ServiceContainer();
 
-        _container.RegisterInstance(game); // TODO: create service?
-        RegisterGlobal();
+        RegisterGlobal(game);
         RegisterGameplay();
     }
 
-    public void Initialize(ContentManager contentManager, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch)
+    public void Initialize(ContentManager contentManager, GraphicsDevice graphicsDevice)
     {
         _container.RegisterInstance(contentManager);
         _container.RegisterInstance(graphicsDevice);
-        _container.RegisterInstance(spriteBatch);
+        _container.RegisterInstance(new SpriteBatch(graphicsDevice));
     }
 
     public T GetInstance<T>()
@@ -37,8 +36,10 @@ public class CompositionRoot
         return _container.GetInstance<T>();
     }
 
-    private void RegisterGlobal()
+    private void RegisterGlobal(Game game)
     {
+        _container.RegisterInstance<IGameService>(new GameService(game));
+
         _container.RegisterInstance(GumService.Default);
 
         _container.Register<IInputService, InputService>(new PerContainerLifetime());
