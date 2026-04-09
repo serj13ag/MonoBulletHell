@@ -83,14 +83,14 @@ public class TitleScene : BaseScene
         var startButton = new Button();
         buttonPanel.AddChild(startButton);
         startButton.Text = StartButtonText;
-        startButton.Width = 200;
+        startButton.Width = 200f;
         startButton.IsFocused = true;
         startButton.Click += OnStartButtonClicked;
 
         var quitButton = new Button();
         buttonPanel.AddChild(quitButton);
         quitButton.Text = QuitButtonText;
-        quitButton.Width = 200;
+        quitButton.Width = 200f;
         quitButton.Click += OnQuitButtonClicked;
     }
 
