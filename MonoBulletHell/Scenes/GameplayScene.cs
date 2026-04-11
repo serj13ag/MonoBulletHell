@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -118,7 +119,7 @@ public class GameplayScene : BaseScene
         _ui.Draw();
     }
 
-    private void OnShipDestroyed()
+    private void OnShipDestroyed(object sender, EventArgs e)
     {
         _sceneService.ChangeScene(SceneType.Title); // TODO: show end screen
     }

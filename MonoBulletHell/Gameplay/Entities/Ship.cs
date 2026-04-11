@@ -37,7 +37,7 @@ public class Ship : EntityWithSprites, IEntityWithCollider
     public Circle Collider => _collider;
     public bool IsImmune => _isImmune;
 
-    public event Action OnDestroyed;
+    public event EventHandler<EventArgs> OnDestroyed;
 
     public Ship(IInputService inputService, IDebugService debugService, ITimeService timeService, IBulletService bulletService)
     {
@@ -69,7 +69,7 @@ public class Ship : EntityWithSprites, IEntityWithCollider
 
         if (_currentHealth == 0)
         {
-            OnDestroyed?.Invoke();
+            OnDestroyed?.Invoke(this, EventArgs.Empty);
             return;
         }
 
