@@ -45,7 +45,7 @@ public class BulletService : IBulletService
                 _gameContext.Enemy.TakeDamage(bullet.Damage);
                 _bulletsToDestroy.Add(bullet);
             }
-            else if (!bullet.IsPlayer && IsColliding(bullet, _gameContext.Ship))
+            else if (!bullet.IsPlayer && !_gameContext.Ship.IsImmune && IsColliding(bullet, _gameContext.Ship))
             {
                 _gameContext.Ship.TakeDamage(bullet.Damage);
                 _bulletsToDestroy.Add(bullet);

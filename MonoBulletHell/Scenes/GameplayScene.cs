@@ -72,6 +72,8 @@ public class GameplayScene : BaseScene
 
         _ship = _gameFactory.CreateShip(new Vector2(Constants.VirtualWidth / 2f, 900f));
         _enemy = _gameFactory.CreateEnemy(new Vector2(Constants.VirtualWidth / 2f, 100f));
+
+        _ship.OnDestroyed += OnShipDestroyed;
     }
 
     public override void Update(GameTime gameTime)
@@ -113,6 +115,11 @@ public class GameplayScene : BaseScene
         SpriteBatch.End();
 
         _ui.Draw();
+    }
+
+    private void OnShipDestroyed()
+    {
+        _sceneService.ChangeScene(SceneType.Title); // TODO: show end screen
     }
 
     private void OnResumeButtonClicked()
