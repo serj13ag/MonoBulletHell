@@ -26,17 +26,17 @@ public class GameplayScene : BaseScene
     private readonly ITimeService _timeService;
     private readonly IBulletService _bulletService;
     private readonly IGameFactory _gameFactory;
+    private readonly IEnemyService _enemyService;
 
     private GameState _gameState;
 
     private GameplayUi _ui;
 
     private Ship _ship;
-    private Enemy _enemy;
 
     public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, GumService gumService,
         IInputService inputService, ISceneService sceneService, ITimeService timeService, IContentService contentService,
-        IBulletService bulletService, IGameFactory gameFactory)
+        IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService)
         : base(content, graphicsDevice, spriteBatch)
     {
         _gumService = gumService;
@@ -46,6 +46,7 @@ public class GameplayScene : BaseScene
         _timeService = timeService;
         _bulletService = bulletService;
         _gameFactory = gameFactory;
+        _enemyService = enemyService;
     }
 
     public override void Initialize()
@@ -71,9 +72,9 @@ public class GameplayScene : BaseScene
         _gameState = GameState.Playing;
 
         _ship = _gameFactory.CreateShip(new Vector2(Constants.VirtualWidth / 2f, 900f));
-        _enemy = _gameFactory.CreateEnemy(new Vector2(Constants.VirtualWidth / 2f, 100f));
-
         _ship.OnDestroyed += OnShipDestroyed;
+
+        _enemyService.SpawnEnemy(new Vector2(Constants.VirtualWidth / 2f, 100f));
     }
 
     public override void Update(GameTime gameTime)
@@ -94,9 +95,9 @@ public class GameplayScene : BaseScene
 
         _timeService.Update(gameTime);
         _bulletService.Update();
+        _enemyService.Update();
 
         _ship.Update();
-        _enemy.Update();
     }
 
     public override void Draw(GameTime gameTime)
@@ -108,9 +109,9 @@ public class GameplayScene : BaseScene
         SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
         _ship.Draw(SpriteBatch);
-        _enemy.Draw(SpriteBatch);
 
         _bulletService.Draw(SpriteBatch);
+        _enemyService.Draw(SpriteBatch);
 
         SpriteBatch.End();
 

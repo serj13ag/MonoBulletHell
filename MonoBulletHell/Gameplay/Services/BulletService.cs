@@ -40,10 +40,17 @@ public class BulletService : IBulletService
             {
                 _bulletsToDestroy.Add(bullet);
             }
-            else if (bullet.IsPlayer && IsColliding(bullet, _gameContext.Enemy)) // TODO: refactor
+            else if (bullet.IsPlayer) // TODO: refactor
             {
-                _gameContext.Enemy.TakeDamage(bullet.Damage);
-                _bulletsToDestroy.Add(bullet);
+                foreach (var enemy in _gameContext.Enemies)
+                {
+                    if (IsColliding(bullet, enemy))
+                    {
+                        enemy.TakeDamage(bullet.Damage);
+                        _bulletsToDestroy.Add(bullet);
+                        break;
+                    }
+                }
             }
             else if (!bullet.IsPlayer && !_gameContext.Ship.IsImmune && IsColliding(bullet, _gameContext.Ship))
             {

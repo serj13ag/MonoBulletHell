@@ -61,7 +61,6 @@ public class GameFactory : IGameFactory
         sprite.Scale = new Vector2(8f, 8f);
         enemy.AddSprite(sprite, new Vector2(0f, -25f));
 
-        _gameContext.RegisterEnemy(enemy);
         return enemy;
     }
 
