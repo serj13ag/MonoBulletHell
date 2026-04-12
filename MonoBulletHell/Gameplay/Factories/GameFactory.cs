@@ -52,6 +52,7 @@ public class GameFactory : IGameFactory
         var sprite = _contentService.CreateSprite("enemy");
         sprite.CenterOrigin();
         sprite.Scale = new Vector2(4f, 4f);
+        sprite.Color = Constants.Colors.EnemyColor;
         enemy.AddSprite(sprite, new Vector2(0f, -25f));
 
         return enemy;

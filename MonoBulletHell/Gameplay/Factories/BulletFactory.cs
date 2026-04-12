@@ -45,7 +45,7 @@ public class BulletFactory : IBulletFactory
         var sprite = _contentService.CreateSprite("bullet");
         sprite.CenterOrigin();
         sprite.Rotation = MathHelper.ToRadians(180f);
-        sprite.Color = Color.Red;
+        sprite.Color = Constants.Colors.BeigeColor;
         return sprite;
     }
 }

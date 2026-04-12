@@ -107,7 +107,7 @@ public class GameplayScene : BaseScene
     {
         base.Draw(gameTime);
 
-        GraphicsDevice.Clear(Color.CornflowerBlue);
+        GraphicsDevice.Clear(Constants.Colors.BackgroundColor);
 
         _ship.Draw(SpriteBatch);
 

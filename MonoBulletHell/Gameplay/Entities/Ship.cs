@@ -205,7 +205,7 @@ public class Ship : BaseEntity, IEntityWithCollider
         var sprite = contentService.CreateSprite("ship");
         sprite.CenterOrigin();
         sprite.Scale = new Vector2(ShipSpriteScale, ShipSpriteScale);
-        sprite.Color = Color.DarkGoldenrod;
+        sprite.Color = Constants.Colors.ShipColor;
         return sprite;
     }
 
@@ -213,7 +213,7 @@ public class Ship : BaseEntity, IEntityWithCollider
     {
         var sprite = contentService.CreateSprite("shipCore");
         sprite.CenterOrigin();
-        sprite.Color = Color.Red;
+        sprite.Color = Constants.Colors.ShipCoreColor;
         sprite.Scale = new Vector2(CoreSpriteScale, CoreSpriteScale);
         return sprite;
     }
