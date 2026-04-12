@@ -1,4 +1,5 @@
-﻿using Gum.Forms.Controls;
+﻿using Gum.Forms;
+using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,8 +12,6 @@ namespace MonoBulletHell;
 
 public class MonoBulletHellGame : Game
 {
-    private const int ScreenScale = 1;
-
     private readonly CompositionRoot _root;
 
     private SpriteBatch _spriteBatch;
@@ -29,8 +28,8 @@ public class MonoBulletHellGame : Game
         _root = new CompositionRoot(this);
 
         var graphics = new GraphicsDeviceManager(this);
-        graphics.PreferredBackBufferWidth = Constants.VirtualWidth * ScreenScale;
-        graphics.PreferredBackBufferHeight = Constants.VirtualHeight * ScreenScale;
+        graphics.PreferredBackBufferWidth = Constants.ActualWidth;
+        graphics.PreferredBackBufferHeight = Constants.ActualHeight;
         graphics.IsFullScreen = false;
 
         Content.RootDirectory = "Content";
@@ -53,7 +52,7 @@ public class MonoBulletHellGame : Game
         InitializeGum(Content);
 
         _nativeRenderTarget = new RenderTarget2D(GraphicsDevice, Constants.VirtualWidth, Constants.VirtualHeight);
-        _actualScreenRectangle = new Rectangle(0, 0, Constants.VirtualWidth * ScreenScale, Constants.VirtualHeight * ScreenScale);
+        _actualScreenRectangle = new Rectangle(0, 0, Constants.ActualWidth, Constants.ActualHeight);
 
         _sceneService.ChangeScene(SceneType.Title);
     }
@@ -88,7 +87,7 @@ public class MonoBulletHellGame : Game
 
     private void InitializeGum(ContentManager content)
     {
-        _gumService.Initialize(this);
+        _gumService.Initialize(this, DefaultVisualsVersion.V3);
         _gumService.ContentLoader.XnaContentManager = content;
 
         FrameworkElement.KeyboardsForUiControl.Add(_gumService.Keyboard);
@@ -108,8 +107,6 @@ public class MonoBulletHellGame : Game
         var yScale = Constants.VirtualHeight / (float)_actualScreenRectangle.Height;
         var scale = Matrix.CreateScale(xScale, yScale, 1f);
 
-        var transform = translation * scale;
-
-        _gumService.Cursor.TransformMatrix = transform;
+        _gumService.Cursor.TransformMatrix = translation * scale;
     }
 }
