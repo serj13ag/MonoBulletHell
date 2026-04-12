@@ -28,3 +28,9 @@
 /processorParam:TextureFormat=Color
 /build:images/kenney_tilemap.png
 
+#begin shaders/flashEffect.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:shaders/flashEffect.fx
+
