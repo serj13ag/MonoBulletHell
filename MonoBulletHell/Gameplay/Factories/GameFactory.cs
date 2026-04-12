@@ -14,8 +14,8 @@ public interface IGameFactory
 
 public class GameFactory : IGameFactory
 {
-    private const float ShipSpriteScale = 4f;
-    private const float CoreSpriteScale = 2f;
+    private const float ShipSpriteScale = 2f;
+    private const float CoreSpriteScale = 1f;
 
     private readonly IInputService _inputService;
     private readonly IDebugService _debugService;
@@ -58,7 +58,7 @@ public class GameFactory : IGameFactory
 
         var sprite = _contentService.CreateSprite("enemy");
         sprite.CenterOrigin();
-        sprite.Scale = new Vector2(8f, 8f);
+        sprite.Scale = new Vector2(4f, 4f);
         enemy.AddSprite(sprite, new Vector2(0f, -25f));
 
         return enemy;

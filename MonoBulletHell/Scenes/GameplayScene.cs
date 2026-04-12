@@ -7,6 +7,7 @@ using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Gameplay.Ui;
+using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 using MonoGameGum;
 
@@ -72,10 +73,11 @@ public class GameplayScene : BaseScene
 
         _gameState = GameState.Playing;
 
-        _ship = _gameFactory.CreateShip(new Vector2(Constants.VirtualWidth / 2f, 900f));
+        _ship = _gameFactory.CreateShip(ScreenHelper.GetLerpScreenVirtualPosition(0.5f, 0.8f));
         _ship.OnDestroyed += OnShipDestroyed;
 
-        _enemyService.SpawnEnemy(new Vector2(Constants.VirtualWidth / 2f, 100f));
+        _enemyService.SpawnEnemy(ScreenHelper.GetLerpScreenVirtualPosition(0.2f, 0.2f));
+        _enemyService.SpawnEnemy(ScreenHelper.GetLerpScreenVirtualPosition(0.8f, 0.2f));
     }
 
     public override void Update(GameTime gameTime)
