@@ -28,9 +28,13 @@ public abstract class EntityWithSprites : BaseEntity
 
     public void Draw(SpriteBatch spriteBatch)
     {
+        spriteBatch.Begin(samplerState: Constants.SamplerState); // TODO: refactor to one batch
+
         foreach (var sprite in _sprites)
         {
             sprite.Sprite.Draw(spriteBatch, Position + sprite.Offset, Rotation);
         }
+
+        spriteBatch.End();
     }
 }

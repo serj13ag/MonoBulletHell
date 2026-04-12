@@ -109,14 +109,10 @@ public class GameplayScene : BaseScene
 
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        SpriteBatch.Begin(samplerState: SamplerState.PointClamp);
-
         _ship.Draw(SpriteBatch);
 
         _bulletService.Draw(SpriteBatch);
         _enemyService.Draw(SpriteBatch);
-
-        SpriteBatch.End();
 
         _ui.Draw();
     }
