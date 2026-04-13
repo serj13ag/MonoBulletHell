@@ -44,16 +44,10 @@ public class GameFactory : IGameFactory
 
     public Enemy CreateEnemy(Vector2 position)
     {
-        var enemy = new Enemy(_debugService, _timeService, _bulletService)
+        var enemy = new Enemy(_debugService, _timeService, _bulletService, _contentService)
         {
             Position = position,
         };
-
-        var sprite = _contentService.CreateSprite("enemy");
-        sprite.CenterOrigin();
-        sprite.Scale = new Vector2(4f, 4f);
-        sprite.Color = Constants.Colors.EnemyColor;
-        enemy.AddSprite(sprite, new Vector2(0f, -25f));
 
         return enemy;
     }

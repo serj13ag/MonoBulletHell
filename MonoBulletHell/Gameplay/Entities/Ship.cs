@@ -82,11 +82,11 @@ public class Ship : BaseEntity, IEntityWithCollider
         {
             _flashEffect.Parameters["flashAmount"].SetValue(_flashEffectAmount); // TODO: refactor? 
 
-            spriteBatch.Begin(effect: _flashEffect);
+            spriteBatch.Begin(samplerState: Constants.SamplerState, effect: _flashEffect);
         }
         else
         {
-            spriteBatch.Begin();
+            spriteBatch.Begin(samplerState: Constants.SamplerState);
         }
 
         _shipSprite.Draw(spriteBatch, Position, Rotation);
