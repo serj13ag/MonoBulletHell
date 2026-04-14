@@ -19,6 +19,7 @@ public class GameplayScene : BaseScene
     {
         Playing,
         Paused,
+        GameOver,
     }
 
     private readonly GumService _gumService;
@@ -91,7 +92,7 @@ public class GameplayScene : BaseScene
             TogglePause();
         }
 
-        if (_gameState == GameState.Paused)
+        if (_gameState == GameState.Paused || _gameState == GameState.GameOver)
         {
             return;
         }
@@ -119,7 +120,8 @@ public class GameplayScene : BaseScene
 
     private void OnShipDestroyed(object sender, EventArgs e)
     {
-        _sceneService.ChangeScene(SceneType.Title); // TODO: show end screen
+        _gameState = GameState.GameOver;
+        _ui.ShowGameOverPanel();
     }
 
     private void OnResumeButtonClicked()
@@ -127,7 +129,7 @@ public class GameplayScene : BaseScene
         _gameState = GameState.Playing;
     }
 
-    private void OnRetryButtonClicked()
+    private void OnRestartButtonClicked()
     {
         // TODO: impl
     }
@@ -158,7 +160,7 @@ public class GameplayScene : BaseScene
         _ui = new GameplayUi(_gumService);
 
         _ui.ResumeButtonClicked += OnResumeButtonClicked;
-        _ui.RetryButtonClicked += OnRetryButtonClicked;
+        _ui.RestartButtonClicked += OnRestartButtonClicked;
         _ui.QuitButtonClicked += OnQuitButtonClicked;
     }
 }
