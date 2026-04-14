@@ -30,6 +30,7 @@ public class GameplayScene : BaseScene
     private readonly IBulletService _bulletService;
     private readonly IGameFactory _gameFactory;
     private readonly IEnemyService _enemyService;
+    private readonly IEnemySpawnService _enemySpawnService;
 
     private GameState _gameState;
 
@@ -39,7 +40,7 @@ public class GameplayScene : BaseScene
 
     public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, GumService gumService,
         IInputService inputService, ISceneService sceneService, ITimeService timeService, IContentService contentService,
-        IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService)
+        IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService, IEnemySpawnService enemySpawnService)
         : base(content, graphicsDevice, spriteBatch)
     {
         _gumService = gumService;
@@ -50,6 +51,7 @@ public class GameplayScene : BaseScene
         _bulletService = bulletService;
         _gameFactory = gameFactory;
         _enemyService = enemyService;
+        _enemySpawnService = enemySpawnService;
     }
 
     public override void Initialize()
@@ -101,6 +103,7 @@ public class GameplayScene : BaseScene
 
         _timeService.Update(gameTime);
         _bulletService.Update();
+        _enemySpawnService.Update();
         _enemyService.Update();
 
         _ship.Update();
@@ -125,10 +128,9 @@ public class GameplayScene : BaseScene
         _bulletService.Clear();
         _enemyService.Clear();
 
-        _ship.InitializeAt(ScreenHelper.GetLerpScreenVirtualPosition(0.5f, 0.8f));
+        _enemySpawnService.Initialize(_contentService.GetSpawnData());
 
-        _enemyService.SpawnEnemy(ScreenHelper.GetLerpScreenVirtualPosition(0.2f, 0.2f));
-        _enemyService.SpawnEnemy(ScreenHelper.GetLerpScreenVirtualPosition(0.8f, 0.2f));
+        _ship.InitializeAt(ScreenHelper.GetLerpScreenVirtualPosition(0.5f, 0.8f));
 
         _gameState = GameState.Playing;
     }

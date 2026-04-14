@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin configs/spawnData.json
+/copy:configs/spawnData.json
+
 #begin images/atlas-definition.json
 /copy:images/atlas-definition.json
 

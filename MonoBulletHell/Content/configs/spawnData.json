@@ -1,0 +1,30 @@
+{
+  "Waves": [
+    {
+      "SpawnTime": 0.5,
+      "Enemies": [
+        {
+          "NormalizedSpawnPositionX": 0.2,
+          "NormalizedSpawnPositionY": 0.1
+        },
+        {
+          "NormalizedSpawnPositionX": 0.8,
+          "NormalizedSpawnPositionY": 0.1
+        }
+      ]
+    },
+    {
+      "SpawnTime": 3.0,
+      "Enemies": [
+        {
+          "NormalizedSpawnPositionX": 0.5,
+          "NormalizedSpawnPositionY": 0.2
+        },
+        {
+          "NormalizedSpawnPositionX": 0.5,
+          "NormalizedSpawnPositionY": 0.4
+        }
+      ]
+    }
+  ]
+}

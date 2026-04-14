@@ -11,6 +11,13 @@ public static class ScreenHelper
         return new Vector2(virtualWidth, virtualHeight);
     }
 
+    public static Vector2 ToVirtualPosition(float normalizedX, float normalizedY)
+    {
+        var pixelX = normalizedX * Constants.VirtualWidth;
+        var pixelY = normalizedY * Constants.VirtualHeight;
+        return new Vector2(pixelX, pixelY);
+    }
+
     public static bool IsOutOfVirtualBounds(Vector2 position)
     {
         return position.X < 0 || position.Y < 0 || position.X > Constants.VirtualWidth || position.Y > Constants.VirtualHeight;

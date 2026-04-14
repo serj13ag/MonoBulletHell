@@ -58,6 +58,7 @@ public class CompositionRoot
         _container.Register<IContentService, ContentService>(new PerScopeLifetime());
         _container.Register<ITimeService, TimeService>(new PerScopeLifetime());
         _container.Register<IEnemyService, EnemyService>(new PerScopeLifetime());
+        _container.Register<IEnemySpawnService, EnemySpawnService>(new PerScopeLifetime());
         _container.Register<IBulletService, BulletService>(new PerScopeLifetime());
 
         _container.Register<IGameContext, GameContext>(new PerScopeLifetime());
