@@ -72,13 +72,10 @@ public class GameplayScene : BaseScene
     {
         base.Enter();
 
-        _gameState = GameState.Playing;
-
-        _ship = _gameFactory.CreateShip(ScreenHelper.GetLerpScreenVirtualPosition(0.5f, 0.8f));
+        _ship = _gameFactory.CreateShip();
         _ship.OnDestroyed += OnShipDestroyed;
 
-        _enemyService.SpawnEnemy(ScreenHelper.GetLerpScreenVirtualPosition(0.2f, 0.2f));
-        _enemyService.SpawnEnemy(ScreenHelper.GetLerpScreenVirtualPosition(0.8f, 0.2f));
+        InitializeNewGame();
     }
 
     public override void Update(GameTime gameTime)
@@ -87,12 +84,17 @@ public class GameplayScene : BaseScene
 
         _ui.Update(gameTime);
 
+        if (_gameState == GameState.GameOver)
+        {
+            return;
+        }
+
         if (_inputService.PausePressed())
         {
             TogglePause();
         }
 
-        if (_gameState == GameState.Paused || _gameState == GameState.GameOver)
+        if (_gameState == GameState.Paused)
         {
             return;
         }
@@ -118,6 +120,19 @@ public class GameplayScene : BaseScene
         _ui.Draw();
     }
 
+    private void InitializeNewGame()
+    {
+        _bulletService.Clear();
+        _enemyService.Clear();
+
+        _ship.InitializeAt(ScreenHelper.GetLerpScreenVirtualPosition(0.5f, 0.8f));
+
+        _enemyService.SpawnEnemy(ScreenHelper.GetLerpScreenVirtualPosition(0.2f, 0.2f));
+        _enemyService.SpawnEnemy(ScreenHelper.GetLerpScreenVirtualPosition(0.8f, 0.2f));
+
+        _gameState = GameState.Playing;
+    }
+
     private void OnShipDestroyed(object sender, EventArgs e)
     {
         _gameState = GameState.GameOver;
@@ -131,7 +146,7 @@ public class GameplayScene : BaseScene
 
     private void OnRestartButtonClicked()
     {
-        // TODO: impl
+        InitializeNewGame();
     }
 
     private void OnQuitButtonClicked()

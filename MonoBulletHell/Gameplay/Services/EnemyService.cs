@@ -13,6 +13,7 @@ public interface IEnemyService
     void Draw(SpriteBatch spriteBatch);
 
     void SpawnEnemy(Vector2 vector2);
+    void Clear();
 }
 
 public class EnemyService : IEnemyService
@@ -56,6 +57,12 @@ public class EnemyService : IEnemyService
         var enemy = _gameFactory.CreateEnemy(vector2);
         _context.Enemies.Add(enemy);
         enemy.OnDestroyed += OnEnemyDestroyed;
+    }
+
+    public void Clear()
+    {
+        _enemiesToDestroy.Clear();
+        _context.Enemies.Clear();
     }
 
     private void OnEnemyDestroyed(object sender, EventArgs e)

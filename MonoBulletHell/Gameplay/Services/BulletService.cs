@@ -14,6 +14,7 @@ public interface IBulletService
     void Draw(SpriteBatch spriteBatch);
 
     void SpawnBullet(Vector2 position, Vector2 direction, float speed, int damage, bool isPlayer);
+    void Clear();
 }
 
 public class BulletService : IBulletService
@@ -79,6 +80,11 @@ public class BulletService : IBulletService
     {
         var bullet = _bulletFactory.CreateBullet(position, direction, speed, damage, isPlayer);
         _bullets.Add(bullet);
+    }
+
+    public void Clear()
+    {
+        _bullets.Clear();
     }
 
     private static bool IsColliding(IEntityWithCollider bullet, IEntityWithCollider entityWithCollider)

@@ -65,6 +65,17 @@ public class Ship : BaseEntity, IEntityWithCollider
         _coreSprite = GetCoreSprite(contentService);
     }
 
+    public void InitializeAt(Vector2 position)
+    {
+        Position = position;
+
+        _currentHealth = Health;
+        _isImmune = false;
+        _timeTillDisableImmunity = 0f;
+        _timeTillCanShoot = 0f;
+        _flashEffectAmount = 0f;
+    }
+
     public void Update()
     {
         var deltaTime = _timeService.DeltaTime;

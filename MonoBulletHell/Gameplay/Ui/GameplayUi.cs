@@ -63,12 +63,19 @@ public class GameplayUi : ContainerRuntime
     public void HidePausePanel()
     {
         _pausePanel.IsVisible = false;
+        _resumeButton.IsFocused = false; // TODO: reset focus from all?
     }
 
     public void ShowGameOverPanel()
     {
         _gameOverPanel.IsVisible = true;
         _restartButton.IsFocused = true;
+    }
+
+    private void HideGameOverPanel()
+    {
+        _gameOverPanel.IsVisible = false;
+        _restartButton.IsFocused = false;
     }
 
     private void OnResumeButtonClicked(object sender, EventArgs e)
@@ -79,7 +86,8 @@ public class GameplayUi : ContainerRuntime
 
     private void OnRestartButtonClicked(object sender, EventArgs e)
     {
-        _gameOverPanel.IsVisible = false;
+        HidePausePanel();
+        HideGameOverPanel();
         RestartButtonClicked?.Invoke();
     }
 
@@ -116,8 +124,12 @@ public class GameplayUi : ContainerRuntime
         resumeButton = new Button();
         buttonsPanel.AddChild(resumeButton);
         resumeButton.Text = ResumeButtonText;
-        resumeButton.IsFocused = true;
         resumeButton.Click += OnResumeButtonClicked;
+
+        var restartButton = new Button();
+        buttonsPanel.AddChild(restartButton);
+        restartButton.Text = RestartButtonText;
+        restartButton.Click += OnRestartButtonClicked;
 
         var quitButton = new Button();
         buttonsPanel.AddChild(quitButton);
@@ -154,7 +166,6 @@ public class GameplayUi : ContainerRuntime
         restartButton = new Button();
         buttonsPanel.AddChild(restartButton);
         restartButton.Text = RestartButtonText;
-        restartButton.IsFocused = true;
         restartButton.Click += OnRestartButtonClicked;
 
         var quitButton = new Button();

@@ -7,7 +7,7 @@ namespace MonoBulletHell.Gameplay.Factories;
 
 public interface IGameFactory
 {
-    Ship CreateShip(Vector2 position);
+    Ship CreateShip();
     Enemy CreateEnemy(Vector2 vector2);
 }
 
@@ -31,13 +31,9 @@ public class GameFactory : IGameFactory
         _gameContext = gameContext;
     }
 
-    public Ship CreateShip(Vector2 position)
+    public Ship CreateShip()
     {
-        var ship = new Ship(_inputService, _debugService, _timeService, _bulletService, _contentService)
-        {
-            Position = position,
-        };
-
+        var ship = new Ship(_inputService, _debugService, _timeService, _bulletService, _contentService);
         _gameContext.RegisterShip(ship);
         return ship;
     }
