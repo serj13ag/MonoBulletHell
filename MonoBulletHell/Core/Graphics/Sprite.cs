@@ -5,7 +5,7 @@ namespace MonoBulletHell.Core.Graphics;
 
 public class Sprite
 {
-    private readonly TextureRegion _region;
+    private TextureRegion _region;
 
     public Color Color { get; set; } = Color.White;
 
@@ -35,5 +35,10 @@ public class Sprite
     public void Draw(SpriteBatch spriteBatch, Vector2 position, float rotation = 0f)
     {
         _region.Draw(spriteBatch, position, Color, Rotation + rotation, Origin, Scale, Effects, LayerDepth);
+    }
+
+    protected void SetRegion(TextureRegion region)
+    {
+        _region = region;
     }
 }

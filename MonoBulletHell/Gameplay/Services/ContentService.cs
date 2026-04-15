@@ -13,6 +13,8 @@ public interface IContentService
 
     Sprite CreateSprite(string spriteName);
     Sprite CreateBulletSprite(string spriteName);
+    AnimatedSprite CreateBulletAnimatedSprite(string animationName);
+
     Effect GetFlashEffect();
     SpawnData GetSpawnData();
     Texture2D BackgroundTexture { get; }
@@ -46,6 +48,11 @@ public class ContentService : IContentService
     public Sprite CreateBulletSprite(string spriteName)
     {
         return _bulletsAtlas.CreateSprite(spriteName);
+    }
+
+    public AnimatedSprite CreateBulletAnimatedSprite(string animationName)
+    {
+        return _bulletsAtlas.CreateAnimatedSprite(animationName);
     }
 
     public Effect GetFlashEffect()

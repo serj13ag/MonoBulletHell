@@ -1,6 +1,6 @@
 {
-  "Texture": "images/bullets",
-  "Regions": [
+  "texture": "images/bullets",
+  "regions": [
     {
       "name": "shipBullet",
       "x": 0,
@@ -14,6 +14,46 @@
       "y": 0,
       "width": 16,
       "height": 16
+    },
+    {
+      "name": "bulletImpact-1",
+      "x": 0,
+      "y": 16,
+      "width": 16,
+      "height": 16
+    },
+    {
+      "name": "bulletImpact-2",
+      "x": 16,
+      "y": 16,
+      "width": 16,
+      "height": 16
+    },
+    {
+      "name": "bulletImpact-3",
+      "x": 0,
+      "y": 32,
+      "width": 16,
+      "height": 16
+    },
+    {
+      "name": "bulletImpact-4",
+      "x": 16,
+      "y": 32,
+      "width": 16,
+      "height": 16
+    }
+  ],
+  "animations": [
+    {
+      "name": "bulletImpact",
+      "fps": 16,
+      "frames": [
+        "bulletImpact-1",
+        "bulletImpact-2",
+        "bulletImpact-3",
+        "bulletImpact-4"
+      ]
     }
   ]
 }

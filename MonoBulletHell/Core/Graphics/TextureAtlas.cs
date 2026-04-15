@@ -11,17 +11,25 @@ public class TextureAtlas
 {
     private readonly Texture2D _texture;
     private readonly Dictionary<string, TextureRegion> _regions;
+    private readonly Dictionary<string, Animation> _animations;
 
     private TextureAtlas(Texture2D texture)
     {
         _texture = texture;
         _regions = new Dictionary<string, TextureRegion>();
+        _animations = new Dictionary<string, Animation>();
     }
 
     public Sprite CreateSprite(string regionName)
     {
         var region = GetRegion(regionName);
         return new Sprite(region);
+    }
+
+    public AnimatedSprite CreateAnimatedSprite(string animationName)
+    {
+        var animation = GetAnimation(animationName);
+        return new AnimatedSprite(animation);
     }
 
     public static TextureAtlas FromFile(ContentManager content, string fileName)
@@ -42,6 +50,24 @@ public class TextureAtlas
             }
         }
 
+        if (atlasData.Animations != null)
+        {
+            foreach (var animationData in atlasData.Animations)
+            {
+                var frames = new List<TextureRegion>();
+                if (animationData.Frames != null)
+                {
+                    foreach (var frame in animationData.Frames)
+                    {
+                        frames.Add(atlas.GetRegion(frame));
+                    }
+                }
+
+                var animation = new Animation(frames, animationData.Fps);
+                atlas.AddAnimation(animationData.Name, animation);
+            }
+        }
+
         return atlas;
     }
 
@@ -54,5 +80,15 @@ public class TextureAtlas
     private TextureRegion GetRegion(string name)
     {
         return _regions[name];
+    }
+
+    private void AddAnimation(string animationName, Animation animation)
+    {
+        _animations.Add(animationName, animation);
+    }
+
+    private Animation GetAnimation(string animationName)
+    {
+        return _animations[animationName];
     }
 }
