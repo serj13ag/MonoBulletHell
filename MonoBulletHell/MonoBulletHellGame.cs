@@ -1,4 +1,5 @@
-﻿using Gum.Forms;
+﻿using System;
+using Gum.Forms;
 using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -12,6 +13,8 @@ namespace MonoBulletHell;
 
 public class MonoBulletHellGame : Game
 {
+    private const double TargetFps = 144.0;
+
     private readonly CompositionRoot _root;
 
     private SpriteBatch _spriteBatch;
@@ -35,6 +38,9 @@ public class MonoBulletHellGame : Game
         Content.RootDirectory = "Content";
 
         IsMouseVisible = true;
+
+        IsFixedTimeStep = true;
+        TargetElapsedTime = TimeSpan.FromSeconds(1.0 / TargetFps);
     }
 
     protected override void Initialize()
