@@ -20,10 +20,10 @@ public class Ship : BaseEntity, IEntityWithCollider
     private const int Health = 3; // TODO: to config
     private const float DamageImmuneCooldown = 2f; // TODO: to config
 
-    private const float ShootCooldown = 0.05f; // TODO: to config
+    private const float ShootCooldown = 0.08f; // TODO: to config
     private const float MoveSpeed = 400f; // TODO: to config
 
-    private const float BulletSpeed = 1200f; // TODO: to config
+    private const float BulletSpeed = 800f; // TODO: to config
     private const int BulletDamage = 1; // TODO: to config
 
     private const float FlashEffectSpeed = 6f;

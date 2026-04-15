@@ -15,7 +15,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
 
     private const int Health = 10; // TODO: to config
     private const float ShootCooldown = 0.5f;
-    private const float BulletSpeed = 800;
+    private const float BulletSpeed = 300f;
     private const int BulletDamage = 1;
 
     private const float ColliderRadius = 45f;
