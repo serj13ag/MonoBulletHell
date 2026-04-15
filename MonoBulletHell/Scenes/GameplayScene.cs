@@ -32,6 +32,7 @@ public class GameplayScene : BaseScene
     private readonly IEnemyService _enemyService;
     private readonly IEnemySpawnService _enemySpawnService;
     private readonly IBackgroundService _backgroundService;
+    private readonly IParticleService _particleService;
 
     private GameState _gameState;
 
@@ -42,7 +43,7 @@ public class GameplayScene : BaseScene
     public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, GumService gumService,
         IInputService inputService, ISceneService sceneService, ITimeService timeService, IContentService contentService,
         IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService, IEnemySpawnService enemySpawnService,
-        IBackgroundService backgroundService)
+        IBackgroundService backgroundService, IParticleService particleService)
         : base(content, graphicsDevice, spriteBatch)
     {
         _gumService = gumService;
@@ -55,6 +56,7 @@ public class GameplayScene : BaseScene
         _enemyService = enemyService;
         _enemySpawnService = enemySpawnService;
         _backgroundService = backgroundService;
+        _particleService = particleService;
     }
 
     public override void Initialize()
@@ -109,6 +111,7 @@ public class GameplayScene : BaseScene
         _enemySpawnService.Update();
         _enemyService.Update();
         _backgroundService.Update();
+        _particleService.Update();
 
         _ship.Update();
     }
@@ -125,6 +128,7 @@ public class GameplayScene : BaseScene
 
         _bulletService.Draw(SpriteBatch);
         _enemyService.Draw(SpriteBatch);
+        _particleService.Draw(SpriteBatch);
 
         _ui.Draw();
     }
@@ -133,6 +137,7 @@ public class GameplayScene : BaseScene
     {
         _bulletService.Clear();
         _enemyService.Clear();
+        _particleService.Clear();
 
         _backgroundService.Initialize(_contentService.BackgroundTexture);
 

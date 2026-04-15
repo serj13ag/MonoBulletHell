@@ -21,14 +21,16 @@ public class BulletService : IBulletService
 {
     private readonly IGameContext _gameContext;
     private readonly IBulletFactory _bulletFactory;
+    private readonly IParticleService _particleService;
 
     private readonly List<Bullet> _bullets = new List<Bullet>(256);
     private readonly List<Bullet> _bulletsToDestroy = new List<Bullet>(128);
 
-    public BulletService(IGameContext gameContext, IBulletFactory bulletFactory)
+    public BulletService(IGameContext gameContext, IBulletFactory bulletFactory, IParticleService particleService)
     {
         _gameContext = gameContext;
         _bulletFactory = bulletFactory;
+        _particleService = particleService;
     }
 
     public void Update()
@@ -62,6 +64,8 @@ public class BulletService : IBulletService
 
         foreach (var bulletToDestroy in _bulletsToDestroy)
         {
+            _particleService.CreateBulletImpact(bulletToDestroy.Position);
+
             _bullets.Remove(bulletToDestroy);
         }
 
