@@ -34,18 +34,28 @@ public class BulletFactory : IBulletFactory
             IsPlayer = isPlayer,
         };
 
-        bullet.AddSprite(GetBulletSprite(), Vector2.Zero);
+        bullet.AddSprite(GetBulletSprite(isPlayer), Vector2.Zero);
         bullet.SetDirection(direction);
 
         return bullet;
     }
 
-    private Sprite GetBulletSprite()
+    private Sprite GetBulletSprite(bool isPlayer)
     {
-        var sprite = _contentService.CreateSprite("bullet");
-        sprite.CenterOrigin();
-        sprite.Rotation = MathHelper.ToRadians(180f);
-        sprite.Color = Constants.Colors.BeigeColor;
+        Sprite sprite;
+        if (isPlayer)
+        {
+            sprite = _contentService.CreateBulletSprite("shipBullet");
+            sprite.CenterOrigin();
+            sprite.Color = Constants.Colors.BeigeColor;
+        }
+        else
+        {
+            sprite = _contentService.CreateBulletSprite("enemyBullet");
+            sprite.CenterOrigin();
+            sprite.Color = Constants.Colors.EnemyColor;
+        }
+
         return sprite;
     }
 }

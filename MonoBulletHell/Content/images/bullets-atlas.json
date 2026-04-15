@@ -1,0 +1,19 @@
+{
+  "Texture": "images/bullets",
+  "Regions": [
+    {
+      "name": "shipBullet",
+      "x": 0,
+      "y": 0,
+      "width": 16,
+      "height": 16
+    },
+    {
+      "name": "enemyBullet",
+      "x": 16,
+      "y": 0,
+      "width": 16,
+      "height": 16
+    }
+  ]
+}
