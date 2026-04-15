@@ -14,6 +14,7 @@ public interface IContentService
     Sprite CreateSprite(string spriteName);
     Effect GetFlashEffect();
     SpawnData GetSpawnData();
+    Texture2D BackgroundTexture { get; }
 }
 
 public class ContentService : IContentService
@@ -22,12 +23,13 @@ public class ContentService : IContentService
     private Effect _flashEffect;
     private SpawnData _spawnData;
 
+    public Texture2D BackgroundTexture { get; private set; }
+
     public void Load(ContentManager content)
     {
         _atlas = TextureAtlas.FromFile(content, "images/atlas-definition.json");
-
+        BackgroundTexture = content.Load<Texture2D>("images/background");
         _flashEffect = content.Load<Effect>("shaders/flashEffect");
-
         _spawnData = LoadJsonData<SpawnData>(content, "configs/spawnData.json");
     }
 

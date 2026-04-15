@@ -14,7 +14,7 @@ public static class Constants
     public const int ActualWidth = (int)(VirtualWidth * ScreenScale);
     public const int ActualHeight = (int)(VirtualHeight * ScreenScale);
 
-    private const float ScreenScale = 1f;
+    private const float ScreenScale = 2.5f;
 
     public static class Colors
     {

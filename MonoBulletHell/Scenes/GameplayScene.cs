@@ -31,6 +31,7 @@ public class GameplayScene : BaseScene
     private readonly IGameFactory _gameFactory;
     private readonly IEnemyService _enemyService;
     private readonly IEnemySpawnService _enemySpawnService;
+    private readonly IBackgroundService _backgroundService;
 
     private GameState _gameState;
 
@@ -40,7 +41,8 @@ public class GameplayScene : BaseScene
 
     public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, GumService gumService,
         IInputService inputService, ISceneService sceneService, ITimeService timeService, IContentService contentService,
-        IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService, IEnemySpawnService enemySpawnService)
+        IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService, IEnemySpawnService enemySpawnService,
+        IBackgroundService backgroundService)
         : base(content, graphicsDevice, spriteBatch)
     {
         _gumService = gumService;
@@ -52,6 +54,7 @@ public class GameplayScene : BaseScene
         _gameFactory = gameFactory;
         _enemyService = enemyService;
         _enemySpawnService = enemySpawnService;
+        _backgroundService = backgroundService;
     }
 
     public override void Initialize()
@@ -105,6 +108,7 @@ public class GameplayScene : BaseScene
         _bulletService.Update();
         _enemySpawnService.Update();
         _enemyService.Update();
+        _backgroundService.Update();
 
         _ship.Update();
     }
@@ -114,6 +118,8 @@ public class GameplayScene : BaseScene
         base.Draw(gameTime);
 
         GraphicsDevice.Clear(Constants.Colors.BackgroundColor);
+
+        _backgroundService.Draw(SpriteBatch);
 
         _ship.Draw(SpriteBatch);
 
@@ -127,6 +133,8 @@ public class GameplayScene : BaseScene
     {
         _bulletService.Clear();
         _enemyService.Clear();
+
+        _backgroundService.Initialize(_contentService.BackgroundTexture);
 
         _enemySpawnService.Initialize(_contentService.GetSpawnData());
 
