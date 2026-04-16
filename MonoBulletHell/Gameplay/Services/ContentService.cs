@@ -57,7 +57,7 @@ public class ContentService : IContentService
 
     public Effect GetFlashEffect()
     {
-        return _flashEffect;
+        return _flashEffect.Clone();
     }
 
     public SpawnData GetSpawnData()

@@ -18,57 +18,60 @@ public interface IRenderService
 
 public class RenderService : IRenderService
 {
-    private readonly List<SpriteRenderRequest> _requestsWithEffect = new List<SpriteRenderRequest>();
-    private readonly List<SpriteRenderRequest> _simpleRequests = new List<SpriteRenderRequest>();
-    private BackgroundRenderRequest _backgroundRequest;
+    private BackgroundRenderRequest _backgroundBatch;
+    private readonly List<SpriteRenderRequest> _simpleBatches = new List<SpriteRenderRequest>(64);
+    private readonly List<SpriteRenderRequest> _effectBatches = new List<SpriteRenderRequest>(32);
 
     public void AddBackground(Texture2D texture, Rectangle destinationRectangle, Rectangle sourceRectangle, Color color,
         SamplerState samplerState)
     {
-        _backgroundRequest = new BackgroundRenderRequest(texture, destinationRectangle, sourceRectangle, color, samplerState);
+        _backgroundBatch = new BackgroundRenderRequest(texture, destinationRectangle, sourceRectangle, color, samplerState);
     }
 
     public void AddSprite(Sprite sprite, Vector2 position, float rotation, Effect effect = null)
     {
         if (effect != null)
         {
-            _requestsWithEffect.Add(new SpriteRenderRequest(sprite, position, rotation, effect));
+            _effectBatches.Add(new SpriteRenderRequest(sprite, position, rotation, effect));
         }
         else
         {
-            _simpleRequests.Add(new SpriteRenderRequest(sprite, position, rotation));
+            _simpleBatches.Add(new SpriteRenderRequest(sprite, position, rotation));
         }
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
         // background
-        spriteBatch.Begin(samplerState: _backgroundRequest.SamplerState);
-        _backgroundRequest.Draw(spriteBatch);
-        spriteBatch.End();
-
-        _backgroundRequest = null;
-
-        // requests with effects
-        foreach (var effect in _requestsWithEffect)
+        if (_backgroundBatch != null)
         {
-            spriteBatch.Begin(samplerState: Constants.SamplerState, effect: effect.Effect);
-            effect.Draw(spriteBatch);
+            spriteBatch.Begin(samplerState: _backgroundBatch.SamplerState);
+            _backgroundBatch.Draw(spriteBatch);
             spriteBatch.End();
+
+            _backgroundBatch = null;
         }
 
-        _requestsWithEffect.Clear();
-
-        // simple requests
+        // simple
         spriteBatch.Begin(samplerState: Constants.SamplerState);
 
-        foreach (var renderRequest in _simpleRequests)
+        foreach (var renderRequest in _simpleBatches)
         {
             renderRequest.Draw(spriteBatch);
         }
 
         spriteBatch.End();
 
-        _simpleRequests.Clear();
+        _simpleBatches.Clear();
+
+        // effects
+        foreach (var effect in _effectBatches)
+        {
+            spriteBatch.Begin(samplerState: Constants.SamplerState, effect: effect.Effect);
+            effect.Draw(spriteBatch);
+            spriteBatch.End();
+        }
+
+        _effectBatches.Clear();
     }
 }
