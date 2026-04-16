@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core;
@@ -36,7 +35,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
 
     public Circle Collider => _collider;
 
-    public event EventHandler<EventArgs> OnDestroyed;
+    public bool IsDead => _currentHealth <= 0;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IBulletService bulletService,
         IContentService contentService)
@@ -81,13 +80,10 @@ public class Enemy : BaseEntity, IEntityWithCollider
     {
         _currentHealth -= damage;
 
-        if (_currentHealth <= 0)
+        if (_currentHealth > 0)
         {
-            OnDestroyed?.Invoke(this, EventArgs.Empty);
-            return;
+            _timeTillEndFlashEffect = FlashEffectDuration;
         }
-
-        _timeTillEndFlashEffect = FlashEffectDuration;
     }
 
     private void HandleShooting()

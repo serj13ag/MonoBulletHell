@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -31,17 +30,22 @@ public class EnemyService : IEnemyService
 
     public void Update()
     {
+        foreach (var enemy in _context.Enemies)
+        {
+            enemy.Update();
+
+            if (enemy.IsDead)
+            {
+                _enemiesToDestroy.Add(enemy);
+            }
+        }
+
         foreach (var enemyToDestroy in _enemiesToDestroy)
         {
             _context.Enemies.Remove(enemyToDestroy);
         }
 
         _enemiesToDestroy.Clear();
-
-        foreach (var enemy in _context.Enemies)
-        {
-            enemy.Update();
-        }
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -56,18 +60,11 @@ public class EnemyService : IEnemyService
     {
         var enemy = _gameFactory.CreateEnemy(vector2);
         _context.Enemies.Add(enemy);
-        enemy.OnDestroyed += OnEnemyDestroyed;
     }
 
     public void Clear()
     {
         _enemiesToDestroy.Clear();
         _context.Enemies.Clear();
-    }
-
-    private void OnEnemyDestroyed(object sender, EventArgs e)
-    {
-        var enemy = (Enemy)sender;
-        _enemiesToDestroy.Add(enemy);
     }
 }
