@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.Interfaces;
@@ -11,7 +10,7 @@ namespace MonoBulletHell.Gameplay.Services;
 public interface IBulletService
 {
     void Update();
-    void Draw(SpriteBatch spriteBatch);
+    void Render(IRenderService renderService);
 
     void SpawnBullet(Vector2 position, Vector2 direction, float speed, int damage, bool isPlayer);
     void Clear();
@@ -72,11 +71,11 @@ public class BulletService : IBulletService
         _bulletsToDestroy.Clear();
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Render(IRenderService renderService)
     {
         foreach (var bullet in _bullets)
         {
-            bullet.Draw(spriteBatch);
+            bullet.Render(renderService);
         }
     }
 

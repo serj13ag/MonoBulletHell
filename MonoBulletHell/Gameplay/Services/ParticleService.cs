@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Gameplay.Entities;
 
 namespace MonoBulletHell.Gameplay.Services;
@@ -8,7 +7,7 @@ namespace MonoBulletHell.Gameplay.Services;
 public interface IParticleService
 {
     void Update();
-    void Draw(SpriteBatch spriteBatch);
+    void Render(IRenderService renderService);
 
     void CreateBulletImpact(Vector2 position);
     void Clear();
@@ -48,11 +47,11 @@ public class ParticleService : IParticleService
         _particlesToDestroy.Clear();
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Render(IRenderService renderService)
     {
         foreach (var particle in _particles)
         {
-            particle.Draw(spriteBatch);
+            particle.Render(renderService);
         }
     }
 

@@ -87,23 +87,17 @@ public class Ship : BaseEntity, IEntityWithCollider
         _debugService.DrawCircle(_collider.Location, _collider.Radius, Color.GreenYellow, 2f, 10);
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Render(IRenderService renderService)
     {
+        Effect effect = null;
         if (_isImmune)
         {
             _flashEffect.Parameters["flashAmount"].SetValue(_flashEffectAmount); // TODO: refactor? 
-
-            spriteBatch.Begin(samplerState: Constants.SamplerState, effect: _flashEffect);
-        }
-        else
-        {
-            spriteBatch.Begin(samplerState: Constants.SamplerState);
+            effect = _flashEffect;
         }
 
-        _shipSprite.Draw(spriteBatch, Position, Rotation);
-        _coreSprite.Draw(spriteBatch, Position, Rotation);
-
-        spriteBatch.End();
+        renderService.AddSprite(_shipSprite, Position, Rotation, effect);
+        renderService.AddSprite(_coreSprite, Position, Rotation, effect);
     }
 
     public void TakeDamage(int damage)

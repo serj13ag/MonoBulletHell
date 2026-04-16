@@ -57,23 +57,17 @@ public class Enemy : BaseEntity, IEntityWithCollider
         _debugService.DrawCircle(_collider.Location, _collider.Radius, Color.GreenYellow, 2f, 10);
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Render(IRenderService renderService)
     {
+        Effect effect = null;
         if (_timeTillEndFlashEffect > 0)
         {
             _flashEffect.Parameters["flashAmount"].SetValue(_flashEffectAmount); // TODO: refactor? 
-
-            spriteBatch.Begin(samplerState: Constants.SamplerState, effect: _flashEffect);
-        }
-        else
-        {
-            spriteBatch.Begin(samplerState: Constants.SamplerState);
+            effect = _flashEffect;
         }
 
         var spriteOffset = new Vector2(0f, -10f); // TODO: refactor
-        _sprite.Draw(spriteBatch, Position + spriteOffset, Rotation);
-
-        spriteBatch.End();
+        renderService.AddSprite(_sprite, Position + spriteOffset, Rotation, effect);
     }
 
     public void TakeDamage(int damage)

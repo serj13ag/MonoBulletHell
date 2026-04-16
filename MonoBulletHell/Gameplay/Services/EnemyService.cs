@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 
@@ -9,7 +8,7 @@ namespace MonoBulletHell.Gameplay.Services;
 public interface IEnemyService
 {
     void Update();
-    void Draw(SpriteBatch spriteBatch);
+    void Render(IRenderService renderService);
 
     void SpawnEnemy(Vector2 vector2);
     void Clear();
@@ -48,11 +47,11 @@ public class EnemyService : IEnemyService
         _enemiesToDestroy.Clear();
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Render(IRenderService renderService)
     {
         foreach (var enemy in _context.Enemies)
         {
-            enemy.Draw(spriteBatch);
+            enemy.Render(renderService);
         }
     }
 

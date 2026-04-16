@@ -33,6 +33,7 @@ public class GameplayScene : BaseScene
     private readonly IEnemySpawnService _enemySpawnService;
     private readonly IBackgroundService _backgroundService;
     private readonly IParticleService _particleService;
+    private readonly IRenderService _renderService;
 
     private GameState _gameState;
 
@@ -43,7 +44,7 @@ public class GameplayScene : BaseScene
     public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, GumService gumService,
         IInputService inputService, ISceneService sceneService, ITimeService timeService, IContentService contentService,
         IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService, IEnemySpawnService enemySpawnService,
-        IBackgroundService backgroundService, IParticleService particleService)
+        IBackgroundService backgroundService, IParticleService particleService, IRenderService renderService)
         : base(content, graphicsDevice, spriteBatch)
     {
         _gumService = gumService;
@@ -57,6 +58,7 @@ public class GameplayScene : BaseScene
         _enemySpawnService = enemySpawnService;
         _backgroundService = backgroundService;
         _particleService = particleService;
+        _renderService = renderService;
     }
 
     public override void Initialize()
@@ -116,19 +118,25 @@ public class GameplayScene : BaseScene
         _ship.Update();
     }
 
+    public override void LateUpdate(GameTime gameTime)
+    {
+        base.LateUpdate(gameTime);
+
+        _backgroundService.Render(_renderService);
+        _ship.Render(_renderService);
+        
+        _bulletService.Render(_renderService);
+        _enemyService.Render(_renderService);
+        _particleService.Render(_renderService);
+    }
+
     public override void Draw(GameTime gameTime)
     {
         base.Draw(gameTime);
 
         GraphicsDevice.Clear(Constants.Colors.BackgroundColor);
 
-        _backgroundService.Draw(SpriteBatch);
-
-        _ship.Draw(SpriteBatch);
-
-        _bulletService.Draw(SpriteBatch);
-        _enemyService.Draw(SpriteBatch);
-        _particleService.Draw(SpriteBatch);
+        _renderService.Draw(SpriteBatch);
 
         _ui.Draw();
     }

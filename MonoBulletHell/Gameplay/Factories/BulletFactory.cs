@@ -26,7 +26,7 @@ public class BulletFactory : IBulletFactory
 
     public Bullet CreateBullet(Vector2 position, Vector2 direction, float speed, int damage, bool isPlayer)
     {
-        var bullet = new Bullet(_debugService, _timeService)
+        var bullet = new Bullet(_debugService, _timeService, GetBulletSprite(isPlayer))
         {
             Position = position,
             Speed = speed,
@@ -34,7 +34,6 @@ public class BulletFactory : IBulletFactory
             IsPlayer = isPlayer,
         };
 
-        bullet.AddSprite(GetBulletSprite(isPlayer), Vector2.Zero);
         bullet.SetDirection(direction);
 
         return bullet;

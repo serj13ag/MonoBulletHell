@@ -62,6 +62,7 @@ public class CompositionRoot
         _container.Register<IBulletService, BulletService>(new PerScopeLifetime());
         _container.Register<IBackgroundService, BackgroundService>(new PerScopeLifetime());
         _container.Register<IParticleService, ParticleService>(new PerScopeLifetime());
+        _container.Register<IRenderService, RenderService>(new PerScopeLifetime());
 
         _container.Register<IGameContext, GameContext>(new PerScopeLifetime());
 

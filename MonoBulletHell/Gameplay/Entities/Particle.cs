@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Gameplay.Services;
 
 namespace MonoBulletHell.Gameplay.Entities;
 
@@ -20,10 +20,8 @@ public class Particle : BaseEntity
         _animatedSprite.Update(deltaTime);
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Render(IRenderService renderService)
     {
-        spriteBatch.Begin(samplerState: Constants.SamplerState); // TODO: fix
-        _animatedSprite.Draw(spriteBatch, Position, Rotation);
-        spriteBatch.End();
+        renderService.AddSprite(_animatedSprite, Position, Rotation);
     }
 }

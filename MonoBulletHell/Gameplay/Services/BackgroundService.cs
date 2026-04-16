@@ -8,7 +8,7 @@ public interface IBackgroundService
 {
     void Initialize(Texture2D backgroundTexture);
     void Update();
-    void Draw(SpriteBatch spriteBatch);
+    void Render(IRenderService renderService);
 }
 
 public class BackgroundService : IBackgroundService
@@ -40,14 +40,11 @@ public class BackgroundService : IBackgroundService
         _backgroundVerticalOffset %= _backgroundTexture.Height;
     }
 
-    public void Draw(SpriteBatch spriteBatch)
+    public void Render(IRenderService renderService)
     {
-        spriteBatch.Begin(samplerState: SamplerState.PointWrap);
-
         var destinationRectangle = new Rectangle(Point.Zero, new Point(Constants.VirtualWidth, Constants.VirtualHeight));
         var sourceRectangle = new Rectangle(new Point(0, (int)_backgroundVerticalOffset), destinationRectangle.Size);
-        spriteBatch.Draw(_backgroundTexture, destinationRectangle, sourceRectangle, Constants.Colors.BackgroundColor.Adjust(-20f));
-
-        spriteBatch.End();
+        renderService.AddBackground(_backgroundTexture, destinationRectangle, sourceRectangle,
+            Constants.Colors.BackgroundColor.Adjust(-20f), SamplerState.PointWrap);
     }
 }
