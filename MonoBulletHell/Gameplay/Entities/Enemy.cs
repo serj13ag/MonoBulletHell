@@ -18,7 +18,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
     private const float BulletSpeed = 300f;
     private const int BulletDamage = 1;
 
-    private const float ColliderRadius = 45f;
+    private const float ColliderRadius = 20f;
 
     private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
@@ -71,7 +71,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
             spriteBatch.Begin(samplerState: Constants.SamplerState);
         }
 
-        var spriteOffset = new Vector2(0f, -25f); // TODO: refactor
+        var spriteOffset = new Vector2(0f, -10f); // TODO: refactor
         _sprite.Draw(spriteBatch, Position + spriteOffset, Rotation);
 
         spriteBatch.End();
