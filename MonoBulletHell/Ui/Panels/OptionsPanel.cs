@@ -3,10 +3,14 @@ using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
 using MonoGameGum.GueDeriving;
 
-namespace MonoBulletHell.Ui;
+namespace MonoBulletHell.Ui.Panels;
 
-public class OptionsPanel : Panel
+public class OptionsPanel : BasePanel
 {
+    private readonly Button _backButton;
+
+    protected override Button FocusButton => _backButton;
+
     public event Action OnBackButtonClicked;
 
     public OptionsPanel()
@@ -32,10 +36,10 @@ public class OptionsPanel : Panel
         buttonsPanel.Y = -10f;
         buttonsPanel.Spacing = 5f;
 
-        var backButton = new Button();
-        buttonsPanel.AddChild(backButton);
-        backButton.Text = UiConstants.BackButtonText;
-        backButton.Click += OnOptionsBackButtonClicked;
+        _backButton = new Button();
+        buttonsPanel.AddChild(_backButton);
+        _backButton.Text = UiConstants.BackButtonText;
+        _backButton.Click += OnOptionsBackButtonClicked;
     }
 
     private void OnOptionsBackButtonClicked(object sender, EventArgs e)

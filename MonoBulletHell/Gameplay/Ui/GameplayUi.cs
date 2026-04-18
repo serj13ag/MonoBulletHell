@@ -1,7 +1,6 @@
 using System;
-using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
-using MonoBulletHell.Ui;
+using MonoBulletHell.Ui.Panels;
 using MonoGameGum;
 using MonoGameGum.GueDeriving;
 
@@ -11,11 +10,9 @@ public class GameplayUi : ContainerRuntime
 {
     private readonly GumService _gumService;
 
-    private readonly Panel _pausePanel;
-    private readonly Button _resumeButton;
-
-    private readonly Panel _gameOverPanel;
-    private readonly Button _restartButton;
+    private readonly PausePanel _pausePanel;
+    private readonly OptionsPanel _optionsPanel;
+    private readonly GameOverPanel _gameOverPanel;
 
     public event Action ResumeButtonClicked;
     public event Action RestartButtonClicked;
@@ -28,13 +25,24 @@ public class GameplayUi : ContainerRuntime
         Dock(Gum.Wireframe.Dock.Fill);
         this.AddToRoot();
 
-        _pausePanel = CreatePausePanel(out _resumeButton);
+        _pausePanel = new PausePanel();
         AddChild(_pausePanel.Visual);
-        _pausePanel.IsVisible = false;
+        _pausePanel.OnResumeButtonClicked += OnResumeButtonClicked;
+        _pausePanel.OnRestartButtonClicked += OnRestartButtonClicked;
+        _pausePanel.OnOptionsButtonClicked += OnOptionsButtonClicked;
+        _pausePanel.OnQuitButtonClicked += OnQuitButtonClicked;
+        _pausePanel.Disable();
 
-        _gameOverPanel = CreateGameOverPanel(out _restartButton);
+        _optionsPanel = new OptionsPanel();
+        _optionsPanel.AddToRoot();
+        _optionsPanel.OnBackButtonClicked += OnOptionsBackButtonClicked;
+        _optionsPanel.Disable();
+
+        _gameOverPanel = new GameOverPanel();
         AddChild(_gameOverPanel.Visual);
-        _gameOverPanel.IsVisible = false;
+        _gameOverPanel.Disable();
+        _gameOverPanel.OnRestartButtonClicked += OnRestartButtonClicked;
+        _gameOverPanel.OnQuitButtonClicked += OnQuitButtonClicked;
     }
 
     public void Update(GameTime gameTime)
@@ -49,123 +57,50 @@ public class GameplayUi : ContainerRuntime
 
     public void ShowPausePanel()
     {
-        _pausePanel.IsVisible = true;
-        _resumeButton.IsFocused = true;
+        _pausePanel.Enable();
     }
 
     public void HidePausePanel()
     {
-        _pausePanel.IsVisible = false;
-        _resumeButton.IsFocused = false; // TODO: reset focus from all?
+        _pausePanel.Disable();
     }
 
     public void ShowGameOverPanel()
     {
-        _gameOverPanel.IsVisible = true;
-        _restartButton.IsFocused = true;
+        _gameOverPanel.Enable();
     }
 
     private void HideGameOverPanel()
     {
-        _gameOverPanel.IsVisible = false;
-        _restartButton.IsFocused = false;
+        _gameOverPanel.Disable();
     }
 
-    private void OnResumeButtonClicked(object sender, EventArgs e)
+    private void OnResumeButtonClicked()
     {
         HidePausePanel();
         ResumeButtonClicked?.Invoke();
     }
 
-    private void OnRestartButtonClicked(object sender, EventArgs e)
+    private void OnRestartButtonClicked()
     {
         HidePausePanel();
         HideGameOverPanel();
         RestartButtonClicked?.Invoke();
     }
 
-    private void OnQuitButtonClicked(object sender, EventArgs e)
+    private void OnQuitButtonClicked()
     {
         HidePausePanel();
         QuitButtonClicked?.Invoke();
     }
 
-    private Panel CreatePausePanel(out Button resumeButton)
+    private void OnOptionsButtonClicked()
     {
-        var panel = new Panel();
-        panel.Anchor(Gum.Wireframe.Anchor.Center);
-        panel.Width = 100f;
-        panel.Height = 50f;
-
-        var background = new ColoredRectangleRuntime();
-        panel.AddChild(background);
-        background.Dock(Gum.Wireframe.Dock.Fill);
-        background.Color = Color.DarkSlateBlue;
-
-        var titleText = new Label();
-        panel.AddChild(titleText);
-        titleText.Anchor(Gum.Wireframe.Anchor.Top);
-        titleText.Text = UiConstants.PausePanelTitleText;
-        titleText.Y = 10f;
-
-        var buttonsPanel = new StackPanel();
-        panel.AddChild(buttonsPanel);
-        buttonsPanel.Anchor(Gum.Wireframe.Anchor.Bottom);
-        buttonsPanel.Y = -10f;
-        buttonsPanel.Spacing = 5f;
-
-        resumeButton = new Button();
-        buttonsPanel.AddChild(resumeButton);
-        resumeButton.Text = UiConstants.ResumeButtonText;
-        resumeButton.Click += OnResumeButtonClicked;
-
-        var restartButton = new Button();
-        buttonsPanel.AddChild(restartButton);
-        restartButton.Text = UiConstants.RestartButtonText;
-        restartButton.Click += OnRestartButtonClicked;
-
-        var quitButton = new Button();
-        buttonsPanel.AddChild(quitButton);
-        quitButton.Text = UiConstants.QuitButtonText;
-        quitButton.Click += OnQuitButtonClicked;
-
-        return panel;
+        _optionsPanel.Enable();
     }
 
-    private Panel CreateGameOverPanel(out Button restartButton)
+    private void OnOptionsBackButtonClicked()
     {
-        var panel = new Panel();
-        panel.Anchor(Gum.Wireframe.Anchor.Center);
-        panel.Width = 100f;
-        panel.Height = 50f;
-
-        var background = new ColoredRectangleRuntime();
-        panel.AddChild(background);
-        background.Dock(Gum.Wireframe.Dock.Fill);
-        background.Color = Color.DarkSlateBlue;
-
-        var titleText = new Label();
-        panel.AddChild(titleText);
-        titleText.Anchor(Gum.Wireframe.Anchor.Top);
-        titleText.Text = UiConstants.GameOverPanelTitleText;
-        titleText.Y = 10f;
-
-        var buttonsPanel = new StackPanel();
-        panel.AddChild(buttonsPanel);
-        buttonsPanel.Anchor(Gum.Wireframe.Anchor.Bottom);
-        buttonsPanel.Y = -10f;
-        buttonsPanel.Spacing = 5f;
-
-        restartButton = new Button();
-        buttonsPanel.AddChild(restartButton);
-        restartButton.Text = UiConstants.RestartButtonText;
-        restartButton.Click += OnRestartButtonClicked;
-
-        var quitButton = new Button();
-        buttonsPanel.AddChild(quitButton);
-        quitButton.Text = UiConstants.QuitButtonText;
-        quitButton.Click += OnQuitButtonClicked;
-
-        return panel;
+        _optionsPanel.Disable();
     }
 }

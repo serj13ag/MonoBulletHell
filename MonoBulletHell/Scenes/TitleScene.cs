@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Services;
 using MonoBulletHell.Ui;
+using MonoBulletHell.Ui.Panels;
 using MonoGameGum;
 
 namespace MonoBulletHell.Scenes;
@@ -65,7 +66,7 @@ public class TitleScene : BaseScene
         _optionsPanel = new OptionsPanel();
         _optionsPanel.AddToRoot();
         _optionsPanel.OnBackButtonClicked += OnOptionsBackButtonClicked;
-        _optionsPanel.IsVisible = false;
+        _optionsPanel.Disable();
     }
 
     private Panel CreateMainPanel()
@@ -118,12 +119,12 @@ public class TitleScene : BaseScene
 
     private void OnOptionsButtonClicked(object sender, EventArgs e)
     {
-        _optionsPanel.IsVisible = true;
+        _optionsPanel.Enable();
     }
 
     private void OnOptionsBackButtonClicked()
     {
-        _optionsPanel.IsVisible = false;
+        _optionsPanel.Disable();
     }
 
     private void OnQuitButtonClicked(object o, EventArgs eventArgs)
