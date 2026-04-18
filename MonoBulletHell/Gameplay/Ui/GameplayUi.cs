@@ -1,6 +1,7 @@
 using System;
 using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
+using MonoBulletHell.Ui;
 using MonoGameGum;
 using MonoGameGum.GueDeriving;
 
@@ -8,14 +9,6 @@ namespace MonoBulletHell.Gameplay.Ui;
 
 public class GameplayUi : ContainerRuntime
 {
-    private const string PausePanelTitleText = "PAUSED";
-    private const string ResumeButtonText = "RESUME";
-
-    private const string GameOverPanelTitleText = "GAME OVER";
-    private const string RestartButtonText = "RESTART";
-
-    private const string QuitButtonText = "QUIT";
-
     private readonly GumService _gumService;
 
     private readonly Panel _pausePanel;
@@ -112,7 +105,7 @@ public class GameplayUi : ContainerRuntime
         var titleText = new Label();
         panel.AddChild(titleText);
         titleText.Anchor(Gum.Wireframe.Anchor.Top);
-        titleText.Text = PausePanelTitleText;
+        titleText.Text = UiConstants.PausePanelTitleText;
         titleText.Y = 10f;
 
         var buttonsPanel = new StackPanel();
@@ -123,17 +116,17 @@ public class GameplayUi : ContainerRuntime
 
         resumeButton = new Button();
         buttonsPanel.AddChild(resumeButton);
-        resumeButton.Text = ResumeButtonText;
+        resumeButton.Text = UiConstants.ResumeButtonText;
         resumeButton.Click += OnResumeButtonClicked;
 
         var restartButton = new Button();
         buttonsPanel.AddChild(restartButton);
-        restartButton.Text = RestartButtonText;
+        restartButton.Text = UiConstants.RestartButtonText;
         restartButton.Click += OnRestartButtonClicked;
 
         var quitButton = new Button();
         buttonsPanel.AddChild(quitButton);
-        quitButton.Text = QuitButtonText;
+        quitButton.Text = UiConstants.QuitButtonText;
         quitButton.Click += OnQuitButtonClicked;
 
         return panel;
@@ -154,7 +147,7 @@ public class GameplayUi : ContainerRuntime
         var titleText = new Label();
         panel.AddChild(titleText);
         titleText.Anchor(Gum.Wireframe.Anchor.Top);
-        titleText.Text = GameOverPanelTitleText;
+        titleText.Text = UiConstants.GameOverPanelTitleText;
         titleText.Y = 10f;
 
         var buttonsPanel = new StackPanel();
@@ -165,12 +158,12 @@ public class GameplayUi : ContainerRuntime
 
         restartButton = new Button();
         buttonsPanel.AddChild(restartButton);
-        restartButton.Text = RestartButtonText;
+        restartButton.Text = UiConstants.RestartButtonText;
         restartButton.Click += OnRestartButtonClicked;
 
         var quitButton = new Button();
         buttonsPanel.AddChild(quitButton);
-        quitButton.Text = QuitButtonText;
+        quitButton.Text = UiConstants.QuitButtonText;
         quitButton.Click += OnQuitButtonClicked;
 
         return panel;

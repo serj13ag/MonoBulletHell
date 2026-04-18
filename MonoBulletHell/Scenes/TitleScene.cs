@@ -6,20 +6,19 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Services;
+using MonoBulletHell.Ui;
 using MonoGameGum;
 
 namespace MonoBulletHell.Scenes;
 
 public class TitleScene : BaseScene
 {
-    private const string TitleText = "MONO HELL";
-    private const string StartButtonText = "START GAME";
-    private const string QuitButtonText = "QUIT";
-
     private readonly IGameService _gameService;
     private readonly GumService _gumService;
     private readonly IInputService _inputService;
     private readonly ISceneService _sceneService;
+
+    private OptionsPanel _optionsPanel;
 
     public TitleScene(IGameService gameService, ContentManager contentManager, GraphicsDevice graphicsDevice,
         SpriteBatch spriteBatch, GumService gumService, IInputService inputService, ISceneService sceneService)
@@ -60,17 +59,29 @@ public class TitleScene : BaseScene
     {
         _gumService.Root.Children.Clear();
 
-        var mainPanel = new Panel();
+        var mainPanel = CreateMainPanel();
         mainPanel.AddToRoot();
+
+        _optionsPanel = new OptionsPanel();
+        _optionsPanel.AddToRoot();
+        _optionsPanel.OnBackButtonClicked += OnOptionsBackButtonClicked;
+        _optionsPanel.IsVisible = false;
+    }
+
+    private Panel CreateMainPanel()
+    {
+        var mainPanel = new Panel();
         mainPanel.Dock(Dock.Fill);
 
         var titleText = new Label();
         mainPanel.AddChild(titleText);
         titleText.Anchor(Anchor.Top);
-        titleText.Text = TitleText;
+        titleText.Text = UiConstants.TitleText;
         titleText.Y = 100f;
 
         CreateButtons(mainPanel);
+
+        return mainPanel;
     }
 
     private void CreateButtons(Panel parentPanel)
@@ -82,14 +93,20 @@ public class TitleScene : BaseScene
 
         var startButton = new Button();
         buttonPanel.AddChild(startButton);
-        startButton.Text = StartButtonText;
+        startButton.Text = UiConstants.StartButtonText;
         startButton.Width = 200f;
         startButton.IsFocused = true;
         startButton.Click += OnStartButtonClicked;
 
+        var optionsButton = new Button();
+        buttonPanel.AddChild(optionsButton);
+        optionsButton.Text = UiConstants.OptionsButtonText;
+        optionsButton.Width = 200f;
+        optionsButton.Click += OnOptionsButtonClicked;
+
         var quitButton = new Button();
         buttonPanel.AddChild(quitButton);
-        quitButton.Text = QuitButtonText;
+        quitButton.Text = UiConstants.QuitButtonText;
         quitButton.Width = 200f;
         quitButton.Click += OnQuitButtonClicked;
     }
@@ -97,6 +114,16 @@ public class TitleScene : BaseScene
     private void OnStartButtonClicked(object o, EventArgs eventArgs)
     {
         _sceneService.ChangeScene(SceneType.Gameplay);
+    }
+
+    private void OnOptionsButtonClicked(object sender, EventArgs e)
+    {
+        _optionsPanel.IsVisible = true;
+    }
+
+    private void OnOptionsBackButtonClicked()
+    {
+        _optionsPanel.IsVisible = false;
     }
 
     private void OnQuitButtonClicked(object o, EventArgs eventArgs)
