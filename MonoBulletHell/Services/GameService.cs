@@ -1,19 +1,23 @@
-using Microsoft.Xna.Framework;
-
 namespace MonoBulletHell.Services;
 
 public interface IGameService
 {
+    void ApplyScale(float scale);
     void Exit();
 }
 
 public class GameService : IGameService
 {
-    private readonly Game _game;
+    private readonly MonoBulletHellGame _game;
 
-    public GameService(Game game)
+    public GameService(MonoBulletHellGame game)
     {
         _game = game;
+    }
+
+    public void ApplyScale(float scale)
+    {
+        _game.ApplyScale(scale);
     }
 
     public void Exit()

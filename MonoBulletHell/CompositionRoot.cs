@@ -1,6 +1,5 @@
 using System;
 using LightInject;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Gameplay;
@@ -8,6 +7,7 @@ using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Scenes;
 using MonoBulletHell.Services;
+using MonoBulletHell.Ui;
 using MonoGameGum;
 
 namespace MonoBulletHell;
@@ -16,7 +16,7 @@ public class CompositionRoot
 {
     private readonly ServiceContainer _container;
 
-    public CompositionRoot(Game game)
+    public CompositionRoot(MonoBulletHellGame game)
     {
         _container = new ServiceContainer();
 
@@ -36,7 +36,7 @@ public class CompositionRoot
         return _container.GetInstance<T>();
     }
 
-    private void RegisterGlobal(Game game)
+    private void RegisterGlobal(MonoBulletHellGame game)
     {
         _container.RegisterInstance<IGameService>(new GameService(game));
 
@@ -45,6 +45,9 @@ public class CompositionRoot
         _container.Register<IInputService, InputService>(new PerContainerLifetime());
         _container.Register<ISceneService, SceneService>(new PerContainerLifetime());
         _container.Register<IDebugService, DebugService>(new PerContainerLifetime());
+
+        _container.Register<IUiMediator, UiMediator>(new PerContainerLifetime());
+        _container.Register<IUiFactory, UiFactory>(new PerContainerLifetime());
 
         // Scope factory
         _container.Register<Func<Scope>>(c => c.BeginScope);

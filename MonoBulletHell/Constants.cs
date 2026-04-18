@@ -11,11 +11,6 @@ public static class Constants
     public const int VirtualWidth = 320;
     public const int VirtualHeight = 480;
 
-    public const int ActualWidth = (int)(VirtualWidth * ScreenScale);
-    public const int ActualHeight = (int)(VirtualHeight * ScreenScale);
-
-    private const float ScreenScale = 2.5f;
-
     public static class Colors
     {
         public static readonly Color BackgroundColor = ColorHelper.FromHex("#5C4B51");

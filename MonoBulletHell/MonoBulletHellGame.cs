@@ -16,6 +16,7 @@ public class MonoBulletHellGame : Game
     private const double TargetFps = 144.0;
 
     private readonly CompositionRoot _root;
+    private readonly GraphicsDeviceManager _graphics;
 
     private SpriteBatch _spriteBatch;
     private GumService _gumService;
@@ -26,18 +27,20 @@ public class MonoBulletHellGame : Game
     private RenderTarget2D _nativeRenderTarget;
     private Rectangle _actualScreenRectangle;
 
+    private float _scale = 1f;
+
     public MonoBulletHellGame()
     {
         _root = new CompositionRoot(this);
 
-        var graphics = new GraphicsDeviceManager(this);
-        graphics.PreferredBackBufferWidth = Constants.ActualWidth;
-        graphics.PreferredBackBufferHeight = Constants.ActualHeight;
-        graphics.IsFullScreen = false;
+        _graphics = new GraphicsDeviceManager(this);
+        _graphics.IsFullScreen = false;
+        ApplyScale(_scale);
 
         Content.RootDirectory = "Content";
 
         IsMouseVisible = true;
+        Window.AllowUserResizing = false;
 
         IsFixedTimeStep = true;
         TargetElapsedTime = TimeSpan.FromSeconds(1.0 / TargetFps);
@@ -58,7 +61,6 @@ public class MonoBulletHellGame : Game
         InitializeGum(Content);
 
         _nativeRenderTarget = new RenderTarget2D(GraphicsDevice, Constants.VirtualWidth, Constants.VirtualHeight);
-        _actualScreenRectangle = new Rectangle(0, 0, Constants.ActualWidth, Constants.ActualHeight);
 
         _sceneService.ChangeScene(SceneType.Title);
     }
@@ -89,6 +91,20 @@ public class MonoBulletHellGame : Game
         _spriteBatch.End();
 
         base.Draw(gameTime);
+    }
+
+    public void ApplyScale(float scale) // TODO: refactor
+    {
+        _scale = scale;
+
+        var newWidth = (int)(Constants.VirtualWidth * scale);
+        var newHeight = (int)(Constants.VirtualHeight * scale);
+
+        _graphics.PreferredBackBufferWidth = newWidth;
+        _graphics.PreferredBackBufferHeight = newHeight;
+        _graphics.ApplyChanges();
+
+        _actualScreenRectangle = new Rectangle(0, 0, newWidth, newHeight);
     }
 
     private void InitializeGum(ContentManager content)

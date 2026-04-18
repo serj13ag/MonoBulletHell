@@ -6,9 +6,9 @@ using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.Services;
-using MonoBulletHell.Gameplay.Ui;
 using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
+using MonoBulletHell.Ui;
 using MonoGameGum;
 
 namespace MonoBulletHell.Scenes;
@@ -23,6 +23,7 @@ public class GameplayScene : BaseScene
     }
 
     private readonly GumService _gumService;
+    private readonly IUiFactory _uiFactory;
     private readonly IInputService _inputService;
     private readonly ISceneService _sceneService;
     private readonly IContentService _contentService;
@@ -42,12 +43,14 @@ public class GameplayScene : BaseScene
     private Ship _ship;
 
     public GameplayScene(ContentManager content, GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, GumService gumService,
-        IInputService inputService, ISceneService sceneService, ITimeService timeService, IContentService contentService,
-        IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService, IEnemySpawnService enemySpawnService,
-        IBackgroundService backgroundService, IParticleService particleService, IRenderService renderService)
+        IUiFactory uiFactory, IInputService inputService, ISceneService sceneService, ITimeService timeService,
+        IContentService contentService, IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService,
+        IEnemySpawnService enemySpawnService, IBackgroundService backgroundService, IParticleService particleService,
+        IRenderService renderService)
         : base(content, graphicsDevice, spriteBatch)
     {
         _gumService = gumService;
+        _uiFactory = uiFactory;
         _inputService = inputService;
         _sceneService = sceneService;
         _contentService = contentService;
@@ -124,7 +127,7 @@ public class GameplayScene : BaseScene
 
         _backgroundService.Render(_renderService);
         _ship.Render(_renderService);
-        
+
         _bulletService.Render(_renderService);
         _enemyService.Render(_renderService);
         _particleService.Render(_renderService);
@@ -195,7 +198,7 @@ public class GameplayScene : BaseScene
     {
         _gumService.Root.Children.Clear();
 
-        _ui = new GameplayUi(_gumService);
+        _ui = new GameplayUi(_gumService, _uiFactory);
 
         _ui.ResumeButtonClicked += OnResumeButtonClicked;
         _ui.RestartButtonClicked += OnRestartButtonClicked;

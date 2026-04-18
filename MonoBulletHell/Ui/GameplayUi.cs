@@ -4,7 +4,7 @@ using MonoBulletHell.Ui.Panels;
 using MonoGameGum;
 using MonoGameGum.GueDeriving;
 
-namespace MonoBulletHell.Gameplay.Ui;
+namespace MonoBulletHell.Ui;
 
 public class GameplayUi : ContainerRuntime
 {
@@ -18,14 +18,14 @@ public class GameplayUi : ContainerRuntime
     public event Action RestartButtonClicked;
     public event Action QuitButtonClicked;
 
-    public GameplayUi(GumService gumService)
+    public GameplayUi(GumService gumService, IUiFactory uiFactory)
     {
         _gumService = gumService;
 
         Dock(Gum.Wireframe.Dock.Fill);
         this.AddToRoot();
 
-        _pausePanel = new PausePanel();
+        _pausePanel = uiFactory.CreatePausePanel();
         AddChild(_pausePanel.Visual);
         _pausePanel.OnResumeButtonClicked += OnResumeButtonClicked;
         _pausePanel.OnRestartButtonClicked += OnRestartButtonClicked;
@@ -33,12 +33,12 @@ public class GameplayUi : ContainerRuntime
         _pausePanel.OnQuitButtonClicked += OnQuitButtonClicked;
         _pausePanel.Disable();
 
-        _optionsPanel = new OptionsPanel();
+        _optionsPanel = uiFactory.CreateOptionsPanel();
         _optionsPanel.AddToRoot();
         _optionsPanel.OnBackButtonClicked += OnOptionsBackButtonClicked;
         _optionsPanel.Disable();
 
-        _gameOverPanel = new GameOverPanel();
+        _gameOverPanel = uiFactory.CreateGameOverPanel();
         AddChild(_gameOverPanel.Visual);
         _gameOverPanel.Disable();
         _gameOverPanel.OnRestartButtonClicked += OnRestartButtonClicked;

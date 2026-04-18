@@ -16,17 +16,20 @@ public class TitleScene : BaseScene
 {
     private readonly IGameService _gameService;
     private readonly GumService _gumService;
+    private readonly IUiFactory _uiFactory;
     private readonly IInputService _inputService;
     private readonly ISceneService _sceneService;
 
     private OptionsPanel _optionsPanel;
 
     public TitleScene(IGameService gameService, ContentManager contentManager, GraphicsDevice graphicsDevice,
-        SpriteBatch spriteBatch, GumService gumService, IInputService inputService, ISceneService sceneService)
+        SpriteBatch spriteBatch, GumService gumService, IUiFactory uiFactory, IInputService inputService,
+        ISceneService sceneService)
         : base(contentManager, graphicsDevice, spriteBatch)
     {
         _gameService = gameService;
         _gumService = gumService;
+        _uiFactory = uiFactory;
         _inputService = inputService;
         _sceneService = sceneService;
     }
@@ -63,7 +66,7 @@ public class TitleScene : BaseScene
         var mainPanel = CreateMainPanel();
         mainPanel.AddToRoot();
 
-        _optionsPanel = new OptionsPanel();
+        _optionsPanel = _uiFactory.CreateOptionsPanel();
         _optionsPanel.AddToRoot();
         _optionsPanel.OnBackButtonClicked += OnOptionsBackButtonClicked;
         _optionsPanel.Disable();
