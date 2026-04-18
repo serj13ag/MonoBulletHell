@@ -32,6 +32,26 @@
           "Position": "1, 0"
         }
       ]
+    },
+    {
+      "Name": "testCurve",
+      "Points": [
+        {
+          "Position": "0, 0"
+        },
+        {
+          "Position": "0.5, 0.3",
+          "ControlPoints": [
+            "0, 0.3"
+          ]
+        },
+        {
+          "Position": "1, 0",
+          "ControlPoints": [
+            "1, 0.3"
+          ]
+        }
+      ]
     }
   ]
 }

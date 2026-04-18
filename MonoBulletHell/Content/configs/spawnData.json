@@ -15,7 +15,21 @@
       ]
     },
     {
-      "SpawnTime": 3.0,
+      "SpawnTime": 1,
+      "PathName": "testCurve",
+      "Enemies": [
+        {
+          "NormalizedSpawnPositionX": 0.2,
+          "NormalizedSpawnPositionY": 0.1
+        },
+        {
+          "NormalizedSpawnPositionX": 0.8,
+          "NormalizedSpawnPositionY": 0.1
+        }
+      ]
+    },
+    {
+      "SpawnTime": 1.5,
       "PathName": "testLoop",
       "Enemies": [
         {

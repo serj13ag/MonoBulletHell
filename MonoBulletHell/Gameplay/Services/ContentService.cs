@@ -99,11 +99,19 @@ public class ContentService : IContentService
 
     private void ValidateData()
     {
-        foreach (var path in _paths)
+        foreach (var path in _paths.Values)
         {
-            if (path.Value.Points.Count < 2)
+            if (path.Points.Count < 2)
             {
                 throw new Exception("Path must have at least 2 points");
+            }
+
+            foreach (var pathPointData in path.Points)
+            {
+                if (pathPointData.ControlPoints?.Count > 2)
+                {
+                    throw new Exception("Path must have max 2 control points");
+                }
             }
         }
 

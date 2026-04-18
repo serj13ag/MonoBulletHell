@@ -22,6 +22,7 @@ public class PathData
 public class PathPointData
 {
     public Vector2 Position { get; set; }
+    public List<Vector2> ControlPoints { get; set; }
     public float WaitTime { get; set; }
     public float SpeedMultiplier { get; set; }
     public bool ShootingDisabled { get; set; }

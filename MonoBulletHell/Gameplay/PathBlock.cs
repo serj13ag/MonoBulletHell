@@ -81,7 +81,8 @@ public class PathBlock
         }
         else
         {
-            _currentPosition = Vector2.Lerp(_startPosition, _targetPosition, _progress);
+            var nextPoint = _path.Points[_currentIndex + 1];
+            _currentPosition = CalculateCurrentPosition(nextPoint);
         }
     }
 
@@ -139,6 +140,26 @@ public class PathBlock
         else
         {
             IsFinished = true;
+        }
+    }
+
+    private Vector2 CalculateCurrentPosition(PathPointData nextPoint)
+    {
+        switch (nextPoint.ControlPoints?.Count)
+        {
+            case 1:
+            {
+                var c = ScreenHelper.ToVirtualPosition(nextPoint.ControlPoints[0]);
+                return GameMathHelper.QuadraticBezier(_startPosition, c, _targetPosition, _progress);
+            }
+            case 2:
+            {
+                var c1 = ScreenHelper.ToVirtualPosition(nextPoint.ControlPoints[0]);
+                var c2 = ScreenHelper.ToVirtualPosition(nextPoint.ControlPoints[1]);
+                return GameMathHelper.CubicBezier(_startPosition, c1, c2, _targetPosition, _progress);
+            }
+            default:
+                return Vector2.Lerp(_startPosition, _targetPosition, _progress);
         }
     }
 
