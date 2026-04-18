@@ -9,15 +9,15 @@ public interface IUiMediator
 
 public class UiMediator : IUiMediator
 {
-    private readonly IGameService _gameService;
+    private readonly IScreenService _screenService;
 
-    public UiMediator(IGameService gameService)
+    public UiMediator(IScreenService screenService)
     {
-        _gameService = gameService;
+        _screenService = screenService;
     }
 
     public void ResolutionScaleSelected(float scale)
     {
-        _gameService.ApplyScale(scale);
+        _screenService.ApplyScale(scale);
     }
 }

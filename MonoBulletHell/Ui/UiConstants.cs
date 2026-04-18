@@ -2,7 +2,7 @@ namespace MonoBulletHell.Ui;
 
 public static class UiConstants
 {
-    public const string TitleText = "MONO HELL";
+    public const string GameTitleText = "MONO HELL";
     public const string StartButtonText = "START GAME";
     public const string OptionsButtonText = "OPTIONS";
     public const string BackButtonText = "BACK";

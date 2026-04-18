@@ -3,7 +3,6 @@ using Gum.Forms;
 using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoBulletHell.Scenes;
 using MonoBulletHell.Services;
@@ -16,26 +15,16 @@ public class MonoBulletHellGame : Game
     private const double TargetFps = 144.0;
 
     private readonly CompositionRoot _root;
-    private readonly GraphicsDeviceManager _graphics;
 
-    private SpriteBatch _spriteBatch;
     private GumService _gumService;
     private IInputService _inputService;
+    private IScreenService _screenService;
     private ISceneService _sceneService;
     private IDebugService _debugService;
-
-    private RenderTarget2D _nativeRenderTarget;
-    private Rectangle _actualScreenRectangle;
-
-    private float _scale = 1f;
 
     public MonoBulletHellGame()
     {
         _root = new CompositionRoot(this);
-
-        _graphics = new GraphicsDeviceManager(this);
-        _graphics.IsFullScreen = false;
-        ApplyScale(_scale);
 
         Content.RootDirectory = "Content";
 
@@ -52,15 +41,14 @@ public class MonoBulletHellGame : Game
 
         _root.Initialize(Content, GraphicsDevice);
 
-        _spriteBatch = _root.GetInstance<SpriteBatch>();
         _gumService = _root.GetInstance<GumService>();
         _inputService = _root.GetInstance<IInputService>();
+        _screenService = _root.GetInstance<IScreenService>();
         _sceneService = _root.GetInstance<ISceneService>();
         _debugService = _root.GetInstance<IDebugService>();
 
+        _screenService.Initialize();
         InitializeGum(Content);
-
-        _nativeRenderTarget = new RenderTarget2D(GraphicsDevice, Constants.VirtualWidth, Constants.VirtualHeight);
 
         _sceneService.ChangeScene(SceneType.Title);
     }
@@ -70,7 +58,7 @@ public class MonoBulletHellGame : Game
         _inputService.Update();
         _debugService.Update();
 
-        UpdateGumCursorTransform();
+        _gumService.Cursor.TransformMatrix = _screenService.GetTransformMatrix();
 
         _sceneService.Update(gameTime);
 
@@ -79,32 +67,14 @@ public class MonoBulletHellGame : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        GraphicsDevice.SetRenderTarget(_nativeRenderTarget);
+        _screenService.SetNativeRenderTarget();
 
         _sceneService.Draw(gameTime);
         _debugService.Render();
 
-        // Scale image
-        GraphicsDevice.SetRenderTarget(null);
-        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-        _spriteBatch.Draw(_nativeRenderTarget, _actualScreenRectangle, Color.White);
-        _spriteBatch.End();
+        _screenService.RenderResultImage();
 
         base.Draw(gameTime);
-    }
-
-    public void ApplyScale(float scale) // TODO: refactor
-    {
-        _scale = scale;
-
-        var newWidth = (int)(Constants.VirtualWidth * scale);
-        var newHeight = (int)(Constants.VirtualHeight * scale);
-
-        _graphics.PreferredBackBufferWidth = newWidth;
-        _graphics.PreferredBackBufferHeight = newHeight;
-        _graphics.ApplyChanges();
-
-        _actualScreenRectangle = new Rectangle(0, 0, newWidth, newHeight);
     }
 
     private void InitializeGum(ContentManager content)
@@ -119,16 +89,5 @@ public class MonoBulletHellGame : Game
 
         _gumService.CanvasWidth = Constants.VirtualWidth;
         _gumService.CanvasHeight = Constants.VirtualHeight;
-    }
-
-    private void UpdateGumCursorTransform()
-    {
-        var translation = Matrix.CreateTranslation(-_actualScreenRectangle.X, -_actualScreenRectangle.Y, 0);
-
-        var xScale = Constants.VirtualWidth / (float)_actualScreenRectangle.Width;
-        var yScale = Constants.VirtualHeight / (float)_actualScreenRectangle.Height;
-        var scale = Matrix.CreateScale(xScale, yScale, 1f);
-
-        _gumService.Cursor.TransformMatrix = translation * scale;
     }
 }

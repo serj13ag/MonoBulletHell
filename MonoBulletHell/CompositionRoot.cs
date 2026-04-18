@@ -1,5 +1,6 @@
 using System;
 using LightInject;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Gameplay;
@@ -38,11 +39,14 @@ public class CompositionRoot
 
     private void RegisterGlobal(MonoBulletHellGame game)
     {
-        _container.RegisterInstance<IGameService>(new GameService(game));
+        _container.RegisterInstance(new GraphicsDeviceManager(game));
 
         _container.RegisterInstance(GumService.Default);
 
+        _container.RegisterInstance<IGameService>(new GameService(game));
+
         _container.Register<IInputService, InputService>(new PerContainerLifetime());
+        _container.Register<IScreenService, ScreenService>(new PerContainerLifetime());
         _container.Register<ISceneService, SceneService>(new PerContainerLifetime());
         _container.Register<IDebugService, DebugService>(new PerContainerLifetime());
 

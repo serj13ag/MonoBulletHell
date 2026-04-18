@@ -2,7 +2,6 @@ namespace MonoBulletHell.Services;
 
 public interface IGameService
 {
-    void ApplyScale(float scale);
     void Exit();
 }
 
@@ -13,11 +12,6 @@ public class GameService : IGameService
     public GameService(MonoBulletHellGame game)
     {
         _game = game;
-    }
-
-    public void ApplyScale(float scale)
-    {
-        _game.ApplyScale(scale);
     }
 
     public void Exit()

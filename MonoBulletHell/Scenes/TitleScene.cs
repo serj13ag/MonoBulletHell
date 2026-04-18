@@ -80,7 +80,7 @@ public class TitleScene : BaseScene
         var titleText = new Label();
         mainPanel.AddChild(titleText);
         titleText.Anchor(Anchor.Top);
-        titleText.Text = UiConstants.TitleText;
+        titleText.Text = UiConstants.GameTitleText;
         titleText.Y = 100f;
 
         CreateButtons(mainPanel);
