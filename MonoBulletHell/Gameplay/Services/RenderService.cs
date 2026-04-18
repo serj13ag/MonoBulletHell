@@ -18,6 +18,8 @@ public interface IRenderService
 
 public class RenderService : IRenderService
 {
+    private static readonly SamplerState SamplerState = SamplerState.PointClamp;
+
     private BackgroundRenderRequest _backgroundBatch;
     private readonly List<SpriteRenderRequest> _simpleBatches = new List<SpriteRenderRequest>(64);
     private readonly List<SpriteRenderRequest> _effectBatches = new List<SpriteRenderRequest>(32);
@@ -53,7 +55,7 @@ public class RenderService : IRenderService
         }
 
         // simple
-        spriteBatch.Begin(samplerState: Constants.SamplerState);
+        spriteBatch.Begin(samplerState: SamplerState);
 
         foreach (var renderRequest in _simpleBatches)
         {
@@ -67,7 +69,7 @@ public class RenderService : IRenderService
         // effects
         foreach (var effect in _effectBatches)
         {
-            spriteBatch.Begin(samplerState: Constants.SamplerState, effect: effect.Effect);
+            spriteBatch.Begin(samplerState: SamplerState, effect: effect.Effect);
             effect.Draw(spriteBatch);
             spriteBatch.End();
         }
