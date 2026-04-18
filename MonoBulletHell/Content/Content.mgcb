@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin configs/pathConfig.json
+/copy:configs/pathConfig.json
+
 #begin configs/spawnData.json
 /copy:configs/spawnData.json
 

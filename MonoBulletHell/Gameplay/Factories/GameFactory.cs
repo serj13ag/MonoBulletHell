@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+using MonoBulletHell.Data;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
@@ -8,7 +8,7 @@ namespace MonoBulletHell.Gameplay.Factories;
 public interface IGameFactory
 {
     Ship CreateShip();
-    Enemy CreateEnemy(Vector2 vector2);
+    Enemy CreateEnemy(PathData path);
 }
 
 public class GameFactory : IGameFactory
@@ -38,13 +38,9 @@ public class GameFactory : IGameFactory
         return ship;
     }
 
-    public Enemy CreateEnemy(Vector2 position)
+    public Enemy CreateEnemy(PathData path)
     {
-        var enemy = new Enemy(_debugService, _timeService, _bulletService, _contentService)
-        {
-            Position = position,
-        };
-
+        var enemy = new Enemy(_debugService, _timeService, _bulletService, _contentService, path);
         return enemy;
     }
 }

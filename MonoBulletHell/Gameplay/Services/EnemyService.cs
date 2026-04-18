@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 
@@ -10,19 +9,21 @@ public interface IEnemyService
     void Update();
     void Render(IRenderService renderService);
 
-    void SpawnEnemy(Vector2 vector2);
+    void SpawnEnemy(string pathName);
     void Clear();
 }
 
 public class EnemyService : IEnemyService
 {
+    private readonly IContentService _contentService;
     private readonly IGameFactory _gameFactory;
     private readonly IGameContext _context;
 
     private readonly List<Enemy> _enemiesToDestroy = new List<Enemy>();
 
-    public EnemyService(IGameFactory gameFactory, IGameContext context)
+    public EnemyService(IContentService contentService, IGameFactory gameFactory, IGameContext context)
     {
+        _contentService = contentService;
         _gameFactory = gameFactory;
         _context = context;
     }
@@ -33,7 +34,7 @@ public class EnemyService : IEnemyService
         {
             enemy.Update();
 
-            if (enemy.IsDead)
+            if (enemy.IsDead || enemy.PathIsFinished)
             {
                 _enemiesToDestroy.Add(enemy);
             }
@@ -55,9 +56,10 @@ public class EnemyService : IEnemyService
         }
     }
 
-    public void SpawnEnemy(Vector2 vector2)
+    public void SpawnEnemy(string pathName)
     {
-        var enemy = _gameFactory.CreateEnemy(vector2);
+        var path = _contentService.GetPath(pathName);
+        var enemy = _gameFactory.CreateEnemy(path);
         _context.Enemies.Add(enemy);
     }
 

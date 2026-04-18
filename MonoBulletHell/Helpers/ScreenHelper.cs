@@ -11,10 +11,10 @@ public static class ScreenHelper
         return new Vector2(virtualWidth, virtualHeight);
     }
 
-    public static Vector2 ToVirtualPosition(float normalizedX, float normalizedY)
+    public static Vector2 ToVirtualPosition(Vector2 normalized)
     {
-        var pixelX = normalizedX * Constants.VirtualWidth;
-        var pixelY = normalizedY * Constants.VirtualHeight;
+        var pixelX = normalized.X * Constants.VirtualWidth;
+        var pixelY = normalized.Y * Constants.VirtualHeight;
         return new Vector2(pixelX, pixelY);
     }
 

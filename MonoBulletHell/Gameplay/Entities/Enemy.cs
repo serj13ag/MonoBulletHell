@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Data;
 using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
@@ -13,6 +14,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
     private const float FlashEffectDuration = 0.2f;
 
     private const int Health = 10; // TODO: to config
+    private const float Speed = 100f; // TODO: to config
     private const float ShootCooldown = 0.5f;
     private const float BulletSpeed = 300f;
     private const int BulletDamage = 1;
@@ -26,6 +28,8 @@ public class Enemy : BaseEntity, IEntityWithCollider
     private readonly Sprite _sprite;
     private readonly Effect _flashEffect;
 
+    private readonly PathBlock _pathBlock;
+
     private Circle _collider;
     private int _currentHealth = Health;
     private float _timeTillShoot;
@@ -36,9 +40,10 @@ public class Enemy : BaseEntity, IEntityWithCollider
     public Circle Collider => _collider;
 
     public bool IsDead => _currentHealth <= 0;
+    public bool PathIsFinished => _pathBlock.IsFinished;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IBulletService bulletService,
-        IContentService contentService)
+        IContentService contentService, PathData path)
     {
         _debugService = debugService;
         _timeService = timeService;
@@ -46,10 +51,16 @@ public class Enemy : BaseEntity, IEntityWithCollider
 
         _sprite = GetEnemySprite(contentService);
         _flashEffect = contentService.GetFlashEffect();
+
+        _pathBlock = new PathBlock(path, Speed);
+        Position = _pathBlock.Position;
     }
 
     public void Update()
     {
+        _pathBlock.Update(_timeService.DeltaTime);
+        Position = _pathBlock.Position;
+
         HandleShooting();
         HandleFlashEffect();
 
@@ -84,6 +95,11 @@ public class Enemy : BaseEntity, IEntityWithCollider
     {
         if (_timeTillShoot <= 0f)
         {
+            if (_pathBlock.ShootingDisabled)
+            {
+                return;
+            }
+
             _bulletService.SpawnBullet(Position, Vector2.UnitY, BulletSpeed, BulletDamage, false);
             _timeTillShoot += ShootCooldown;
         }

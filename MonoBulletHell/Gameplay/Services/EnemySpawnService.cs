@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using MonoBulletHell.Data;
-using MonoBulletHell.Helpers;
 
 namespace MonoBulletHell.Gameplay.Services;
 
@@ -51,9 +50,9 @@ public class EnemySpawnService : IEnemySpawnService
 
         if (_passedTime > _nextWaveToSpawn.SpawnTime)
         {
-            foreach (var enemy in _nextWaveToSpawn.Enemies)
+            foreach (var enemy in _nextWaveToSpawn.Enemies) // TODO: unused
             {
-                _enemyService.SpawnEnemy(ScreenHelper.ToVirtualPosition(enemy.NormalizedSpawnPositionX, enemy.NormalizedSpawnPositionY));
+                _enemyService.SpawnEnemy(_nextWaveToSpawn.PathName);
             }
 
             TrySetNextWave();

@@ -1,4 +1,7 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
@@ -17,6 +20,8 @@ public interface IContentService
 
     Effect GetFlashEffect();
     SpawnData GetSpawnData();
+    PathData GetPath(string pathName);
+
     Texture2D BackgroundTexture { get; }
 }
 
@@ -26,7 +31,9 @@ public class ContentService : IContentService
     private TextureAtlas _bulletsAtlas;
 
     private Effect _flashEffect;
+
     private SpawnData _spawnData;
+    private Dictionary<string, PathData> _paths;
 
     public Texture2D BackgroundTexture { get; private set; }
 
@@ -37,7 +44,11 @@ public class ContentService : IContentService
 
         BackgroundTexture = content.Load<Texture2D>("images/background");
         _flashEffect = content.Load<Effect>("shaders/flashEffect");
+
         _spawnData = LoadJsonData<SpawnData>(content, "configs/spawnData.json");
+        _paths = LoadPaths(content);
+
+        ValidateData();
     }
 
     public Sprite CreateSprite(string spriteName)
@@ -65,6 +76,17 @@ public class ContentService : IContentService
         return _spawnData;
     }
 
+    public PathData GetPath(string pathName)
+    {
+        return _paths[pathName];
+    }
+
+    private static Dictionary<string, PathData> LoadPaths(ContentManager content)
+    {
+        var pathConfig = LoadJsonData<PathConfig>(content, "configs/pathConfig.json");
+        return pathConfig.Paths.ToDictionary(path => path.Name);
+    }
+
     private static T LoadJsonData<T>(ContentManager content, string fileName)
     {
         var filePath = Path.Combine(content.RootDirectory, fileName);
@@ -73,5 +95,24 @@ public class ContentService : IContentService
         var spawnData = JsonConvert.DeserializeObject<T>(json);
 
         return spawnData;
+    }
+
+    private void ValidateData()
+    {
+        foreach (var path in _paths)
+        {
+            if (path.Value.Points.Count < 2)
+            {
+                throw new Exception("Path must have at least 2 points");
+            }
+        }
+
+        foreach (var waveData in _spawnData.Waves)
+        {
+            if (!_paths.ContainsKey(waveData.PathName))
+            {
+                throw new Exception("Path not found: " + waveData.PathName);
+            }
+        }
     }
 }

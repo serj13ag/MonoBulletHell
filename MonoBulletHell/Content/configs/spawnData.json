@@ -2,6 +2,7 @@
   "Waves": [
     {
       "SpawnTime": 0.5,
+      "PathName": "test",
       "Enemies": [
         {
           "NormalizedSpawnPositionX": 0.2,
@@ -15,6 +16,7 @@
     },
     {
       "SpawnTime": 3.0,
+      "PathName": "testLoop",
       "Enemies": [
         {
           "NormalizedSpawnPositionX": 0.5,

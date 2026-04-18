@@ -1,0 +1,43 @@
+{
+  "Paths": [
+    {
+      "Name": "test",
+      "Points": [
+        {
+          "X": 0,
+          "Y": 0
+        },
+        {
+          "X": 0.5,
+          "Y": 0.3,
+          "WaitTime": 1
+        },
+        {
+          "X": 1,
+          "Y": 0
+        }
+      ]
+    },
+    {
+      "Name": "testLoop",
+      "Loops": 1,
+      "Points": [
+        {
+          "X": 0,
+          "Y": 0,
+          "ShootingDisabled": true
+        },
+        {
+          "X": 0.5,
+          "Y": 0.3,
+          "WaitTime": 1,
+          "SpeedMultiplier": 2
+        },
+        {
+          "X": 1,
+          "Y": 0
+        }
+      ]
+    }
+  ]
+}
