@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace MonoBulletHell.Data;
 
@@ -20,8 +21,7 @@ public class PathData
 [Serializable]
 public class PathPointData
 {
-    public float X { get; set; }
-    public float Y { get; set; }
+    public Vector2 Position { get; set; }
     public float WaitTime { get; set; }
     public float SpeedMultiplier { get; set; }
     public bool ShootingDisabled { get; set; }

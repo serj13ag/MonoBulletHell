@@ -33,7 +33,7 @@ public class PathBlock
         _loopsLeft = path.Loops;
         _currentIndex = 0;
 
-        UpdatePositions(path.Points[0], path.Points[1]);
+        UpdatePositions(path.Points[0].Position, path.Points[1].Position);
         _currentPosition = _startPosition;
 
         ShootingDisabled = _path.Points[0].ShootingDisabled;
@@ -123,7 +123,7 @@ public class PathBlock
             return;
         }
 
-        UpdatePositions(_path.Points[_currentIndex], _path.Points[_currentIndex + 1]);
+        UpdatePositions(_path.Points[_currentIndex].Position, _path.Points[_currentIndex + 1].Position);
     }
 
     private void HandleEndOfPath()
@@ -134,7 +134,7 @@ public class PathBlock
             _currentIndex = 0;
 
             ShootingDisabled = _path.Points[0].ShootingDisabled;
-            UpdatePositions(_path.Points[0], _path.Points[1]);
+            UpdatePositions(_path.Points[0].Position, _path.Points[1].Position);
         }
         else
         {
@@ -142,15 +142,10 @@ public class PathBlock
         }
     }
 
-    private void UpdatePositions(PathPointData start, PathPointData target)
+    private void UpdatePositions(Vector2 start, Vector2 target)
     {
-        _startPosition = ToScreen(start);
-        _targetPosition = ToScreen(target);
+        _startPosition = ScreenHelper.ToVirtualPosition(start);
+        _targetPosition = ScreenHelper.ToVirtualPosition(target);
         _progress = 0f;
-    }
-
-    private static Vector2 ToScreen(PathPointData pathPointData)
-    {
-        return ScreenHelper.ToVirtualPosition(new Vector2(pathPointData.X, pathPointData.Y));
     }
 }
