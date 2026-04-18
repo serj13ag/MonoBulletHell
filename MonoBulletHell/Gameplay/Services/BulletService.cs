@@ -49,6 +49,7 @@ public class BulletService : IBulletService
                     if (IsColliding(bullet, enemy))
                     {
                         enemy.TakeDamage(bullet.Damage);
+                        _particleService.CreateBulletImpact(bullet.Position);
                         _bulletsToDestroy.Add(bullet);
                         break;
                     }
@@ -57,14 +58,13 @@ public class BulletService : IBulletService
             else if (!bullet.IsPlayer && !_gameContext.Ship.IsImmune && IsColliding(bullet, _gameContext.Ship))
             {
                 _gameContext.Ship.TakeDamage(bullet.Damage);
+                _particleService.CreateBulletImpact(bullet.Position);
                 _bulletsToDestroy.Add(bullet);
             }
         }
 
         foreach (var bulletToDestroy in _bulletsToDestroy)
         {
-            _particleService.CreateBulletImpact(bulletToDestroy.Position);
-
             _bullets.Remove(bulletToDestroy);
         }
 
