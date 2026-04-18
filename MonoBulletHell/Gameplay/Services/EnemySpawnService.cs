@@ -50,10 +50,7 @@ public class EnemySpawnService : IEnemySpawnService
 
         if (_passedTime > _nextWaveToSpawn.SpawnTime)
         {
-            foreach (var enemy in _nextWaveToSpawn.Enemies) // TODO: unused
-            {
-                _enemyService.SpawnEnemy(_nextWaveToSpawn.PathName);
-            }
+            _enemyService.SpawnEnemy(_nextWaveToSpawn.PathName);
 
             TrySetNextWave();
         }
