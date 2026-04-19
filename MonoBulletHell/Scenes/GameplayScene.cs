@@ -68,8 +68,6 @@ public class GameplayScene : BaseScene
     {
         base.Initialize();
 
-        _inputService.SetExitOnEscapeKeyPressed(false);
-
         InitializeUi();
     }
 

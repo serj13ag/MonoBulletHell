@@ -35,14 +35,24 @@ public class TitleScene : BaseScene
     {
         base.Initialize();
 
-        _inputService.SetExitOnEscapeKeyPressed(true);
-
         InitializeUi();
     }
 
     public override void Update(GameTime gameTime)
     {
         base.Update(gameTime);
+
+        if (_inputService.PausePressed())
+        {
+            if (_optionsPanel.IsVisible)
+            {
+                _optionsPanel.Disable();
+            }
+            else
+            {
+                _gameService.Exit();
+            }
+        }
 
         _gumService.Update(gameTime);
     }
