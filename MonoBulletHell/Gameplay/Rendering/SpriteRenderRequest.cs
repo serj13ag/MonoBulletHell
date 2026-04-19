@@ -22,6 +22,6 @@ public class SpriteRenderRequest
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        _sprite.Draw(spriteBatch, _position, _rotation);
+        _sprite.Draw(spriteBatch, Vector2.Floor(_position), _rotation);
     }
 }
