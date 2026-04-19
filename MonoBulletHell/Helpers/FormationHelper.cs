@@ -17,6 +17,8 @@ public static class FormationHelper
                 return GetCirclePositions(formation);
             case FormationType.Grid:
                 return GetGridPositions(formation);
+            case FormationType.VShape:
+                return GetVShapePositions(formation);
             case FormationType.Undefined:
             default:
                 throw new ArgumentOutOfRangeException();
@@ -79,6 +81,33 @@ public static class FormationHelper
             );
 
             positions.Add(RotateAroundCenter(offset, formation.Rotation));
+        }
+
+        return positions;
+    }
+
+    private static List<Vector2> GetVShapePositions(FormationData formation)
+    {
+        var positions = new List<Vector2>();
+
+        var direction = formation.Inverted ? 1f : -1f;
+
+        for (var row = 0; row < formation.Rows; row++)
+        {
+            var y = row * formation.SpacingY * direction;
+
+            if (row == 0)
+            {
+                var offset = new Vector2(0, 0);
+                positions.Add(RotateAroundCenter(offset, formation.Rotation));
+                continue;
+            }
+
+            var left = new Vector2(-row * formation.SpacingX, y);
+            var right = new Vector2(row * formation.SpacingX, y);
+
+            positions.Add(RotateAroundCenter(left, formation.Rotation));
+            positions.Add(RotateAroundCenter(right, formation.Rotation));
         }
 
         return positions;

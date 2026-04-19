@@ -38,6 +38,18 @@
         "SpacingX": 120,
         "SpacingY": 50
       }
+    },
+    {
+      "SpawnTime": 9,
+      "Position": "160, 0",
+      "PathName": "test",
+      "Formation": {
+        "Type": "VShape",
+        "Rows": 4,
+        "SpacingX": 40,
+        "SpacingY": 40,
+        "Inverted": true
+      }
     }
   ]
 }

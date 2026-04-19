@@ -6,4 +6,5 @@ public enum FormationType
     Line,
     Circle,
     Grid,
+    VShape,
 }

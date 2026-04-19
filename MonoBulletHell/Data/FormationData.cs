@@ -9,15 +9,11 @@ public class FormationData
     public int Count { get; set; }
     public float Rotation { get; set; }
 
-    // Line
-    public int Spacing { get; set; }
-
-    // Circle
-    public float Radius { get; set; }
-    
-    // Grid
-    public int Rows { get; set; }
-    public int Columns { get; set; }
-    public float SpacingX { get; set; }
-    public float SpacingY { get; set; }
+    public int Spacing { get; set; } // Line
+    public float Radius { get; set; } // Circle
+    public int Rows { get; set; } // Grid, VShape
+    public int Columns { get; set; } // Grid
+    public float SpacingX { get; set; } // Grid, VShape
+    public float SpacingY { get; set; } // Grid, VShape
+    public bool Inverted { get; set; } // VShape
 }
