@@ -2,24 +2,8 @@
   "Waves": [
     {
       "SpawnTime": 1,
-      "Position": "0, 0",
-      "PathName": "test"
-    },
-    {
-      "SpawnTime": 3,
-      "Position": "0, 100",
-      "PathName": "testCurve",
-      "Formation": {
-        "Type": "Circle",
-        "Count": 3,
-        "Radius": 50,
-        "Rotation": 30
-      }
-    },
-    {
-      "SpawnTime": 5,
-      "Position": "0, 200",
-      "PathName": "testLoop",
+      "Position": "40, 0",
+      "PathName": "down",
       "Formation": {
         "Type": "Line",
         "Count": 3,
@@ -28,27 +12,47 @@
       }
     },
     {
-      "SpawnTime": 7,
-      "Position": "160, 0",
-      "PathName": "test",
+      "SpawnTime": 3,
+      "Position": "280, 0",
+      "PathName": "down",
       "Formation": {
-        "Type": "Grid",
-        "Rows": 3,
-        "Columns": 2,
-        "SpacingX": 120,
-        "SpacingY": 50
+        "Type": "Line",
+        "Count": 3,
+        "Spacing": 50,
+        "Rotation": 90
       }
     },
     {
-      "SpawnTime": 9,
+      "SpawnTime": 5,
       "Position": "160, 0",
-      "PathName": "test",
+      "PathName": "down",
       "Formation": {
         "Type": "VShape",
-        "Rows": 4,
+        "Rows": 3,
         "SpacingX": 40,
-        "SpacingY": 40,
-        "Inverted": true
+        "SpacingY": 40
+      }
+    },
+    {
+      "SpawnTime": 8,
+      "Position": "0, 0",
+      "PathName": "downRight",
+      "Formation": {
+        "Type": "Line",
+        "Count": 3,
+        "Spacing": 50,
+        "Rotation": 135
+      }
+    },
+    {
+      "SpawnTime": 8.1,
+      "Position": "320, 0",
+      "PathName": "downLeft",
+      "Formation": {
+        "Type": "Line",
+        "Count": 3,
+        "Spacing": 50,
+        "Rotation": 45
       }
     }
   ]

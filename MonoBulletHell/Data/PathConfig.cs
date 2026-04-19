@@ -16,6 +16,7 @@ public class PathData
     public string Name { get; set; }
     public int Loops { get; set; }
     public List<PathPointData> Points { get; set; }
+    // TODO: add inverse bool
 }
 
 [Serializable]

@@ -1,17 +1,35 @@
 {
   "Paths": [
     {
-      "Name": "test",
+      "Name": "down",
       "Points": [
         {
           "Position": "0, 0"
         },
         {
-          "Position": "160, 160",
-          "WaitTime": 1
+          "Position": "0, 480"
+        }
+      ]
+    },
+    {
+      "Name": "downRight",
+      "Points": [
+        {
+          "Position": "0, 0"
         },
         {
-          "Position": "320, 0"
+          "Position": "320, 480"
+        }
+      ]
+    },
+    {
+      "Name": "downLeft",
+      "Points": [
+        {
+          "Position": "0, 0"
+        },
+        {
+          "Position": "-320, 480"
         }
       ]
     },
