@@ -1,19 +1,43 @@
 {
   "Waves": [
     {
-      "SpawnTime": 0.5,
+      "SpawnTime": 1,
       "Position": "0, 0",
       "PathName": "test"
     },
     {
-      "SpawnTime": 1,
+      "SpawnTime": 3,
       "Position": "0, 100",
-      "PathName": "testCurve"
+      "PathName": "testCurve",
+      "Formation": {
+        "Type": "Circle",
+        "Count": 3,
+        "Radius": 50,
+        "Rotation": 30
+      }
     },
     {
-      "SpawnTime": 1.5,
+      "SpawnTime": 5,
       "Position": "0, 200",
-      "PathName": "testLoop"
+      "PathName": "testLoop",
+      "Formation": {
+        "Type": "Line",
+        "Count": 3,
+        "Spacing": 50,
+        "Rotation": 90
+      }
+    },
+    {
+      "SpawnTime": 7,
+      "Position": "160, 0",
+      "PathName": "test",
+      "Formation": {
+        "Type": "Grid",
+        "Rows": 3,
+        "Columns": 2,
+        "SpacingX": 120,
+        "SpacingY": 50
+      }
     }
   ]
 }

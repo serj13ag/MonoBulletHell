@@ -16,4 +16,5 @@ public class WaveData
     public float SpawnTime { get; set; }
     public Vector2 Position { get; set; }
     public string PathName { get; set; }
+    public FormationData Formation { get; set; }
 }
