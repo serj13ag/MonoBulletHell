@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 using MonoBulletHell.Data;
 using MonoBulletHell.Helpers;
 
@@ -65,7 +66,7 @@ public class EnemySpawnService : IEnemySpawnService
             return;
         }
 
-        foreach (var spawnPosition in FormationHelper.GetSpawnPositions(nextWaveToSpawn.Formation))
+        foreach (var spawnPosition in FormationHelper.GetSpawnPositions(nextWaveToSpawn.Formation, nextWaveToSpawn.Position))
         {
             _enemyService.SpawnEnemy(spawnPosition, nextWaveToSpawn.PathName);
         }

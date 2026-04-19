@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Data;
 
@@ -7,58 +8,58 @@ namespace MonoBulletHell.Helpers;
 
 public static class FormationHelper
 {
-    public static List<Vector2> GetSpawnPositions(FormationData formation)
+    public static List<Vector2> GetSpawnPositions(FormationData formation, Vector2 position)
     {
+        IEnumerable<Vector2> formationPositions;
+
         switch (formation.Type)
         {
             case FormationType.Line:
-                return GetLinePositions(formation);
+                formationPositions = GetLinePositions(formation);
+                break;
             case FormationType.Circle:
-                return GetCirclePositions(formation);
+                formationPositions = GetCirclePositions(formation);
+                break;
             case FormationType.Grid:
-                return GetGridPositions(formation);
+                formationPositions = GetGridPositions(formation);
+                break;
             case FormationType.VShape:
-                return GetVShapePositions(formation);
+                formationPositions = GetVShapePositions(formation);
+                break;
             case FormationType.Undefined:
             default:
                 throw new ArgumentOutOfRangeException();
         }
+
+        return formationPositions
+            .Select(formationPosition => position + formationPosition)
+            .ToList();
     }
 
-    private static List<Vector2> GetLinePositions(FormationData formationData)
+    private static IEnumerable<Vector2> GetLinePositions(FormationData formationData)
     {
-        var positions = new List<Vector2>();
-
         var totalWidth = (formationData.Count - 1) * formationData.Spacing;
         var startX = -totalWidth / 2f;
 
         for (var i = 0; i < formationData.Count; i++)
         {
             var offset = new Vector2(startX + i * formationData.Spacing, 0);
-            positions.Add(RotateAroundCenter(offset, formationData.Rotation));
+            yield return RotateAroundCenter(offset, formationData.Rotation);
         }
-
-        return positions;
     }
 
-    private static List<Vector2> GetCirclePositions(FormationData formationData)
+    private static IEnumerable<Vector2> GetCirclePositions(FormationData formationData)
     {
-        var positions = new List<Vector2>();
-
         for (var i = 0; i < formationData.Count; i++)
         {
             var angle = i / (float)formationData.Count * MathF.PI * 2;
             var offset = new Vector2(MathF.Cos(angle), MathF.Sin(angle)) * formationData.Radius;
-            positions.Add(RotateAroundCenter(offset, formationData.Rotation));
+            yield return RotateAroundCenter(offset, formationData.Rotation);
         }
-
-        return positions;
     }
 
-    private static List<Vector2> GetGridPositions(FormationData formation)
+    private static IEnumerable<Vector2> GetGridPositions(FormationData formation)
     {
-        var positions = new List<Vector2>();
-
         var columns = formation.Columns;
         var rows = formation.Rows;
 
@@ -80,16 +81,12 @@ public static class FormationHelper
                 startY + row * formation.SpacingY
             );
 
-            positions.Add(RotateAroundCenter(offset, formation.Rotation));
+            yield return RotateAroundCenter(offset, formation.Rotation);
         }
-
-        return positions;
     }
 
-    private static List<Vector2> GetVShapePositions(FormationData formation)
+    private static IEnumerable<Vector2> GetVShapePositions(FormationData formation)
     {
-        var positions = new List<Vector2>();
-
         var direction = formation.Inverted ? 1f : -1f;
 
         for (var row = 0; row < formation.Rows; row++)
@@ -99,18 +96,16 @@ public static class FormationHelper
             if (row == 0)
             {
                 var offset = new Vector2(0, 0);
-                positions.Add(RotateAroundCenter(offset, formation.Rotation));
+                yield return RotateAroundCenter(offset, formation.Rotation);
                 continue;
             }
 
             var left = new Vector2(-row * formation.SpacingX, y);
             var right = new Vector2(row * formation.SpacingX, y);
 
-            positions.Add(RotateAroundCenter(left, formation.Rotation));
-            positions.Add(RotateAroundCenter(right, formation.Rotation));
+            yield return RotateAroundCenter(left, formation.Rotation);
+            yield return RotateAroundCenter(right, formation.Rotation);
         }
-
-        return positions;
     }
 
     private static Vector2 RotateAroundCenter(Vector2 v, float degrees)
