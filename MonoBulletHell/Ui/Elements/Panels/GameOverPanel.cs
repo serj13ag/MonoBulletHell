@@ -1,6 +1,5 @@
 using System;
 using Gum.Forms.Controls;
-using Microsoft.Xna.Framework;
 using MonoGameGum.GueDeriving;
 
 namespace MonoBulletHell.Ui.Elements.Panels;
@@ -23,7 +22,7 @@ public class GameOverPanel : BasePanel
         var background = new ColoredRectangleRuntime();
         AddChild(background);
         background.Dock(Gum.Wireframe.Dock.Fill);
-        background.Color = Color.DarkSlateBlue;
+        background.Color = Constants.Colors.BackgroundDark;
 
         var titleText = new CustomLabel();
         AddChild(titleText);

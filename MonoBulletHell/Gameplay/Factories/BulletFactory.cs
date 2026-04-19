@@ -46,13 +46,13 @@ public class BulletFactory : IBulletFactory
         {
             sprite = _contentService.CreateBulletSprite("shipBullet");
             sprite.CenterOrigin();
-            sprite.Color = Constants.Colors.BeigeColor;
+            sprite.Color = Constants.Colors.ShipProjectile;
         }
         else
         {
             sprite = _contentService.CreateBulletSprite("enemyBullet");
             sprite.CenterOrigin();
-            sprite.Color = Constants.Colors.EnemyColor;
+            sprite.Color = Constants.Colors.EnemyProjectiles;
         }
 
         return sprite;

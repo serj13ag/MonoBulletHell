@@ -13,7 +13,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
 {
     private const float FlashEffectDuration = 0.2f;
 
-    private const int Health = 10; // TODO: to config
+    private const int Health = 3; // TODO: to config
     private const float Speed = 100f; // TODO: to config
     private const float ShootCooldown = 0.5f;
     private const float BulletSpeed = 300f;

@@ -10,10 +10,12 @@ public static class Constants
 
     public static class Colors // TODO: config
     {
-        public static readonly Color BackgroundColor = ColorHelper.FromHex("#5C4B51");
-        public static readonly Color ShipColor = ColorHelper.FromHex("#8CBEB2");
-        public static readonly Color ShipCoreColor = ColorHelper.FromHex("#F3B562");
-        public static readonly Color EnemyColor = ColorHelper.FromHex("#F06060");
-        public static readonly Color BeigeColor = ColorHelper.FromHex("#F2EBBF");
+        public static readonly Color BackgroundDark = ColorHelper.FromHex("#0D170D");
+        public static readonly Color BackgroundColor = ColorHelper.FromHex("#1B2F1B");
+        public static readonly Color BackgroundHighlight = ColorHelper.FromHex("#3F5F3F");
+        public static readonly Color ShipColor = ColorHelper.FromHex("#BFE8BF");
+        public static readonly Color ShipProjectile = ColorHelper.FromHex("#E8FFE8");
+        public static readonly Color EnemyColor = ColorHelper.FromHex("#6A8F6A");
+        public static readonly Color EnemyProjectiles = ColorHelper.FromHex("#7CFF7C");
     }
 }

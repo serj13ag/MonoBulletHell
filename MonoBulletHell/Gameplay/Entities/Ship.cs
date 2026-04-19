@@ -218,7 +218,7 @@ public class Ship : BaseEntity, IEntityWithCollider
     {
         var sprite = contentService.CreateSprite("shipCore");
         sprite.CenterOrigin();
-        sprite.Color = Constants.Colors.ShipCoreColor;
+        sprite.Color = Constants.Colors.ShipProjectile;
         sprite.Scale = new Vector2(CoreSpriteScale, CoreSpriteScale);
         return sprite;
     }

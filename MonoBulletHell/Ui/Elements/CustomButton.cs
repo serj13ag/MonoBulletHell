@@ -8,6 +8,7 @@ public class CustomButton : Button
     public CustomButton()
     {
         var buttonVisual = (ButtonVisual)Visual;
+        buttonVisual.BackgroundColor = Constants.Colors.BackgroundHighlight;
 
         var textComponent = buttonVisual.TextInstance;
         textComponent.UseCustomFont = true;
