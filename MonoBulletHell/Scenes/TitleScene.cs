@@ -1,13 +1,9 @@
-using System;
-using Gum.Forms.Controls;
-using Gum.Wireframe;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Services;
 using MonoBulletHell.Ui;
-using MonoBulletHell.Ui.Elements;
 using MonoBulletHell.Ui.Elements.Panels;
 using MonoGameGum;
 
@@ -64,8 +60,11 @@ public class TitleScene : BaseScene
     {
         _gumService.Root.Children.Clear();
 
-        var mainPanel = CreateMainPanel();
-        mainPanel.AddToRoot();
+        var titlePanel = _uiFactory.CreateTitlePanel();
+        titlePanel.AddToRoot();
+        titlePanel.OnStartButtonClicked += StartButtonClicked;
+        titlePanel.OnOptionsButtonClicked += OptionsButtonClicked;
+        titlePanel.OnQuitButtonClicked += QuitButtonClicked;
 
         _optionsPanel = _uiFactory.CreateOptionsPanel();
         _optionsPanel.AddToRoot();
@@ -73,55 +72,12 @@ public class TitleScene : BaseScene
         _optionsPanel.Disable();
     }
 
-    private Panel CreateMainPanel()
-    {
-        var mainPanel = new Panel();
-        mainPanel.Dock(Dock.Fill);
-
-        var titleText = new CustomLabel();
-        mainPanel.AddChild(titleText);
-        titleText.Anchor(Anchor.Top);
-        titleText.Text = UiConstants.GameTitleText;
-        titleText.Y = 100f;
-
-        CreateButtons(mainPanel);
-
-        return mainPanel;
-    }
-
-    private void CreateButtons(Panel parentPanel)
-    {
-        var buttonPanel = new StackPanel();
-        parentPanel.AddChild(buttonPanel);
-        buttonPanel.Anchor(Anchor.Center);
-        buttonPanel.Spacing = 5f;
-
-        var startButton = new CustomButton();
-        buttonPanel.AddChild(startButton);
-        startButton.Text = UiConstants.StartButtonText;
-        startButton.Width = 200f;
-        startButton.IsFocused = true;
-        startButton.Click += OnStartButtonClicked;
-
-        var optionsButton = new CustomButton();
-        buttonPanel.AddChild(optionsButton);
-        optionsButton.Text = UiConstants.OptionsButtonText;
-        optionsButton.Width = 200f;
-        optionsButton.Click += OnOptionsButtonClicked;
-
-        var quitButton = new CustomButton();
-        buttonPanel.AddChild(quitButton);
-        quitButton.Text = UiConstants.QuitButtonText;
-        quitButton.Width = 200f;
-        quitButton.Click += OnQuitButtonClicked;
-    }
-
-    private void OnStartButtonClicked(object o, EventArgs eventArgs)
+    private void StartButtonClicked()
     {
         _sceneService.ChangeScene(SceneType.Gameplay);
     }
 
-    private void OnOptionsButtonClicked(object sender, EventArgs e)
+    private void OptionsButtonClicked()
     {
         _optionsPanel.Enable();
     }
@@ -131,7 +87,7 @@ public class TitleScene : BaseScene
         _optionsPanel.Disable();
     }
 
-    private void OnQuitButtonClicked(object o, EventArgs eventArgs)
+    private void QuitButtonClicked()
     {
         _gameService.Exit();
     }

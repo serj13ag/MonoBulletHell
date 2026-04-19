@@ -4,6 +4,7 @@ namespace MonoBulletHell.Ui;
 
 public interface IUiFactory
 {
+    TitlePanel CreateTitlePanel();
     OptionsPanel CreateOptionsPanel();
     PausePanel CreatePausePanel();
     GameOverPanel CreateGameOverPanel();
@@ -16,6 +17,11 @@ public class UiFactory : IUiFactory
     public UiFactory(IUiMediator uiMediator)
     {
         _uiMediator = uiMediator;
+    }
+
+    public TitlePanel CreateTitlePanel()
+    {
+        return new TitlePanel();
     }
 
     public OptionsPanel CreateOptionsPanel()
