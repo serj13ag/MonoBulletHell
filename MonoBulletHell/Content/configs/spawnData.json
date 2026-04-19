@@ -2,45 +2,18 @@
   "Waves": [
     {
       "SpawnTime": 0.5,
-      "PathName": "test",
-      "Enemies": [
-        {
-          "NormalizedSpawnPositionX": 0.2,
-          "NormalizedSpawnPositionY": 0.1
-        },
-        {
-          "NormalizedSpawnPositionX": 0.8,
-          "NormalizedSpawnPositionY": 0.1
-        }
-      ]
+      "Position": "0, 0",
+      "PathName": "test"
     },
     {
       "SpawnTime": 1,
-      "PathName": "testCurve",
-      "Enemies": [
-        {
-          "NormalizedSpawnPositionX": 0.2,
-          "NormalizedSpawnPositionY": 0.1
-        },
-        {
-          "NormalizedSpawnPositionX": 0.8,
-          "NormalizedSpawnPositionY": 0.1
-        }
-      ]
+      "Position": "0, 100",
+      "PathName": "testCurve"
     },
     {
       "SpawnTime": 1.5,
-      "PathName": "testLoop",
-      "Enemies": [
-        {
-          "NormalizedSpawnPositionX": 0.5,
-          "NormalizedSpawnPositionY": 0.2
-        },
-        {
-          "NormalizedSpawnPositionX": 0.5,
-          "NormalizedSpawnPositionY": 0.4
-        }
-      ]
+      "Position": "0, 200",
+      "PathName": "testLoop"
     }
   ]
 }

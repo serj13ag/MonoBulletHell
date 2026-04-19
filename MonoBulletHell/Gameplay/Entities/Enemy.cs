@@ -43,7 +43,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
     public bool PathIsFinished => _pathBlock.IsFinished;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IBulletService bulletService,
-        IContentService contentService, PathData path)
+        IContentService contentService, Vector2 position, PathData path)
     {
         _debugService = debugService;
         _timeService = timeService;
@@ -52,7 +52,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
         _sprite = GetEnemySprite(contentService);
         _flashEffect = contentService.GetFlashEffect();
 
-        _pathBlock = new PathBlock(path, Speed);
+        _pathBlock = new PathBlock(path, position, Speed);
         Position = _pathBlock.Position;
     }
 

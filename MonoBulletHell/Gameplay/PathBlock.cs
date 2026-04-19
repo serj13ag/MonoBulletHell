@@ -6,6 +6,7 @@ namespace MonoBulletHell.Gameplay;
 
 public class PathBlock
 {
+    private readonly Vector2 _initialPosition;
     private readonly PathData _path;
     private readonly float _speed;
 
@@ -25,8 +26,9 @@ public class PathBlock
 
     public Vector2 Position => _currentPosition;
 
-    public PathBlock(PathData path, float speed)
+    public PathBlock(PathData path, Vector2 initialPosition, float speed)
     {
+        _initialPosition = initialPosition; // TODO: create path in runtime from data
         _path = path;
         _speed = speed;
 
@@ -149,13 +151,13 @@ public class PathBlock
         {
             case 1:
             {
-                var c = ScreenHelper.ToVirtualPosition(nextPoint.ControlPoints[0]);
+                var c = nextPoint.ControlPoints[0] + _initialPosition;
                 return GameMathHelper.QuadraticBezier(_startPosition, c, _targetPosition, _progress);
             }
             case 2:
             {
-                var c1 = ScreenHelper.ToVirtualPosition(nextPoint.ControlPoints[0]);
-                var c2 = ScreenHelper.ToVirtualPosition(nextPoint.ControlPoints[1]);
+                var c1 = nextPoint.ControlPoints[0] + _initialPosition;
+                var c2 = nextPoint.ControlPoints[1] + _initialPosition;
                 return GameMathHelper.CubicBezier(_startPosition, c1, c2, _targetPosition, _progress);
             }
             default:
@@ -165,8 +167,8 @@ public class PathBlock
 
     private void UpdatePositions(Vector2 start, Vector2 target)
     {
-        _startPosition = ScreenHelper.ToVirtualPosition(start);
-        _targetPosition = ScreenHelper.ToVirtualPosition(target);
+        _startPosition = _initialPosition + start;
+        _targetPosition = _initialPosition + target;
         _progress = 0f;
     }
 }

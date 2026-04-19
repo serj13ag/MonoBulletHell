@@ -50,7 +50,7 @@ public class EnemySpawnService : IEnemySpawnService
 
         if (_passedTime > _nextWaveToSpawn.SpawnTime)
         {
-            _enemyService.SpawnEnemy(_nextWaveToSpawn.PathName);
+            _enemyService.SpawnEnemy(_nextWaveToSpawn.Position, _nextWaveToSpawn.PathName);
 
             TrySetNextWave();
         }
