@@ -1,6 +1,6 @@
 using Gum.Forms.Controls;
 
-namespace MonoBulletHell.Ui.Panels;
+namespace MonoBulletHell.Ui.Elements.Panels;
 
 public abstract class BasePanel : Panel
 {

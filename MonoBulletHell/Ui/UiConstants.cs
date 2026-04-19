@@ -2,6 +2,8 @@ namespace MonoBulletHell.Ui;
 
 public static class UiConstants
 {
+    public const string FontPath = "fonts/micro_5.fnt";
+
     public const string GameTitleText = "MONO HELL";
     public const string StartButtonText = "START GAME";
     public const string OptionsButtonText = "OPTIONS";

@@ -7,7 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Services;
 using MonoBulletHell.Ui;
-using MonoBulletHell.Ui.Panels;
+using MonoBulletHell.Ui.Elements;
+using MonoBulletHell.Ui.Elements.Panels;
 using MonoGameGum;
 
 namespace MonoBulletHell.Scenes;
@@ -77,7 +78,7 @@ public class TitleScene : BaseScene
         var mainPanel = new Panel();
         mainPanel.Dock(Dock.Fill);
 
-        var titleText = new Label();
+        var titleText = new CustomLabel();
         mainPanel.AddChild(titleText);
         titleText.Anchor(Anchor.Top);
         titleText.Text = UiConstants.GameTitleText;
@@ -95,20 +96,20 @@ public class TitleScene : BaseScene
         buttonPanel.Anchor(Anchor.Center);
         buttonPanel.Spacing = 5f;
 
-        var startButton = new Button();
+        var startButton = new CustomButton();
         buttonPanel.AddChild(startButton);
         startButton.Text = UiConstants.StartButtonText;
         startButton.Width = 200f;
         startButton.IsFocused = true;
         startButton.Click += OnStartButtonClicked;
 
-        var optionsButton = new Button();
+        var optionsButton = new CustomButton();
         buttonPanel.AddChild(optionsButton);
         optionsButton.Text = UiConstants.OptionsButtonText;
         optionsButton.Width = 200f;
         optionsButton.Click += OnOptionsButtonClicked;
 
-        var quitButton = new Button();
+        var quitButton = new CustomButton();
         buttonPanel.AddChild(quitButton);
         quitButton.Text = UiConstants.QuitButtonText;
         quitButton.Width = 200f;

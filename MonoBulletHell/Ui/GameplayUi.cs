@@ -1,6 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
-using MonoBulletHell.Ui.Panels;
+using MonoBulletHell.Ui.Elements.Panels;
 using MonoGameGum;
 using MonoGameGum.GueDeriving;
 

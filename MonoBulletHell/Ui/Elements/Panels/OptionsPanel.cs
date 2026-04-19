@@ -5,7 +5,7 @@ using Gum.Wireframe;
 using Microsoft.Xna.Framework;
 using MonoGameGum.GueDeriving;
 
-namespace MonoBulletHell.Ui.Panels;
+namespace MonoBulletHell.Ui.Elements.Panels;
 
 public class OptionsPanel : BasePanel
 {
@@ -38,7 +38,7 @@ public class OptionsPanel : BasePanel
         background.Dock(Gum.Wireframe.Dock.Fill);
         background.Color = Color.DarkSlateBlue;
 
-        var titleText = new Label();
+        var titleText = new CustomLabel();
         AddChild(titleText);
         titleText.Anchor(Gum.Wireframe.Anchor.Top);
         titleText.Text = UiConstants.OptionsButtonText;
@@ -50,19 +50,19 @@ public class OptionsPanel : BasePanel
         buttonsPanel.Y = -10f;
         buttonsPanel.Spacing = 5f;
 
-        var comboBox = new ComboBox();
+        var comboBox = new CustomComboBox();
         buttonsPanel.AddChild(comboBox);
         comboBox.Anchor(Gum.Wireframe.Anchor.Top);
         comboBox.Width = 120f;
         foreach (var (scaleString, _) in _scales)
         {
-            comboBox.Items.Add(scaleString);
+            comboBox.AddItem(scaleString);
         }
 
         comboBox.SelectedIndex = 0;
         comboBox.SelectionChanged += BoxSelectionChanged;
 
-        _backButton = new Button();
+        _backButton = new CustomButton();
         buttonsPanel.AddChild(_backButton);
         _backButton.Text = UiConstants.BackButtonText;
         _backButton.Click += OnOptionsBackButtonClicked;

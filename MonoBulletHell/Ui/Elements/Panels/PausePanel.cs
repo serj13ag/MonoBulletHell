@@ -3,7 +3,7 @@ using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
 using MonoGameGum.GueDeriving;
 
-namespace MonoBulletHell.Ui.Panels;
+namespace MonoBulletHell.Ui.Elements.Panels;
 
 public class PausePanel : BasePanel
 {
@@ -27,7 +27,7 @@ public class PausePanel : BasePanel
         background.Dock(Gum.Wireframe.Dock.Fill);
         background.Color = Color.DarkSlateBlue;
 
-        var titleText = new Label();
+        var titleText = new CustomLabel();
         AddChild(titleText);
         titleText.Anchor(Gum.Wireframe.Anchor.Top);
         titleText.Text = UiConstants.PausePanelTitleText;
@@ -39,22 +39,22 @@ public class PausePanel : BasePanel
         buttonsPanel.Y = -10f;
         buttonsPanel.Spacing = 5f;
 
-        _resumeButton = new Button();
+        _resumeButton = new CustomButton();
         buttonsPanel.AddChild(_resumeButton);
         _resumeButton.Text = UiConstants.ResumeButtonText;
         _resumeButton.Click += ResumeButtonClicked;
 
-        var restartButton = new Button();
+        var restartButton = new CustomButton();
         buttonsPanel.AddChild(restartButton);
         restartButton.Text = UiConstants.RestartButtonText;
         restartButton.Click += RestartButtonClicked;
 
-        var optionsButton = new Button();
+        var optionsButton = new CustomButton();
         buttonsPanel.AddChild(optionsButton);
         optionsButton.Text = UiConstants.OptionsButtonText;
         optionsButton.Click += OptionsButtonClicked;
         
-        var quitButton = new Button();
+        var quitButton = new CustomButton();
         buttonsPanel.AddChild(quitButton);
         quitButton.Text = UiConstants.QuitButtonText;
         quitButton.Click += QuitButtonClicked;

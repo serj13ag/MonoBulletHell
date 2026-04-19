@@ -19,6 +19,21 @@
 #begin configs/spawnData.json
 /copy:configs/spawnData.json
 
+#begin fonts/micro_5.fnt
+/copy:fonts/micro_5.fnt
+
+#begin fonts/micro_5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:fonts/micro_5.png
+
 #begin images/atlas-definition.json
 /copy:images/atlas-definition.json
 

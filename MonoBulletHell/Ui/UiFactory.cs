@@ -1,4 +1,4 @@
-using MonoBulletHell.Ui.Panels;
+using MonoBulletHell.Ui.Elements.Panels;
 
 namespace MonoBulletHell.Ui;
 

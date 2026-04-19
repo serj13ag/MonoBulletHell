@@ -3,7 +3,7 @@ using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
 using MonoGameGum.GueDeriving;
 
-namespace MonoBulletHell.Ui.Panels;
+namespace MonoBulletHell.Ui.Elements.Panels;
 
 public class GameOverPanel : BasePanel
 {
@@ -25,7 +25,7 @@ public class GameOverPanel : BasePanel
         background.Dock(Gum.Wireframe.Dock.Fill);
         background.Color = Color.DarkSlateBlue;
 
-        var titleText = new Label();
+        var titleText = new CustomLabel();
         AddChild(titleText);
         titleText.Anchor(Gum.Wireframe.Anchor.Top);
         titleText.Text = UiConstants.GameOverPanelTitleText;
@@ -37,12 +37,12 @@ public class GameOverPanel : BasePanel
         buttonsPanel.Y = -10f;
         buttonsPanel.Spacing = 5f;
 
-        _restartButton = new Button();
+        _restartButton = new CustomButton();
         buttonsPanel.AddChild(_restartButton);
         _restartButton.Text = UiConstants.RestartButtonText;
         _restartButton.Click += RestartButtonClicked;
 
-        var quitButton = new Button();
+        var quitButton = new CustomButton();
         buttonsPanel.AddChild(quitButton);
         quitButton.Text = UiConstants.QuitButtonText;
         quitButton.Click += QuitButtonClicked;
