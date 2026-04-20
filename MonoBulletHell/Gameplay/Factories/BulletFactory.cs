@@ -52,7 +52,7 @@ public class BulletFactory : IBulletFactory
         {
             sprite = _contentService.CreateBulletSprite("enemyBullet");
             sprite.CenterOrigin();
-            sprite.Color = Constants.Colors.EnemyProjectiles;
+            sprite.Color = Constants.Colors.Orange;
         }
 
         return sprite;
