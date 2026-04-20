@@ -59,6 +59,7 @@ public class ParticleService : IParticleService
     {
         var animatedSprite = _contentService.CreateBulletAnimatedSprite("bulletImpact");
         animatedSprite.CenterOrigin();
+        animatedSprite.Color = Constants.Colors.ShipProjectile;
 
         var particle = new Particle(animatedSprite);
         particle.Position = position;

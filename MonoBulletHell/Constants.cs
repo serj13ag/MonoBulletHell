@@ -16,6 +16,6 @@ public static class Constants
         public static readonly Color ShipColor = ColorHelper.FromHex("#BFE8BF");
         public static readonly Color ShipProjectile = ColorHelper.FromHex("#E8FFE8");
         public static readonly Color EnemyColor = ColorHelper.FromHex("#6A8F6A");
-        public static readonly Color EnemyProjectiles = ColorHelper.FromHex("#7CFF7C");
+        public static readonly Color EnemyProjectiles = ColorHelper.FromHex("#c45c0c");
     }
 }
