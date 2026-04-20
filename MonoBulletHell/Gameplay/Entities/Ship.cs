@@ -12,9 +12,6 @@ namespace MonoBulletHell.Gameplay.Entities;
 
 public class Ship : BaseEntity, IEntityWithCollider
 {
-    private const float ShipSpriteScale = 2f;
-    private const float CoreSpriteScale = 1f;
-
     private const float ColliderRadius = 10f;
 
     private const int Health = 3; // TODO: to config
@@ -207,10 +204,9 @@ public class Ship : BaseEntity, IEntityWithCollider
 
     private static Sprite GetShipSprite(IContentService contentService)
     {
-        var sprite = contentService.CreateSprite("ship");
+        var sprite = contentService.CreateShipSprite("ship");
         sprite.CenterOrigin();
-        sprite.Scale = new Vector2(ShipSpriteScale, ShipSpriteScale);
-        sprite.Color = Constants.Colors.ShipColor;
+        sprite.Color = Constants.Colors.BackgroundHighlight;
         return sprite;
     }
 
@@ -219,7 +215,6 @@ public class Ship : BaseEntity, IEntityWithCollider
         var sprite = contentService.CreateSprite("shipCore");
         sprite.CenterOrigin();
         sprite.Color = Constants.Colors.ShipProjectile;
-        sprite.Scale = new Vector2(CoreSpriteScale, CoreSpriteScale);
         return sprite;
     }
 }
