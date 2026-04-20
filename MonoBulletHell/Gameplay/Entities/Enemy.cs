@@ -120,10 +120,9 @@ public class Enemy : BaseEntity, IEntityWithCollider
 
     private static Sprite GetEnemySprite(IContentService contentService)
     {
-        var sprite = contentService.CreateSprite("enemy");
+        var sprite = contentService.CreateShipSprite("alien");
         sprite.CenterOrigin();
-        sprite.Scale = new Vector2(4f, 4f);
-        sprite.Color = Constants.Colors.EnemyColor;
+        sprite.Color = Constants.Colors.BackgroundHighlight;
         return sprite;
     }
 }
