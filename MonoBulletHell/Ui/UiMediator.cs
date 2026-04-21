@@ -1,23 +1,26 @@
+using System.Collections.Generic;
+using MonoBulletHell.Enums;
 using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Ui;
 
 public interface IUiMediator
 {
-    void ResolutionScaleSelected(float scale);
+    IEnumerable<ScreenScale> GetScreenScales();
+    int GetCurrentScaleIndex();
+    void ResolutionScaleSelected(int scaleIndex);
 }
 
 public class UiMediator : IUiMediator
 {
-    private readonly IScreenService _screenService;
+    private readonly ISettingsService _settingsService;
 
-    public UiMediator(IScreenService screenService)
+    public UiMediator(ISettingsService settingsService)
     {
-        _screenService = screenService;
+        _settingsService = settingsService;
     }
 
-    public void ResolutionScaleSelected(float scale)
-    {
-        _screenService.ApplyScale(scale);
-    }
+    public IEnumerable<ScreenScale> GetScreenScales() => _settingsService.Scales;
+    public int GetCurrentScaleIndex() => _settingsService.CurrentScaleIndex;
+    public void ResolutionScaleSelected(int newScaleIndex) => _settingsService.SetScreenScaleByIndex(newScaleIndex);
 }

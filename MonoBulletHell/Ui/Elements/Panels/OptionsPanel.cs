@@ -1,24 +1,17 @@
 using System;
-using System.Collections.Generic;
 using Gum.Forms.Controls;
 using Gum.Wireframe;
+using MonoBulletHell.Enums;
 using MonoGameGum.GueDeriving;
 
 namespace MonoBulletHell.Ui.Elements.Panels;
 
 public class OptionsPanel : BasePanel
 {
-    private readonly List<(string, float)> _scales = // TODO: refactor
-    [
-        ("X1", 1f),
-        ("X1.5", 1.5f),
-        ("X2", 2f),
-        ("X2.5", 2.5f),
-    ];
-
     private readonly IUiMediator _uiMediator;
 
-    private readonly Button _backButton;
+    private readonly CustomComboBox _comboBox;
+    private readonly CustomButton _backButton;
 
     protected override Button FocusButton => _backButton;
 
@@ -49,22 +42,28 @@ public class OptionsPanel : BasePanel
         buttonsPanel.Y = -10f;
         buttonsPanel.Spacing = 5f;
 
-        var comboBox = new CustomComboBox();
-        buttonsPanel.AddChild(comboBox);
-        comboBox.Anchor(Gum.Wireframe.Anchor.Top);
-        comboBox.Width = 120f;
-        foreach (var (scaleString, _) in _scales)
+        _comboBox = new CustomComboBox();
+        buttonsPanel.AddChild(_comboBox);
+        _comboBox.Anchor(Gum.Wireframe.Anchor.Top);
+        _comboBox.Width = 120f;
+        foreach (var scale in uiMediator.GetScreenScales())
         {
-            comboBox.AddItem(scaleString);
+            _comboBox.AddItem(FormatScale(scale));
         }
 
-        comboBox.SelectedIndex = 0;
-        comboBox.SelectionChanged += BoxSelectionChanged;
+        _comboBox.SelectionChanged += BoxSelectionChanged;
 
         _backButton = new CustomButton();
         buttonsPanel.AddChild(_backButton);
         _backButton.Text = UiConstants.BackButtonText;
         _backButton.Click += OnOptionsBackButtonClicked;
+    }
+
+    public override void Enable()
+    {
+        base.Enable();
+
+        _comboBox.SelectedIndex = _uiMediator.GetCurrentScaleIndex();
     }
 
     private void OnOptionsBackButtonClicked(object sender, EventArgs e)
@@ -75,7 +74,19 @@ public class OptionsPanel : BasePanel
     private void BoxSelectionChanged(object arg1, SelectionChangedEventArgs arg2)
     {
         var box = (ComboBox)arg1;
-        var scaleValue = _scales[box.SelectedIndex].Item2;
-        _uiMediator.ResolutionScaleSelected(scaleValue);
+        _uiMediator.ResolutionScaleSelected(box.SelectedIndex);
+    }
+
+    private static string FormatScale(ScreenScale scale)
+    {
+        return scale switch
+        {
+            ScreenScale.X1 => "X1",
+            ScreenScale.X1_5 => "X1.5",
+            ScreenScale.X2 => "X2",
+            ScreenScale.X2_5 => "X2.5",
+            ScreenScale.X3 => "X3",
+            _ => throw new ArgumentOutOfRangeException(nameof(scale), scale, null),
+        };
     }
 }

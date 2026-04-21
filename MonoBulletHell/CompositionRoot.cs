@@ -22,6 +22,7 @@ public class CompositionRoot
         _container = new ServiceContainer();
 
         RegisterGlobal(game);
+        RegisterScenes();
         RegisterGameplay();
     }
 
@@ -49,6 +50,8 @@ public class CompositionRoot
         _container.Register<IScreenService, ScreenService>(new PerContainerLifetime());
         _container.Register<ISceneService, SceneService>(new PerContainerLifetime());
         _container.Register<IDebugService, DebugService>(new PerContainerLifetime());
+        _container.Register<ISettingsService, SettingsService>(new PerContainerLifetime());
+        _container.Register<ISaveService, SaveService>(new PerContainerLifetime());
 
         _container.Register<IUiMediator, UiMediator>(new PerContainerLifetime());
         _container.Register<IUiFactory, UiFactory>(new PerContainerLifetime());
@@ -57,11 +60,14 @@ public class CompositionRoot
         _container.Register<Func<Scope>>(c => c.BeginScope);
     }
 
-    private void RegisterGameplay()
+    private void RegisterScenes()
     {
         _container.Register<GameplayScene>(new PerScopeLifetime());
         _container.Register<TitleScene>(new PerScopeLifetime());
+    }
 
+    private void RegisterGameplay()
+    {
         _container.Register<IContentService, ContentService>(new PerScopeLifetime());
         _container.Register<ITimeService, TimeService>(new PerScopeLifetime());
         _container.Register<IEnemyService, EnemyService>(new PerScopeLifetime());

@@ -6,7 +6,7 @@ public abstract class BasePanel : Panel
 {
     protected abstract Button FocusButton { get; }
 
-    public void Enable()
+    public virtual void Enable()
     {
         IsVisible = true;
 

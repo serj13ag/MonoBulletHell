@@ -21,6 +21,7 @@ public class MonoBulletHellGame : Game
     private IScreenService _screenService;
     private ISceneService _sceneService;
     private IDebugService _debugService;
+    private ISettingsService _settingsService;
 
     public MonoBulletHellGame()
     {
@@ -42,11 +43,13 @@ public class MonoBulletHellGame : Game
         _root.Initialize(Content, GraphicsDevice);
 
         _gumService = _root.GetInstance<GumService>();
+        _settingsService = _root.GetInstance<ISettingsService>();
         _inputService = _root.GetInstance<IInputService>();
         _screenService = _root.GetInstance<IScreenService>();
         _sceneService = _root.GetInstance<ISceneService>();
         _debugService = _root.GetInstance<IDebugService>();
 
+        _settingsService.Initialize();
         _screenService.Initialize();
         InitializeGum(Content);
 
