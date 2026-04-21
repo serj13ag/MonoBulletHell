@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
@@ -34,7 +33,8 @@ public class GameFactory : IGameFactory
 
     public Ship CreateShip()
     {
-        var ship = new Ship(_inputService, _debugService, _timeService, _bulletService, _contentService);
+        var playerConfig = _contentService.GetPlayerConfig();
+        var ship = new Ship(_inputService, _debugService, _timeService, _bulletService, _contentService, playerConfig);
         _gameContext.RegisterShip(ship);
         return ship;
     }

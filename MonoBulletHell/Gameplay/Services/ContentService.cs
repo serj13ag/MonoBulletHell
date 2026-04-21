@@ -20,6 +20,7 @@ public interface IContentService
     AnimatedSprite CreateBulletAnimatedSprite(string animationName);
 
     Effect GetFlashEffect();
+    PlayerConfig GetPlayerConfig();
     SpawnConfig GetSpawnConfig();
     EnemyData GetEnemyData(string enemyName);
     PathData GetPath(string pathName);
@@ -35,6 +36,7 @@ public class ContentService : IContentService
 
     private Effect _flashEffect;
 
+    private PlayerConfig _playerConfig;
     private SpawnConfig _spawnConfig;
     private Dictionary<string, EnemyData> _enemyConfigs;
     private Dictionary<string, PathData> _pathConfigs;
@@ -50,6 +52,7 @@ public class ContentService : IContentService
         BackgroundTexture = content.Load<Texture2D>("images/background");
         _flashEffect = content.Load<Effect>("shaders/flashEffect");
 
+        _playerConfig = LoadJsonData<PlayerConfig>(content, "configs/playerConfig.json");
         _spawnConfig = LoadJsonData<SpawnConfig>(content, "configs/spawnConfig.json");
 
         var enemyConfig = LoadJsonData<EnemyConfig>(content, "configs/enemyConfig.json");
@@ -61,45 +64,18 @@ public class ContentService : IContentService
         ValidateData();
     }
 
-    public Sprite CreateSprite(string spriteName)
-    {
-        return _atlas.CreateSprite(spriteName);
-    }
+    public Sprite CreateSprite(string spriteName) => _atlas.CreateSprite(spriteName);
+    public Sprite CreateShipSprite(string spriteName) => _shipsAtlas.CreateSprite(spriteName);
+    public Sprite CreateBulletSprite(string spriteName) => _bulletsAtlas.CreateSprite(spriteName);
+    public AnimatedSprite CreateBulletAnimatedSprite(string animationName) => _bulletsAtlas.CreateAnimatedSprite(animationName);
 
-    public Sprite CreateShipSprite(string spriteName)
-    {
-        return _shipsAtlas.CreateSprite(spriteName);
-    }
+    public Effect GetFlashEffect() => _flashEffect.Clone();
 
-    public Sprite CreateBulletSprite(string spriteName)
-    {
-        return _bulletsAtlas.CreateSprite(spriteName);
-    }
+    public PlayerConfig GetPlayerConfig() => _playerConfig;
+    public SpawnConfig GetSpawnConfig() => _spawnConfig;
 
-    public AnimatedSprite CreateBulletAnimatedSprite(string animationName)
-    {
-        return _bulletsAtlas.CreateAnimatedSprite(animationName);
-    }
-
-    public Effect GetFlashEffect()
-    {
-        return _flashEffect.Clone();
-    }
-
-    public SpawnConfig GetSpawnConfig()
-    {
-        return _spawnConfig;
-    }
-
-    public EnemyData GetEnemyData(string enemyName)
-    {
-        return _enemyConfigs[enemyName];
-    }
-
-    public PathData GetPath(string pathName)
-    {
-        return _pathConfigs[pathName];
-    }
+    public EnemyData GetEnemyData(string enemyName) => _enemyConfigs[enemyName];
+    public PathData GetPath(string pathName) => _pathConfigs[pathName];
 
     private static T LoadJsonData<T>(ContentManager content, string fileName)
     {

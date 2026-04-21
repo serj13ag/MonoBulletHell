@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Data;
 using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;
@@ -12,17 +13,8 @@ namespace MonoBulletHell.Gameplay.Entities;
 
 public class Ship : BaseEntity, IEntityWithCollider
 {
-    private const float ColliderRadius = 10f;
-
-    private const int Health = 3; // TODO: to config
-    private const float DamageImmuneCooldown = 2f; // TODO: to config
-
-    private const float ShootCooldown = 0.08f; // TODO: to config
-    private const float MoveSpeed = 250f; // TODO: to config
-
-    private const float BulletSpeed = 800f; // TODO: to config
-
     private const float FlashEffectSpeed = 6f;
+    private const float ColliderRadius = 10f;
 
     private readonly Vector2 _bulletSpawnOffset = new Vector2(0f, -32f);
 
@@ -31,13 +23,15 @@ public class Ship : BaseEntity, IEntityWithCollider
     private readonly ITimeService _timeService;
     private readonly IBulletService _bulletService;
 
+    private readonly PlayerConfig _playerConfig;
+
     private readonly Sprite _shipSprite;
     private readonly Sprite _coreSprite;
     private readonly Effect _flashEffect;
 
     private Circle _collider;
     private float _timeTillCanShoot;
-    private int _currentHealth = Health;
+    private int _currentHealth;
     private bool _isImmune;
     private float _timeTillDisableImmunity;
     private float _flashEffectAmount;
@@ -48,16 +42,18 @@ public class Ship : BaseEntity, IEntityWithCollider
     public event EventHandler<EventArgs> OnDestroyed;
 
     public Ship(IInputService inputService, IDebugService debugService, ITimeService timeService, IBulletService bulletService,
-        IContentService contentService)
+        IContentService contentService, PlayerConfig playerConfig)
     {
         _inputService = inputService;
         _debugService = debugService;
         _timeService = timeService;
         _bulletService = bulletService;
 
+        _playerConfig = playerConfig;
+
         _flashEffect = contentService.GetFlashEffect();
 
-        _shipSprite = GetShipSprite(contentService);
+        _shipSprite = GetShipSprite(contentService, playerConfig);
         _coreSprite = GetCoreSprite(contentService);
     }
 
@@ -65,7 +61,7 @@ public class Ship : BaseEntity, IEntityWithCollider
     {
         Position = position;
 
-        _currentHealth = Health;
+        _currentHealth = _playerConfig.Health;
         _isImmune = false;
         _timeTillDisableImmunity = 0f;
         _timeTillCanShoot = 0f;
@@ -118,7 +114,7 @@ public class Ship : BaseEntity, IEntityWithCollider
     {
         if (HasDirectionalInput(out var inputDirection))
         {
-            var newPosition = Position + inputDirection * MoveSpeed * deltaTime;
+            var newPosition = Position + inputDirection * _playerConfig.Speed * deltaTime;
             ScreenHelper.ClampToVirtualBounds(ref newPosition);
             Position = newPosition;
         }
@@ -133,8 +129,9 @@ public class Ship : BaseEntity, IEntityWithCollider
 
         if (_inputService.Shoot() && _timeTillCanShoot <= 0f)
         {
-            _bulletService.SpawnBullet(Position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed, Constants.BulletDamage, true);
-            _timeTillCanShoot += ShootCooldown;
+            _bulletService.SpawnBullet(Position + _bulletSpawnOffset, -Vector2.UnitY, _playerConfig.BulletSpeed,
+                Constants.BulletDamage, true);
+            _timeTillCanShoot += _playerConfig.ShootCooldown;
         }
     }
 
@@ -159,7 +156,7 @@ public class Ship : BaseEntity, IEntityWithCollider
     private void EnableImmunity()
     {
         _isImmune = true;
-        _timeTillDisableImmunity = DamageImmuneCooldown;
+        _timeTillDisableImmunity = _playerConfig.DamageImmuneCooldown;
     }
 
     private void DisableImmunity()
@@ -201,9 +198,9 @@ public class Ship : BaseEntity, IEntityWithCollider
         return true;
     }
 
-    private static Sprite GetShipSprite(IContentService contentService)
+    private static Sprite GetShipSprite(IContentService contentService, PlayerConfig playerConfig)
     {
-        var sprite = contentService.CreateShipSprite("ship");
+        var sprite = contentService.CreateShipSprite(playerConfig.SpriteName);
         sprite.CenterOrigin();
         sprite.Color = Constants.Colors.BackgroundHighlight;
         return sprite;
@@ -211,7 +208,7 @@ public class Ship : BaseEntity, IEntityWithCollider
 
     private static Sprite GetCoreSprite(IContentService contentService)
     {
-        var sprite = contentService.CreateSprite("shipCore");
+        var sprite = contentService.CreateSprite("shipCore"); // TODO: to config
         sprite.CenterOrigin();
         sprite.Color = Constants.Colors.ShipProjectile;
         return sprite;

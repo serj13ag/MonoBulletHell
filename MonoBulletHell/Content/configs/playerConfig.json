@@ -1,0 +1,8 @@
+{
+  "Health": 3,
+  "Speed": 250,
+  "ShootCooldown": 0.08,
+  "BulletSpeed": 800,
+  "DamageImmuneCooldown": 2,
+  "SpriteName": "ship"
+}

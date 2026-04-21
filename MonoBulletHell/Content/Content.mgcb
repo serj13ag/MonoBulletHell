@@ -19,6 +19,9 @@
 #begin configs/pathConfig.json
 /copy:configs/pathConfig.json
 
+#begin configs/playerConfig.json
+/copy:configs/playerConfig.json
+
 #begin configs/spawnConfig.json
 /copy:configs/spawnConfig.json
 
