@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework;
 namespace MonoBulletHell.Data;
 
 [Serializable]
-public class SpawnData
+public class SpawnConfig
 {
     public List<WaveData> Waves { get; set; }
 }

@@ -16,8 +16,8 @@
 #begin configs/pathConfig.json
 /copy:configs/pathConfig.json
 
-#begin configs/spawnData.json
-/copy:configs/spawnData.json
+#begin configs/spawnConfig.json
+/copy:configs/spawnConfig.json
 
 #begin fonts/micro_5.fnt
 /copy:fonts/micro_5.fnt

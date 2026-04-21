@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
 using MonoBulletHell.Data;
 using MonoBulletHell.Helpers;
 
@@ -7,7 +6,7 @@ namespace MonoBulletHell.Gameplay.Services;
 
 public interface IEnemySpawnService
 {
-    void Initialize(SpawnData spawnData);
+    void Initialize(SpawnConfig spawnConfig);
 
     void Update();
 }
@@ -28,12 +27,12 @@ public class EnemySpawnService : IEnemySpawnService
         _enemyService = enemyService;
     }
 
-    public void Initialize(SpawnData spawnData)
+    public void Initialize(SpawnConfig spawnConfig)
     {
         _passedTime = 0f;
 
         _waves.Clear();
-        foreach (var waveData in spawnData.Waves)
+        foreach (var waveData in spawnConfig.Waves)
         {
             _waves.Enqueue(waveData);
         }

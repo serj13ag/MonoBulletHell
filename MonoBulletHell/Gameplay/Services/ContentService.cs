@@ -20,7 +20,7 @@ public interface IContentService
     AnimatedSprite CreateBulletAnimatedSprite(string animationName);
 
     Effect GetFlashEffect();
-    SpawnData GetSpawnData();
+    SpawnConfig GetSpawnConfig();
     PathData GetPath(string pathName);
 
     Texture2D BackgroundTexture { get; }
@@ -34,7 +34,7 @@ public class ContentService : IContentService
 
     private Effect _flashEffect;
 
-    private SpawnData _spawnData;
+    private SpawnConfig _spawnConfig;
     private Dictionary<string, PathData> _paths;
 
     public Texture2D BackgroundTexture { get; private set; }
@@ -48,7 +48,7 @@ public class ContentService : IContentService
         BackgroundTexture = content.Load<Texture2D>("images/background");
         _flashEffect = content.Load<Effect>("shaders/flashEffect");
 
-        _spawnData = LoadJsonData<SpawnData>(content, "configs/spawnData.json");
+        _spawnConfig = LoadJsonData<SpawnConfig>(content, "configs/spawnConfig.json");
         _paths = LoadPaths(content);
 
         ValidateData();
@@ -79,9 +79,9 @@ public class ContentService : IContentService
         return _flashEffect.Clone();
     }
 
-    public SpawnData GetSpawnData()
+    public SpawnConfig GetSpawnConfig()
     {
-        return _spawnData;
+        return _spawnConfig;
     }
 
     public PathData GetPath(string pathName)
@@ -123,7 +123,7 @@ public class ContentService : IContentService
             }
         }
 
-        foreach (var waveData in _spawnData.Waves)
+        foreach (var waveData in _spawnConfig.Waves)
         {
             if (!_paths.ContainsKey(waveData.PathName))
             {
