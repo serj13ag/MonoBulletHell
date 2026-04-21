@@ -21,7 +21,6 @@ public class Ship : BaseEntity, IEntityWithCollider
     private const float MoveSpeed = 250f; // TODO: to config
 
     private const float BulletSpeed = 800f; // TODO: to config
-    private const int BulletDamage = 1; // TODO: to config
 
     private const float FlashEffectSpeed = 6f;
 
@@ -134,7 +133,7 @@ public class Ship : BaseEntity, IEntityWithCollider
 
         if (_inputService.Shoot() && _timeTillCanShoot <= 0f)
         {
-            _bulletService.SpawnBullet(Position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed, BulletDamage, true);
+            _bulletService.SpawnBullet(Position + _bulletSpawnOffset, -Vector2.UnitY, BulletSpeed, Constants.BulletDamage, true);
             _timeTillCanShoot += ShootCooldown;
         }
     }

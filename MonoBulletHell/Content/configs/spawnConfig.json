@@ -4,7 +4,7 @@
       "SpawnTime": 1,
       "Position": "40, 0",
       "PathName": "down",
-      "EnemyType": "Follower",
+      "EnemyName": "follower",
       "Formation": {
         "Type": "Line",
         "Count": 3,
@@ -16,7 +16,7 @@
       "SpawnTime": 3,
       "Position": "280, 0",
       "PathName": "down",
-      "EnemyType": "Follower",
+      "EnemyName": "follower",
       "Formation": {
         "Type": "Line",
         "Count": 3,
@@ -28,7 +28,7 @@
       "SpawnTime": 5,
       "Position": "160, 0",
       "PathName": "down",
-      "EnemyType": "Follower",
+      "EnemyName": "follower",
       "Formation": {
         "Type": "VShape",
         "Rows": 3,
@@ -40,7 +40,7 @@
       "SpawnTime": 8,
       "Position": "0, 0",
       "PathName": "downRight",
-      "EnemyType": "Shooter",
+      "EnemyName": "shooter",
       "Formation": {
         "Type": "Line",
         "Count": 3,
@@ -52,7 +52,7 @@
       "SpawnTime": 8.1,
       "Position": "320, 0",
       "PathName": "downLeft",
-      "EnemyType": "Shooter",
+      "EnemyName": "shooter",
       "Formation": {
         "Type": "Line",
         "Count": 3,

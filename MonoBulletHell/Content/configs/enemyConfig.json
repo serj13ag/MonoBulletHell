@@ -1,0 +1,18 @@
+{
+  "Enemies": [
+    {
+      "Name": "follower",
+      "Health": 3,
+      "Speed": 100,
+      "SpriteName": "alienSmall"
+    },
+    {
+      "Name": "shooter",
+      "Health": 5,
+      "Speed": 100,
+      "ShootCooldown": 0.5,
+      "BulletSpeed": 300,
+      "SpriteName": "alien"
+    }
+  ]
+}

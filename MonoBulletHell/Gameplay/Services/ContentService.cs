@@ -21,6 +21,7 @@ public interface IContentService
 
     Effect GetFlashEffect();
     SpawnConfig GetSpawnConfig();
+    EnemyData GetEnemyData(string enemyName);
     PathData GetPath(string pathName);
 
     Texture2D BackgroundTexture { get; }
@@ -35,7 +36,8 @@ public class ContentService : IContentService
     private Effect _flashEffect;
 
     private SpawnConfig _spawnConfig;
-    private Dictionary<string, PathData> _paths;
+    private Dictionary<string, EnemyData> _enemyConfigs;
+    private Dictionary<string, PathData> _pathConfigs;
 
     public Texture2D BackgroundTexture { get; private set; }
 
@@ -49,7 +51,12 @@ public class ContentService : IContentService
         _flashEffect = content.Load<Effect>("shaders/flashEffect");
 
         _spawnConfig = LoadJsonData<SpawnConfig>(content, "configs/spawnConfig.json");
-        _paths = LoadPaths(content);
+
+        var enemyConfig = LoadJsonData<EnemyConfig>(content, "configs/enemyConfig.json");
+        _enemyConfigs = enemyConfig.Enemies.ToDictionary(x => x.Name);
+
+        var pathConfig = LoadJsonData<PathConfig>(content, "configs/pathConfig.json");
+        _pathConfigs = pathConfig.Paths.ToDictionary(path => path.Name);
 
         ValidateData();
     }
@@ -84,15 +91,14 @@ public class ContentService : IContentService
         return _spawnConfig;
     }
 
-    public PathData GetPath(string pathName)
+    public EnemyData GetEnemyData(string enemyName)
     {
-        return _paths[pathName];
+        return _enemyConfigs[enemyName];
     }
 
-    private static Dictionary<string, PathData> LoadPaths(ContentManager content)
+    public PathData GetPath(string pathName)
     {
-        var pathConfig = LoadJsonData<PathConfig>(content, "configs/pathConfig.json");
-        return pathConfig.Paths.ToDictionary(path => path.Name);
+        return _pathConfigs[pathName];
     }
 
     private static T LoadJsonData<T>(ContentManager content, string fileName)
@@ -107,7 +113,7 @@ public class ContentService : IContentService
 
     private void ValidateData()
     {
-        foreach (var path in _paths.Values)
+        foreach (var path in _pathConfigs.Values)
         {
             if (path.Points.Count < 2)
             {
@@ -125,7 +131,7 @@ public class ContentService : IContentService
 
         foreach (var waveData in _spawnConfig.Waves)
         {
-            if (!_paths.ContainsKey(waveData.PathName))
+            if (!_pathConfigs.ContainsKey(waveData.PathName))
             {
                 throw new Exception("Path not found: " + waveData.PathName);
             }

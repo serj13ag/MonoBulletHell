@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin configs/enemyConfig.json
+/copy:configs/enemyConfig.json
+
 #begin configs/pathConfig.json
 /copy:configs/pathConfig.json
 

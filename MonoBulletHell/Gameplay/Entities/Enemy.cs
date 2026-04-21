@@ -1,10 +1,8 @@
-using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Data;
-using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
@@ -14,20 +12,13 @@ namespace MonoBulletHell.Gameplay.Entities;
 public class Enemy : BaseEntity, IEntityWithCollider
 {
     private const float FlashEffectDuration = 0.2f;
-
-    private const int Health = 3; // TODO: to config
-    private const float Speed = 100f; // TODO: to config
-    private const float ShootCooldown = 0.5f;
-    private const float BulletSpeed = 300f;
-    private const int BulletDamage = 1;
-
     private const float ColliderRadius = 20f;
 
     private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
     private readonly IBulletService _bulletService;
 
-    private readonly EnemyType _enemyType;
+    private readonly EnemyData _enemyData;
 
     private readonly Sprite _sprite;
     private readonly Effect _flashEffect;
@@ -35,7 +26,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
     private readonly PathBlock _pathBlock;
 
     private Circle _collider;
-    private int _currentHealth = Health;
+    private int _currentHealth;
     private float _timeTillShoot;
 
     private float _timeTillEndFlashEffect;
@@ -47,18 +38,20 @@ public class Enemy : BaseEntity, IEntityWithCollider
     public bool PathIsFinished => _pathBlock.IsFinished;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IBulletService bulletService,
-        IContentService contentService, Vector2 position, PathData path, EnemyType enemyType)
+        IContentService contentService, Vector2 position, PathData path, EnemyData enemyData)
     {
         _debugService = debugService;
         _timeService = timeService;
         _bulletService = bulletService;
 
-        _enemyType = enemyType;
+        _enemyData = enemyData;
 
-        _sprite = GetEnemySprite(contentService, enemyType);
+        _currentHealth = enemyData.Health;
+
+        _sprite = GetEnemySprite(contentService, enemyData.SpriteName);
         _flashEffect = contentService.GetFlashEffect();
 
-        _pathBlock = new PathBlock(path, position, Speed);
+        _pathBlock = new PathBlock(path, position, enemyData.Speed);
         Position = _pathBlock.Position;
     }
 
@@ -67,7 +60,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
         _pathBlock.Update(_timeService.DeltaTime);
         Position = _pathBlock.Position;
 
-        if (_enemyType == EnemyType.Shooter)
+        if (_enemyData.ShootCooldown > 0)
         {
             HandleShooting();
         }
@@ -110,8 +103,8 @@ public class Enemy : BaseEntity, IEntityWithCollider
                 return;
             }
 
-            _bulletService.SpawnBullet(Position, Vector2.UnitY, BulletSpeed, BulletDamage, false);
-            _timeTillShoot += ShootCooldown;
+            _bulletService.SpawnBullet(Position, Vector2.UnitY, _enemyData.BulletSpeed, Constants.BulletDamage, false);
+            _timeTillShoot += _enemyData.ShootCooldown;
         }
         else
         {
@@ -128,16 +121,8 @@ public class Enemy : BaseEntity, IEntityWithCollider
         }
     }
 
-    private static Sprite GetEnemySprite(IContentService contentService, EnemyType enemyType)
+    private static Sprite GetEnemySprite(IContentService contentService, string spriteName)
     {
-        var spriteName = enemyType switch
-        {
-            EnemyType.Follower => "alienSmall",
-            EnemyType.Shooter => "alien",
-            EnemyType.Undefined => throw new ArgumentOutOfRangeException(nameof(enemyType), enemyType, null),
-            _ => throw new ArgumentOutOfRangeException(nameof(enemyType), enemyType, null),
-        };
-
         var sprite = contentService.CreateShipSprite(spriteName);
         sprite.CenterOrigin();
         sprite.Color = Constants.Colors.BackgroundHighlight;

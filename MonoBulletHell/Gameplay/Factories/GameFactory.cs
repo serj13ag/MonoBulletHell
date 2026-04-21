@@ -9,7 +9,7 @@ namespace MonoBulletHell.Gameplay.Factories;
 public interface IGameFactory
 {
     Ship CreateShip();
-    Enemy CreateEnemy(Vector2 position, string pathName, EnemyType enemyType);
+    Enemy CreateEnemy(Vector2 position, string pathName, string enemyName);
 }
 
 public class GameFactory : IGameFactory
@@ -39,10 +39,11 @@ public class GameFactory : IGameFactory
         return ship;
     }
 
-    public Enemy CreateEnemy(Vector2 position, string pathName, EnemyType enemyType)
+    public Enemy CreateEnemy(Vector2 position, string pathName, string enemyName)
     {
         var path = _contentService.GetPath(pathName);
-        var enemy = new Enemy(_debugService, _timeService, _bulletService, _contentService, position, path, enemyType);
+        var enemyData = _contentService.GetEnemyData(enemyName);
+        var enemy = new Enemy(_debugService, _timeService, _bulletService, _contentService, position, path, enemyData);
         return enemy;
     }
 }
