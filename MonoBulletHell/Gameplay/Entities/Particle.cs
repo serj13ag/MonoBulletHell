@@ -8,7 +8,7 @@ public class Particle : BaseEntity
 {
     private readonly AnimatedSprite _animatedSprite;
 
-    public bool Finished => _animatedSprite.NumberOfRepeats > 0; // TODO: rework?
+    public bool Finished => _animatedSprite.CompletedLoops > 0;
 
     public Particle(AnimatedSprite animatedSprite)
     {

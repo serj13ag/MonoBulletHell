@@ -10,7 +10,7 @@ public class AnimatedSprite : Sprite
     private int _currentFrame;
     private TimeSpan _elapsed;
 
-    public int NumberOfRepeats { get; private set; } // TODO: rename rework?
+    public int CompletedLoops { get; private set; }
 
     public AnimatedSprite(Animation animation)
         : base(animation.Frames[0])
@@ -33,7 +33,7 @@ public class AnimatedSprite : Sprite
         if (_currentFrame >= _animation.Frames.Count)
         {
             _currentFrame = 0;
-            NumberOfRepeats++;
+            CompletedLoops++;
         }
 
         SetRegion(_animation.Frames[_currentFrame]);
