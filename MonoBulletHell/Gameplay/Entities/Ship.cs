@@ -26,7 +26,6 @@ public class Ship : BaseEntity, IEntityWithCollider
     private readonly PlayerConfig _playerConfig;
 
     private readonly Sprite _shipSprite;
-    private readonly Sprite _coreSprite;
     private readonly Effect _flashEffect;
 
     private Circle _collider;
@@ -54,7 +53,6 @@ public class Ship : BaseEntity, IEntityWithCollider
         _flashEffect = contentService.GetFlashEffect();
 
         _shipSprite = GetShipSprite(contentService, playerConfig);
-        _coreSprite = GetCoreSprite(contentService);
     }
 
     public void InitializeAt(Vector2 position)
@@ -89,7 +87,6 @@ public class Ship : BaseEntity, IEntityWithCollider
         }
 
         renderService.AddSprite(_shipSprite, Position, Rotation, effect);
-        renderService.AddSprite(_coreSprite, Position, Rotation, effect);
     }
 
     public void TakeDamage(int damage)
@@ -203,14 +200,6 @@ public class Ship : BaseEntity, IEntityWithCollider
         var sprite = contentService.CreateShipSprite(playerConfig.SpriteName);
         sprite.CenterOrigin();
         sprite.Color = Constants.Colors.BackgroundHighlight;
-        return sprite;
-    }
-
-    private static Sprite GetCoreSprite(IContentService contentService)
-    {
-        var sprite = contentService.CreateSprite("shipCore"); // TODO: to config
-        sprite.CenterOrigin();
-        sprite.Color = Constants.Colors.ShipProjectile;
         return sprite;
     }
 }

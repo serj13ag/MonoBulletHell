@@ -40,9 +40,6 @@
 /processorParam:TextureFormat=Color
 /build:fonts/micro_5.png
 
-#begin images/atlas-definition.json
-/copy:images/atlas-definition.json
-
 #begin images/background.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -69,18 +66,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:images/bullets.png
-
-#begin images/kenney_tilemap.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:images/kenney_tilemap.png
 
 #begin images/ships-atlas.json
 /copy:images/ships-atlas.json

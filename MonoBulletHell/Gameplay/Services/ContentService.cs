@@ -14,7 +14,6 @@ public interface IContentService
 {
     void Load(ContentManager content);
 
-    Sprite CreateSprite(string spriteName);
     Sprite CreateShipSprite(string spriteName);
     Sprite CreateBulletSprite(string spriteName);
     AnimatedSprite CreateBulletAnimatedSprite(string animationName);
@@ -30,7 +29,6 @@ public interface IContentService
 
 public class ContentService : IContentService
 {
-    private TextureAtlas _atlas;
     private TextureAtlas _shipsAtlas;
     private TextureAtlas _bulletsAtlas;
 
@@ -45,7 +43,6 @@ public class ContentService : IContentService
 
     public void Load(ContentManager content)
     {
-        _atlas = TextureAtlas.FromFile(content, "images/atlas-definition.json");
         _shipsAtlas = TextureAtlas.FromFile(content, "images/ships-atlas.json");
         _bulletsAtlas = TextureAtlas.FromFile(content, "images/bullets-atlas.json");
 
@@ -64,7 +61,6 @@ public class ContentService : IContentService
         ValidateData();
     }
 
-    public Sprite CreateSprite(string spriteName) => _atlas.CreateSprite(spriteName);
     public Sprite CreateShipSprite(string spriteName) => _shipsAtlas.CreateSprite(spriteName);
     public Sprite CreateBulletSprite(string spriteName) => _bulletsAtlas.CreateSprite(spriteName);
     public AnimatedSprite CreateBulletAnimatedSprite(string animationName) => _bulletsAtlas.CreateAnimatedSprite(animationName);
