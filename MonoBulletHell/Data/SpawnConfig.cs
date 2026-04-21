@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using MonoBulletHell.Enums;
 
 namespace MonoBulletHell.Data;
 
@@ -16,5 +17,6 @@ public class WaveData
     public float SpawnTime { get; set; }
     public Vector2 Position { get; set; }
     public string PathName { get; set; }
+    public EnemyType EnemyType { get; set; }
     public FormationData Formation { get; set; }
 }

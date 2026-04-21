@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 
@@ -10,7 +11,7 @@ public interface IEnemyService
     void Update();
     void Render(IRenderService renderService);
 
-    void SpawnEnemy(Vector2 position, string pathName);
+    void SpawnEnemy(Vector2 position, string pathName, EnemyType enemyType);
     void Clear();
 }
 
@@ -55,9 +56,9 @@ public class EnemyService : IEnemyService
         }
     }
 
-    public void SpawnEnemy(Vector2 position, string pathName)
+    public void SpawnEnemy(Vector2 position, string pathName, EnemyType enemyType)
     {
-        var enemy = _gameFactory.CreateEnemy(position, pathName);
+        var enemy = _gameFactory.CreateEnemy(position, pathName, enemyType);
         _context.Enemies.Add(enemy);
     }
 

@@ -1,8 +1,10 @@
+using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Data;
+using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
@@ -25,6 +27,8 @@ public class Enemy : BaseEntity, IEntityWithCollider
     private readonly ITimeService _timeService;
     private readonly IBulletService _bulletService;
 
+    private readonly EnemyType _enemyType;
+
     private readonly Sprite _sprite;
     private readonly Effect _flashEffect;
 
@@ -43,13 +47,15 @@ public class Enemy : BaseEntity, IEntityWithCollider
     public bool PathIsFinished => _pathBlock.IsFinished;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IBulletService bulletService,
-        IContentService contentService, Vector2 position, PathData path)
+        IContentService contentService, Vector2 position, PathData path, EnemyType enemyType)
     {
         _debugService = debugService;
         _timeService = timeService;
         _bulletService = bulletService;
 
-        _sprite = GetEnemySprite(contentService);
+        _enemyType = enemyType;
+
+        _sprite = GetEnemySprite(contentService, enemyType);
         _flashEffect = contentService.GetFlashEffect();
 
         _pathBlock = new PathBlock(path, position, Speed);
@@ -61,7 +67,11 @@ public class Enemy : BaseEntity, IEntityWithCollider
         _pathBlock.Update(_timeService.DeltaTime);
         Position = _pathBlock.Position;
 
-        HandleShooting();
+        if (_enemyType == EnemyType.Shooter)
+        {
+            HandleShooting();
+        }
+
         HandleFlashEffect();
 
         _collider = new Circle(Position.X, Position.Y, ColliderRadius);
@@ -118,9 +128,17 @@ public class Enemy : BaseEntity, IEntityWithCollider
         }
     }
 
-    private static Sprite GetEnemySprite(IContentService contentService)
+    private static Sprite GetEnemySprite(IContentService contentService, EnemyType enemyType)
     {
-        var sprite = contentService.CreateShipSprite("alienSmall");
+        var spriteName = enemyType switch
+        {
+            EnemyType.Follower => "alienSmall",
+            EnemyType.Shooter => "alien",
+            EnemyType.Undefined => throw new ArgumentOutOfRangeException(nameof(enemyType), enemyType, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(enemyType), enemyType, null),
+        };
+
+        var sprite = contentService.CreateShipSprite(spriteName);
         sprite.CenterOrigin();
         sprite.Color = Constants.Colors.BackgroundHighlight;
         return sprite;

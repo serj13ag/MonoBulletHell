@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
@@ -8,7 +9,7 @@ namespace MonoBulletHell.Gameplay.Factories;
 public interface IGameFactory
 {
     Ship CreateShip();
-    Enemy CreateEnemy(Vector2 position, string pathName);
+    Enemy CreateEnemy(Vector2 position, string pathName, EnemyType enemyType);
 }
 
 public class GameFactory : IGameFactory
@@ -38,10 +39,10 @@ public class GameFactory : IGameFactory
         return ship;
     }
 
-    public Enemy CreateEnemy(Vector2 position, string pathName)
+    public Enemy CreateEnemy(Vector2 position, string pathName, EnemyType enemyType)
     {
         var path = _contentService.GetPath(pathName);
-        var enemy = new Enemy(_debugService, _timeService, _bulletService, _contentService, position, path);
+        var enemy = new Enemy(_debugService, _timeService, _bulletService, _contentService, position, path, enemyType);
         return enemy;
     }
 }
