@@ -51,6 +51,7 @@ public class MonoBulletHellGame : Game
 
         _settingsService.Initialize();
         _screenService.Initialize();
+        _debugService.Initialize(Content);
         InitializeGum(Content);
 
         _sceneService.ChangeScene(SceneType.Title);
@@ -59,7 +60,7 @@ public class MonoBulletHellGame : Game
     protected override void Update(GameTime gameTime)
     {
         _inputService.Update();
-        _debugService.Update();
+        _debugService.Update(gameTime);
 
         _gumService.Cursor.TransformMatrix = _screenService.GetTransformMatrix();
 
@@ -73,7 +74,7 @@ public class MonoBulletHellGame : Game
         _screenService.SetNativeRenderTarget();
 
         _sceneService.Draw(gameTime);
-        _debugService.Render();
+        _debugService.Draw();
 
         _screenService.RenderResultImage();
 

@@ -25,6 +25,13 @@
 #begin configs/spawnConfig.json
 /copy:configs/spawnConfig.json
 
+#begin fonts/default.spritefont
+/importer:FontDescriptionImporter
+/processor:LocalizedFontProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:fonts/default.spritefont
+
 #begin fonts/micro_5.fnt
 /copy:fonts/micro_5.fnt
 

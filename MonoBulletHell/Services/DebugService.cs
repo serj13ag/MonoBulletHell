@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -8,11 +9,13 @@ namespace MonoBulletHell.Services;
 
 public interface IDebugService
 {
+    void Initialize(ContentManager content);
+
     void DrawCircle(Vector2 center, float radius, Color color, float thickness, int segments);
     void DrawRectangle(Rectangle rect, Color color, float thickness);
 
-    void Update();
-    void Render();
+    void Update(GameTime gameTime);
+    void Draw();
 }
 
 public class DebugService : IDebugService
@@ -25,13 +28,22 @@ public class DebugService : IDebugService
         public float Thickness;
     }
 
+    private static readonly Vector2 FpsCounterPosition = new Vector2(2, 2);
+
     private readonly SpriteBatch _spriteBatch;
     private readonly IInputService _inputService;
 
     private readonly Texture2D _pixelTexture;
     private readonly List<DrawLineCommand> _drawCommands = new(128);
 
+    private SpriteFont _font;
+
     private bool _enabled;
+
+    private double _fps;
+    private double _msPerFrame;
+    private double _elapsedTime;
+    private int _frameCounter;
 
     public DebugService(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, IInputService inputService)
     {
@@ -40,6 +52,11 @@ public class DebugService : IDebugService
 
         _pixelTexture = new Texture2D(graphicsDevice, 1, 1);
         _pixelTexture.SetData(new[] { Color.White });
+    }
+
+    public void Initialize(ContentManager content)
+    {
+        _font = content.Load<SpriteFont>("fonts/default");
     }
 
     public void DrawCircle(Vector2 center, float radius, Color color, float thickness, int segments)
@@ -79,31 +96,59 @@ public class DebugService : IDebugService
         AddDrawLineCommand(bottomLeft, topLeft, color, thickness);
     }
 
-    public void Update()
+    public void Update(GameTime gameTime)
     {
         if (_inputService.Keyboard.WasKeyJustPressed(Keys.F1))
         {
             _enabled = !_enabled;
         }
-    }
 
-    public void Render()
-    {
-        if (!_enabled || _drawCommands.Count == 0)
+        if (!_enabled)
         {
             return;
         }
 
-        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        TickFps(gameTime);
+    }
 
-        foreach (var drawCommand in _drawCommands)
+    public void Draw()
+    {
+        if (!_enabled)
         {
-            DrawLine(_spriteBatch, _pixelTexture, drawCommand.Start, drawCommand.End, drawCommand.Color, drawCommand.Thickness);
+            return;
         }
 
-        _drawCommands.Clear();
+        _frameCounter++;
+
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+
+        _spriteBatch.DrawString(_font, $"FPS: {_fps}\nm/s: {_msPerFrame:F2}", FpsCounterPosition, Color.White);
+
+        if (_drawCommands.Count > 0)
+        {
+            foreach (var drawCommand in _drawCommands)
+            {
+                DrawLine(_spriteBatch, _pixelTexture, drawCommand.Start, drawCommand.End, drawCommand.Color,
+                    drawCommand.Thickness);
+            }
+
+            _drawCommands.Clear();
+        }
 
         _spriteBatch.End();
+    }
+
+    private void TickFps(GameTime gameTime)
+    {
+        _elapsedTime += gameTime.ElapsedGameTime.TotalSeconds;
+        _msPerFrame = gameTime.ElapsedGameTime.TotalMilliseconds;
+
+        if (_elapsedTime >= 1.0)
+        {
+            _fps = _frameCounter;
+            _frameCounter = 0;
+            _elapsedTime = 0;
+        }
     }
 
     private void AddDrawLineCommand(Vector2 start, Vector2 end, Color color, float thickness)
