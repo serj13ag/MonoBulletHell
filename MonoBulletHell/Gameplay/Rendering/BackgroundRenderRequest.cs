@@ -1,3 +1,4 @@
+using Gum.Forms.DefaultVisuals.V3;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -5,25 +6,21 @@ namespace MonoBulletHell.Gameplay.Rendering;
 
 public class BackgroundRenderRequest
 {
+    private static readonly Rectangle DestinationRectangle =
+        new Rectangle(Point.Zero, new Point(Constants.VirtualWidth, Constants.VirtualHeight));
+
     private readonly Texture2D _texture;
-    private readonly Rectangle _destinationRectangle;
-    private readonly Rectangle _sourceRectangle;
-    private readonly Color _color;
+    private readonly int _verticalOffset;
 
-    public SamplerState SamplerState { get; }
-
-    public BackgroundRenderRequest(Texture2D texture, Rectangle destinationRectangle, Rectangle sourceRectangle, Color color,
-        SamplerState samplerState)
+    public BackgroundRenderRequest(Texture2D texture, int verticalOffset)
     {
         _texture = texture;
-        _destinationRectangle = destinationRectangle;
-        _sourceRectangle = sourceRectangle;
-        _color = color;
-        SamplerState = samplerState;
+        _verticalOffset = verticalOffset;
     }
 
     public void Draw(SpriteBatch spriteBatch)
     {
-        spriteBatch.Draw(_texture, _destinationRectangle, _sourceRectangle, _color);
+        var sourceRectangle = new Rectangle(new Point(0, _verticalOffset), DestinationRectangle.Size);
+        spriteBatch.Draw(_texture, DestinationRectangle, sourceRectangle, Constants.Colors.BackgroundColor.Adjust(-20f));
     }
 }

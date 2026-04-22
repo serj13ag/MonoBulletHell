@@ -5,6 +5,7 @@ using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Data;
 using MonoBulletHell.Gameplay.Interfaces;
+using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
@@ -86,7 +87,7 @@ public class Ship : BaseEntity, IEntityWithCollider
             effect = _flashEffect;
         }
 
-        renderService.AddSprite(_shipSprite, Position, Rotation, effect);
+        renderService.AddSprite(_shipSprite, Position, Rotation, Layer.Ship, effect);
     }
 
     public void TakeDamage(int damage)

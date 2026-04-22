@@ -129,6 +129,8 @@ public class GameplayScene : BaseScene
         _bulletService.Render(_renderService);
         _enemyService.Render(_renderService);
         _particleService.Render(_renderService);
+
+        _renderService.PrepareDraw();
     }
 
     public override void Draw(GameTime gameTime)

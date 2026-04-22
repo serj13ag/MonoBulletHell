@@ -4,6 +4,7 @@ using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Data;
 using MonoBulletHell.Gameplay.Interfaces;
+using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
 
@@ -81,7 +82,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
         }
 
         var spriteOffset = new Vector2(0f, -10f); // TODO: refactor
-        renderService.AddSprite(_sprite, Position + spriteOffset, Rotation, effect);
+        renderService.AddSprite(_sprite, Position + spriteOffset, Rotation, Layer.Enemies, effect);
     }
 
     public void TakeDamage(int damage)

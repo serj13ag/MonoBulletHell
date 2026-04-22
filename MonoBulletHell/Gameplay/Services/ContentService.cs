@@ -19,6 +19,7 @@ public interface IContentService
     AnimatedSprite CreateBulletAnimatedSprite(string animationName);
 
     Effect GetFlashEffect();
+
     PlayerConfig GetPlayerConfig();
     SpawnConfig GetSpawnConfig();
     EnemyData GetEnemyData(string enemyName);

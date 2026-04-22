@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Gameplay.Interfaces;
+using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
@@ -50,6 +51,6 @@ public class Bullet : BaseEntity, IEntityWithCollider
 
     public void Render(IRenderService renderService)
     {
-        renderService.AddSprite(_sprite, Position, Rotation);
+        renderService.AddSprite(_sprite, Position, Rotation, Layer.Bullets);
     }
 }

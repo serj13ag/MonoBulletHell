@@ -1,5 +1,3 @@
-using Gum.Forms.DefaultVisuals.V3;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoBulletHell.Gameplay.Services;
@@ -42,9 +40,6 @@ public class BackgroundService : IBackgroundService
 
     public void Render(IRenderService renderService)
     {
-        var destinationRectangle = new Rectangle(Point.Zero, new Point(Constants.VirtualWidth, Constants.VirtualHeight));
-        var sourceRectangle = new Rectangle(new Point(0, (int)_backgroundVerticalOffset), destinationRectangle.Size);
-        renderService.AddBackground(_backgroundTexture, destinationRectangle, sourceRectangle,
-            Constants.Colors.BackgroundColor.Adjust(-20f), SamplerState.PointWrap);
+        renderService.SetBackgroundBatch(_backgroundTexture, (int)_backgroundVerticalOffset);
     }
 }

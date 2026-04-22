@@ -8,38 +8,71 @@ namespace MonoBulletHell.Gameplay.Services;
 
 public interface IRenderService
 {
-    void AddBackground(Texture2D texture, Rectangle destinationRectangle, Rectangle sourceRectangle, Color color,
-        SamplerState samplerState);
+    void SetBackgroundBatch(Texture2D texture, int verticalOffset);
 
-    void AddSprite(Sprite sprite, Vector2 position, float rotation, Effect effect = null);
+    void AddSprite(Sprite sprite, Vector2 position, float rotation, Layer layer, Effect effect = null);
 
+    void PrepareDraw();
     void Draw(SpriteBatch spriteBatch);
 }
 
 public class RenderService : IRenderService
 {
-    private static readonly SamplerState SamplerState = SamplerState.PointClamp;
+    private static readonly SamplerState CurrentSamplerState = SamplerState.PointClamp;
+
+    private static readonly Dictionary<Layer, int> LayerOrderLookup = new Dictionary<Layer, int>()
+    {
+        { Layer.Ship, 0 },
+        { Layer.Enemies, 1 },
+        { Layer.Bullets, 2 },
+        { Layer.Particles, 3 },
+    };
 
     private BackgroundRenderRequest _backgroundBatch;
-    private readonly List<SpriteRenderRequest> _simpleBatches = new List<SpriteRenderRequest>(64);
-    private readonly List<SpriteRenderRequest> _effectBatches = new List<SpriteRenderRequest>(32);
+    private readonly List<SpriteRenderRequest> _spriteRequests = new List<SpriteRenderRequest>(64);
 
-    public void AddBackground(Texture2D texture, Rectangle destinationRectangle, Rectangle sourceRectangle, Color color,
-        SamplerState samplerState)
+    public void SetBackgroundBatch(Texture2D texture, int verticalOffset)
     {
-        _backgroundBatch = new BackgroundRenderRequest(texture, destinationRectangle, sourceRectangle, color, samplerState);
+        _backgroundBatch = new BackgroundRenderRequest(texture, verticalOffset);
     }
 
-    public void AddSprite(Sprite sprite, Vector2 position, float rotation, Effect effect = null)
+    public void AddSprite(Sprite sprite, Vector2 position, float rotation, Layer layer, Effect effect = null)
     {
-        if (effect != null)
+        _spriteRequests.Add(new SpriteRenderRequest(sprite, position, rotation, layer, effect));
+    }
+
+    public void PrepareDraw()
+    {
+        _spriteRequests.Sort((a, b) =>
         {
-            _effectBatches.Add(new SpriteRenderRequest(sprite, position, rotation, effect));
-        }
-        else
-        {
-            _simpleBatches.Add(new SpriteRenderRequest(sprite, position, rotation));
-        }
+            var layerA = LayerOrderLookup[a.Layer];
+            var layerB = LayerOrderLookup[b.Layer];
+
+            // by layers
+            var layerCompare = layerA.CompareTo(layerB);
+            if (layerCompare != 0)
+            {
+                return layerCompare;
+            }
+
+            // then by effects
+            if (a.Effect == b.Effect)
+            {
+                return 0;
+            }
+
+            if (a.Effect == null)
+            {
+                return -1;
+            }
+
+            if (b.Effect == null)
+            {
+                return 1;
+            }
+
+            return 0;
+        });
     }
 
     public void Draw(SpriteBatch spriteBatch)
@@ -47,33 +80,32 @@ public class RenderService : IRenderService
         // background
         if (_backgroundBatch != null)
         {
-            spriteBatch.Begin(samplerState: _backgroundBatch.SamplerState);
+            spriteBatch.Begin(samplerState: SamplerState.PointWrap);
             _backgroundBatch.Draw(spriteBatch);
             spriteBatch.End();
 
             _backgroundBatch = null;
         }
 
-        // simple
-        spriteBatch.Begin(samplerState: SamplerState);
+        // sprites
+        Effect currentEffect = null;
 
-        foreach (var renderRequest in _simpleBatches)
+        spriteBatch.Begin(samplerState: CurrentSamplerState);
+
+        foreach (var spriteRequest in _spriteRequests)
         {
-            renderRequest.Draw(spriteBatch);
+            if (spriteRequest.Effect != currentEffect)
+            {
+                spriteBatch.End();
+                spriteBatch.Begin(samplerState: CurrentSamplerState, effect: spriteRequest.Effect);
+                currentEffect = spriteRequest.Effect;
+            }
+
+            spriteRequest.Draw(spriteBatch);
         }
 
         spriteBatch.End();
 
-        _simpleBatches.Clear();
-
-        // effects
-        foreach (var effect in _effectBatches)
-        {
-            spriteBatch.Begin(samplerState: SamplerState, effect: effect.Effect);
-            effect.Draw(spriteBatch);
-            spriteBatch.End();
-        }
-
-        _effectBatches.Clear();
+        _spriteRequests.Clear();
     }
 }

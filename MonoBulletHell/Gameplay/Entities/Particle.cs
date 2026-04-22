@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
 
 namespace MonoBulletHell.Gameplay.Entities;
@@ -22,6 +23,6 @@ public class Particle : BaseEntity
 
     public void Render(IRenderService renderService)
     {
-        renderService.AddSprite(_animatedSprite, Position, Rotation);
+        renderService.AddSprite(_animatedSprite, Position, Rotation, Layer.Particles);
     }
 }

@@ -10,13 +10,15 @@ public class SpriteRenderRequest
     private readonly Vector2 _position;
     private readonly float _rotation;
 
+    public Layer Layer { get; }
     public Effect Effect { get; }
 
-    public SpriteRenderRequest(Sprite sprite, Vector2 position, float rotation, Effect effect = null)
+    public SpriteRenderRequest(Sprite sprite, Vector2 position, float rotation, Layer layer, Effect effect = null)
     {
         _sprite = sprite;
         _position = position;
         _rotation = rotation;
+        Layer = layer;
         Effect = effect;
     }
 
