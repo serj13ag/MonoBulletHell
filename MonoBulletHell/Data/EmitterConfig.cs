@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using MonoBulletHell.AnimatedValues;
+using Newtonsoft.Json;
 
 namespace MonoBulletHell.Data;
 
@@ -17,7 +19,9 @@ public class EmitterData
 
     public Vector2 Offset { get; set; }
     public float RoundsPerSecond { get; set; }
-    public float StartingAngle { get; set; }
+
+    [JsonConverter(typeof(AnimatedFloatConverter))]
+    public IAnimatedFloat StartingAngle { get; set; }
 
     public float BulletSpeed { get; set; }
     public float BulletAcceleration { get; set; }

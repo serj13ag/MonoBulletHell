@@ -38,6 +38,29 @@
       "BulletAcceleration": 100,
       "BulletAngularVelocity": 30,
       "StartingAngle": 270
+    },
+    {
+      "Name": "straightDown_rotating_curve_loop",
+      "RoundsPerSecond": 5,
+      "BulletSpeed": 300,
+      "StartingAngle": {
+        "Duration": 2,
+        "Looped": true,
+        "Keyframes": [
+          {
+            "Time": 0,
+            "Value": 250
+          },
+          {
+            "Time": 1,
+            "Value": 290
+          },
+          {
+            "Time": 2,
+            "Value": 250
+          }
+        ]
+      }
     }
   ]
 }

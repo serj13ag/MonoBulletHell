@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using MonoBulletHell.AnimatedValues;
 using MonoBulletHell.Data;
 using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Services;
@@ -24,10 +25,13 @@ public class BulletEmitter // TODO: organize folders
 
     private readonly float _spinPerSecond;
 
+    private float _elapsedTime;
     private Vector2 _position;
     private bool _shootingDisabled;
     private float _timeTillShoot;
-    private float _angle;
+
+    private readonly IAnimatedFloat _angle;
+    private float _spinAngle;
 
     public BulletEmitter(EmitterData emitterData, IBulletService bulletService)
     {
@@ -54,13 +58,10 @@ public class BulletEmitter // TODO: organize folders
 
     public void Update(float deltaTime)
     {
-        UpdateAngle(deltaTime);
-        HandleShooting(deltaTime);
-    }
+        _elapsedTime += deltaTime;
+        _spinAngle += _spinPerSecond * deltaTime;
 
-    private void UpdateAngle(float deltaTime)
-    {
-        _angle += _spinPerSecond * deltaTime;
+        HandleShooting(deltaTime);
     }
 
     private void HandleShooting(float deltaTime)
@@ -82,9 +83,11 @@ public class BulletEmitter // TODO: organize folders
 
     private void Shoot()
     {
+        var totalAngle = _angle.Evaluate(_elapsedTime) + _spinAngle;
+
         for (var line = 0; line < _numberOfLines; line++)
         {
-            var lineAngle = _angle + line * _angleBetweenLines;
+            var lineAngle = totalAngle + line * _angleBetweenLines;
 
             for (var bullet = 0; bullet < _numberOfBulletsPerLine; bullet++)
             {
