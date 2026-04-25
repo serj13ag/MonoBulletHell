@@ -9,12 +9,15 @@ public class BulletEmitter // TODO: organize folders
 {
     private readonly IBulletService _bulletService;
 
-    private readonly EmitterData _emitterData;
-
     private readonly Vector2 _offset;
     private readonly float _shotCooldown;
     private readonly float _bulletSpeed;
     private readonly float _angle;
+
+    private readonly int _numberOfLines;
+    private readonly float _angleBetweenLines;
+    private readonly int _numberOfBulletsPerLine;
+    private readonly float _angleBetweenBulletsInLine;
 
     private Vector2 _position;
     private bool _shootingDisabled;
@@ -24,12 +27,15 @@ public class BulletEmitter // TODO: organize folders
     {
         _bulletService = bulletService;
 
-        _emitterData = emitterData;
-
         _offset = emitterData.Offset;
         _shotCooldown = 1 / emitterData.RoundsPerSecond;
         _bulletSpeed = emitterData.BulletSpeed;
         _angle = emitterData.StartingAngle;
+
+        _numberOfLines = emitterData.NumberOfLines == 0 ? 1 : emitterData.NumberOfLines;
+        _angleBetweenLines = emitterData.AngleBetweenLines;
+        _numberOfBulletsPerLine = emitterData.NumberOfBulletsPerLine == 0 ? 1 : emitterData.NumberOfBulletsPerLine;
+        _angleBetweenBulletsInLine = emitterData.AngleBetweenBulletsInLine;
     }
 
     public void SetPosition(Vector2 position) => _position = position;
@@ -59,10 +65,16 @@ public class BulletEmitter // TODO: organize folders
 
     private void Shoot()
     {
-        for (var i = 0; i < _emitterData.NumberOfLines; i++)
+        for (var line = 0; line < _numberOfLines; line++)
         {
-            var bulletAngle = _angle + _emitterData.AngleBetweenLines * i;
-            SpawnBullet(bulletAngle);
+            var lineAngle = _angle + line * _angleBetweenLines;
+
+            for (var bullet = 0; bullet < _numberOfBulletsPerLine; bullet++)
+            {
+                var bulletAngle = lineAngle + bullet * _angleBetweenBulletsInLine;
+
+                SpawnBullet(bulletAngle);
+            }
         }
     }
 

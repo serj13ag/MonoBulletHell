@@ -22,5 +22,5 @@ public class EmitterData
     public int NumberOfLines { get; set; }
     public float AngleBetweenLines { get; set; }
     public int NumberOfBulletsPerLine { get; set; }
-    public int AngleBetweenBulletsInLine { get; set; }
+    public float AngleBetweenBulletsInLine { get; set; }
 }

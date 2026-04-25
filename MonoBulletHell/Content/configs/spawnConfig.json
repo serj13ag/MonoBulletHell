@@ -49,7 +49,7 @@
       }
     },
     {
-      "SpawnTime": 8.1,
+      "SpawnTime": 8,
       "Position": "320, 0",
       "PathName": "downLeft",
       "EnemyName": "shooter",
