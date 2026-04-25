@@ -1,5 +1,5 @@
-using Microsoft.Xna.Framework;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
@@ -8,7 +8,7 @@ namespace MonoBulletHell.Gameplay.Factories;
 
 public interface IBulletFactory
 {
-    Bullet CreateBullet(Vector2 position, Vector2 direction, float speed, int damage, bool isPlayer);
+    Bullet CreateBullet(BulletDTO bulletDto);
 }
 
 public class BulletFactory : IBulletFactory
@@ -24,18 +24,9 @@ public class BulletFactory : IBulletFactory
         _contentService = contentService;
     }
 
-    public Bullet CreateBullet(Vector2 position, Vector2 direction, float speed, int damage, bool isPlayer)
+    public Bullet CreateBullet(BulletDTO bulletDto)
     {
-        var bullet = new Bullet(_debugService, _timeService, GetBulletSprite(isPlayer))
-        {
-            Position = position,
-            Speed = speed,
-            Damage = damage,
-            IsPlayer = isPlayer,
-        };
-
-        bullet.SetDirection(direction);
-
+        var bullet = new Bullet(_debugService, _timeService, GetBulletSprite(bulletDto.IsPlayer), bulletDto);
         return bullet;
     }
 

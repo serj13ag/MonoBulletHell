@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
@@ -19,18 +20,29 @@ public class Bullet : BaseEntity, IEntityWithCollider
 
     private readonly Sprite _sprite;
 
+    private readonly float _acceleration;
+    private readonly float _angularVelocity;
+
+    private float _speed;
     private Vector2 _direction;
 
-    public float Speed { get; init; }
-    public int Damage { get; init; }
-    public bool IsPlayer { get; init; }
+    public int Damage { get; }
+    public bool IsPlayer { get; }
 
     public CircleCollider Collider => _collider;
 
-    public Bullet(IDebugService debugService, ITimeService timeService, Sprite sprite)
+    public Bullet(IDebugService debugService, ITimeService timeService, Sprite sprite, BulletDTO bulletDto)
     {
         _debugService = debugService;
         _timeService = timeService;
+
+        Position = bulletDto.Position;
+        _speed = bulletDto.Speed;
+        Damage = bulletDto.Damage;
+        IsPlayer = bulletDto.IsPlayer;
+        _acceleration = bulletDto.Acceleration;
+        _angularVelocity = bulletDto.AngularVelocity;
+        SetDirection(bulletDto.Direction);
 
         _collider = new CircleCollider(Vector2.Zero, ColliderRadius);
 
@@ -39,20 +51,25 @@ public class Bullet : BaseEntity, IEntityWithCollider
 
     public void Update()
     {
-        Position += _direction * Speed * _timeService.DeltaTime;
+        var deltaTime = _timeService.DeltaTime;
+
+        _speed += _acceleration * deltaTime;
+        _direction.Rotate(-MathHelper.ToRadians(_angularVelocity * deltaTime));
+
+        Position += _direction * _speed * deltaTime;
 
         _collider.Update(Position);
         _debugService.DrawCircle(_collider.Center, _collider.Radius, Color.GreenYellow, 2f, 10);
     }
 
-    public void SetDirection(Vector2 value)
-    {
-        _direction = value;
-        Rotation = GameMathHelper.GetRotation(_direction);
-    }
-
     public void Render(IRenderService renderService)
     {
         renderService.AddSprite(_sprite, Position, Rotation, Layer.Bullets);
+    }
+
+    private void SetDirection(Vector2 value)
+    {
+        _direction = value;
+        Rotation = GameMathHelper.GetRotation(_direction);
     }
 }

@@ -30,6 +30,14 @@
       "BulletSpeed": 300,
       "StartingAngle": 270,
       "SpinPerSecond": 45
+    },
+    {
+      "Name": "straightDown_accelerated_rotated",
+      "RoundsPerSecond": 1,
+      "BulletSpeed": 100,
+      "BulletAcceleration": 100,
+      "BulletAngularVelocity": 30,
+      "StartingAngle": 270
     }
   ]
 }

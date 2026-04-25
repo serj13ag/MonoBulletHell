@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Data;
+using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;
 
@@ -11,7 +12,10 @@ public class BulletEmitter // TODO: organize folders
 
     private readonly Vector2 _offset;
     private readonly float _shotCooldown;
+
     private readonly float _bulletSpeed;
+    private readonly float _bulletAcceleration;
+    private readonly float _bulletAngularVelocity;
 
     private readonly int _numberOfLines;
     private readonly float _angleBetweenLines;
@@ -31,8 +35,11 @@ public class BulletEmitter // TODO: organize folders
 
         _offset = emitterData.Offset;
         _shotCooldown = 1 / emitterData.RoundsPerSecond;
-        _bulletSpeed = emitterData.BulletSpeed;
         _angle = emitterData.StartingAngle;
+
+        _bulletSpeed = emitterData.BulletSpeed;
+        _bulletAcceleration = emitterData.BulletAcceleration;
+        _bulletAngularVelocity = emitterData.BulletAngularVelocity;
 
         _numberOfLines = emitterData.NumberOfLines == 0 ? 1 : emitterData.NumberOfLines;
         _angleBetweenLines = emitterData.AngleBetweenLines;
@@ -90,7 +97,17 @@ public class BulletEmitter // TODO: organize folders
 
     private void SpawnBullet(float angle)
     {
-        _bulletService.SpawnBullet(_position + _offset, GameMathHelper.DegreeToDirection(angle), _bulletSpeed,
-            Constants.BulletDamage, false);
+        var bulletDto = new BulletDTO
+        {
+            Position = _position + _offset,
+            Direction = GameMathHelper.DegreeToDirection(angle),
+            Speed = _bulletSpeed,
+            Damage = Constants.BulletDamage,
+            IsPlayer = false,
+            Acceleration = _bulletAcceleration,
+            AngularVelocity = _bulletAngularVelocity,
+        };
+
+        _bulletService.SpawnBullet(bulletDto);
     }
 }

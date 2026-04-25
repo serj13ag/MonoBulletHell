@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.Interfaces;
@@ -12,7 +12,7 @@ public interface IBulletService
     void Update();
     void Render(IRenderService renderService);
 
-    void SpawnBullet(Vector2 position, Vector2 direction, float speed, int damage, bool isPlayer);
+    void SpawnBullet(BulletDTO bulletDto);
     void Clear();
 }
 
@@ -79,9 +79,9 @@ public class BulletService : IBulletService
         }
     }
 
-    public void SpawnBullet(Vector2 position, Vector2 direction, float speed, int damage, bool isPlayer)
+    public void SpawnBullet(BulletDTO bulletDto)
     {
-        var bullet = _bulletFactory.CreateBullet(position, direction, speed, damage, isPlayer);
+        var bullet = _bulletFactory.CreateBullet(bulletDto);
         _bullets.Add(bullet);
     }
 

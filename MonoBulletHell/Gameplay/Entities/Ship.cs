@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Data;
+using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
@@ -128,8 +129,15 @@ public class Ship : BaseEntity, IEntityWithCollider
 
         if (_inputService.Shoot() && _timeTillCanShoot <= 0f)
         {
-            _bulletService.SpawnBullet(Position + _bulletSpawnOffset, -Vector2.UnitY, _playerConfig.BulletSpeed,
-                Constants.BulletDamage, true);
+            var bulletDto = new BulletDTO()
+            {
+                Position = Position + _bulletSpawnOffset,
+                Direction = -Vector2.UnitY,
+                Speed = _playerConfig.Speed,
+                Damage = Constants.BulletDamage,
+                IsPlayer = true,
+            };
+            _bulletService.SpawnBullet(bulletDto);
             _timeTillCanShoot += _playerConfig.ShootCooldown;
         }
     }

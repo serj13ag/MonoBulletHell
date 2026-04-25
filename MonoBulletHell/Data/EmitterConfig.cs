@@ -14,10 +14,14 @@ public class EmitterConfig
 public class EmitterData
 {
     public string Name { get; set; }
+
     public Vector2 Offset { get; set; }
     public float RoundsPerSecond { get; set; }
-    public float BulletSpeed { get; set; }
     public float StartingAngle { get; set; }
+
+    public float BulletSpeed { get; set; }
+    public float BulletAcceleration { get; set; }
+    public float BulletAngularVelocity { get; set; }
 
     public int NumberOfLines { get; set; }
     public float AngleBetweenLines { get; set; }
