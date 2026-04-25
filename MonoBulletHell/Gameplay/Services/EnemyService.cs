@@ -10,7 +10,7 @@ public interface IEnemyService
     void Update();
     void Render(IRenderService renderService);
 
-    void SpawnEnemy(Vector2 position, string pathName, string enemyName);
+    void SpawnEnemy(Vector2 position, string pathName, string enemyName, string emitterName);
     void Clear();
 }
 
@@ -55,9 +55,9 @@ public class EnemyService : IEnemyService
         }
     }
 
-    public void SpawnEnemy(Vector2 position, string pathName, string enemyName)
+    public void SpawnEnemy(Vector2 position, string pathName, string enemyName, string emitterName)
     {
-        var enemy = _gameFactory.CreateEnemy(position, pathName, enemyName);
+        var enemy = _gameFactory.CreateEnemy(position, pathName, enemyName, emitterName);
         _context.Enemies.Add(enemy);
     }
 

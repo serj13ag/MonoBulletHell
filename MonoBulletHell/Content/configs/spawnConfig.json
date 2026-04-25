@@ -17,6 +17,7 @@
       "Position": "280, 0",
       "PathName": "down",
       "EnemyName": "follower",
+      "EmitterName": "straightDown",
       "Formation": {
         "Type": "Line",
         "Count": 3,
@@ -41,6 +42,7 @@
       "Position": "0, 0",
       "PathName": "downRight",
       "EnemyName": "shooter",
+      "EmitterName": "straightDown_3_lines",
       "Formation": {
         "Type": "Line",
         "Count": 3,
@@ -53,6 +55,7 @@
       "Position": "320, 0",
       "PathName": "downLeft",
       "EnemyName": "shooter",
+      "EmitterName": "straightDown_3_lines",
       "Formation": {
         "Type": "Line",
         "Count": 3,

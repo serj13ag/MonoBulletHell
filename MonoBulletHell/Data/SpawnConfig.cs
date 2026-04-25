@@ -17,5 +17,6 @@ public class WaveData
     public Vector2 Position { get; set; }
     public string PathName { get; set; }
     public string EnemyName { get; set; }
+    public string EmitterName { get; set; }
     public FormationData Formation { get; set; }
 }

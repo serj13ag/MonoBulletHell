@@ -19,5 +19,4 @@ public class EnemyData
     public float Speed { get; set; }
     public Vector2 ColliderOffset { get; set; }
     public float ColliderRadius { get; set; }
-    public string EmitterName { get; set; }
 }

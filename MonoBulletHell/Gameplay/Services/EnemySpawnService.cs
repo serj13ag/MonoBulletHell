@@ -61,13 +61,15 @@ public class EnemySpawnService : IEnemySpawnService
     {
         if (nextWaveToSpawn.Formation == null)
         {
-            _enemyService.SpawnEnemy(nextWaveToSpawn.Position, nextWaveToSpawn.PathName, nextWaveToSpawn.EnemyName);
+            _enemyService.SpawnEnemy(nextWaveToSpawn.Position, nextWaveToSpawn.PathName, nextWaveToSpawn.EnemyName,
+                nextWaveToSpawn.EmitterName);
             return;
         }
 
         foreach (var spawnPosition in FormationHelper.GetSpawnPositions(nextWaveToSpawn.Formation, nextWaveToSpawn.Position))
         {
-            _enemyService.SpawnEnemy(spawnPosition, nextWaveToSpawn.PathName, nextWaveToSpawn.EnemyName);
+            _enemyService.SpawnEnemy(spawnPosition, nextWaveToSpawn.PathName, nextWaveToSpawn.EnemyName,
+                nextWaveToSpawn.EmitterName);
         }
     }
 
