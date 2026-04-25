@@ -16,6 +16,21 @@ public static class GameMathHelper
         return angle + MathHelper.PiOver2;
     }
 
+    /// <summary>
+    /// 0 => right, 90 => up, 180 => left, 270 => down
+    /// </summary>
+    /// <param name="degree"></param>
+    /// <returns></returns>
+    public static Vector2 DegreeToDirection(float degree)
+    {
+        var radian = degree * (MathF.PI / 180f);
+
+        var x = MathF.Cos(radian);
+        var y = -MathF.Sin(radian); // because Y is inverted
+
+        return new Vector2(x, y);
+    }
+
     public static Vector2 QuadraticBezier(Vector2 p0, Vector2 p1, Vector2 p2, float t)
     {
         return (1 - t) * (1 - t) * p0 +

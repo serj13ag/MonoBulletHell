@@ -15,9 +15,8 @@ public class Enemy : BaseEntity, IEntityWithCollider
 
     private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
-    private readonly IBulletService _bulletService;
 
-    private readonly EnemyData _enemyData;
+    private readonly BulletEmitter _bulletEmitter;
 
     private readonly CircleCollider _collider;
     private readonly PathBlock _pathBlock;
@@ -26,7 +25,6 @@ public class Enemy : BaseEntity, IEntityWithCollider
     private readonly Effect _flashEffect;
 
     private int _currentHealth;
-    private float _timeTillShoot;
 
     private float _timeTillEndFlashEffect;
     private float _flashEffectAmount;
@@ -36,24 +34,27 @@ public class Enemy : BaseEntity, IEntityWithCollider
     public bool IsDead => _currentHealth <= 0;
     public bool PathIsFinished => _pathBlock.IsFinished;
 
-    public Enemy(IDebugService debugService, ITimeService timeService, IBulletService bulletService,
-        IContentService contentService, Vector2 position, PathData path, EnemyData enemyData)
+    public Enemy(IDebugService debugService, ITimeService timeService, IContentService contentService, Vector2 position,
+        PathData path, EnemyData enemyData, BulletEmitter bulletEmitter)
     {
         _debugService = debugService;
         _timeService = timeService;
-        _bulletService = bulletService;
-
-        _enemyData = enemyData;
 
         _currentHealth = enemyData.Health;
-
-        _collider = new CircleCollider(enemyData.ColliderOffset, enemyData.ColliderRadius);
 
         _pathBlock = new PathBlock(path, position, enemyData.Speed);
         Position = _pathBlock.Position;
 
+        _collider = new CircleCollider(enemyData.ColliderOffset, enemyData.ColliderRadius);
+
+        _bulletEmitter = bulletEmitter;
+        _bulletEmitter?.SetPosition(Position);
+        _bulletEmitter?.SetShootingDisabled(_pathBlock.ShootingDisabled);
+
         _sprite = GetEnemySprite(contentService, enemyData.SpriteName);
         _flashEffect = contentService.GetFlashEffect();
+
+        _pathBlock.ShootingDisabledChanged += OnPathShootingDisabledChanged;
     }
 
     public void Update()
@@ -64,10 +65,8 @@ public class Enemy : BaseEntity, IEntityWithCollider
         _collider.Update(Position);
         _debugService.DrawCircle(_collider.Center, _collider.Radius, Color.GreenYellow, 2f, 10);
 
-        if (_enemyData.ShootCooldown > 0)
-        {
-            HandleShooting();
-        }
+        _bulletEmitter?.SetPosition(Position);
+        _bulletEmitter?.Update(_timeService.DeltaTime);
 
         HandleFlashEffect();
     }
@@ -95,22 +94,9 @@ public class Enemy : BaseEntity, IEntityWithCollider
         }
     }
 
-    private void HandleShooting()
+    private void OnPathShootingDisabledChanged(bool shootingDisabled)
     {
-        if (_timeTillShoot <= 0f)
-        {
-            if (_pathBlock.ShootingDisabled)
-            {
-                return;
-            }
-
-            _bulletService.SpawnBullet(Position, Vector2.UnitY, _enemyData.BulletSpeed, Constants.BulletDamage, false);
-            _timeTillShoot += _enemyData.ShootCooldown;
-        }
-        else
-        {
-            _timeTillShoot -= _timeService.DeltaTime;
-        }
+        _bulletEmitter?.SetShootingDisabled(shootingDisabled);
     }
 
     private void HandleFlashEffect()

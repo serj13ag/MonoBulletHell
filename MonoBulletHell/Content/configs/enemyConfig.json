@@ -14,8 +14,7 @@
       "Speed": 100,
       "ColliderOffset": "0, -5",
       "ColliderRadius": 20,
-      "ShootCooldown": 0.5,
-      "BulletSpeed": 300,
+      "EmitterName": "straightDown",
       "SpriteName": "alien"
     }
   ]

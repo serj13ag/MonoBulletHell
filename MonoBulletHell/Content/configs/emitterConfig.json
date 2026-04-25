@@ -1,0 +1,10 @@
+{
+  "Emitters": [
+    {
+      "Name": "straightDown",
+      "RoundsPerSecond": 1,
+      "BulletSpeed": 300,
+      "StartingAngle": 270
+    }
+  ]
+}

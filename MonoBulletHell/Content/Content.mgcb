@@ -13,6 +13,9 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin configs/emitterConfig.json
+/copy:configs/emitterConfig.json
+
 #begin configs/enemyConfig.json
 /copy:configs/enemyConfig.json
 

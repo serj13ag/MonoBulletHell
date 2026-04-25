@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Data;
 using MonoBulletHell.Helpers;
@@ -20,11 +21,26 @@ public class PathBlock
 
     private int _loopsLeft;
     private float _progress;
+    private bool _shootingDisabled;
 
-    public bool ShootingDisabled { get; private set; }
+    public bool ShootingDisabled
+    {
+        get => _shootingDisabled;
+        private set
+        {
+            if (_shootingDisabled != value)
+            {
+                _shootingDisabled = value;
+                ShootingDisabledChanged?.Invoke(value);
+            }
+        }
+    }
+
     public bool IsFinished { get; private set; }
 
     public Vector2 Position => _currentPosition;
+
+    public event Action<bool> ShootingDisabledChanged;
 
     public PathBlock(PathData path, Vector2 initialPosition, float speed)
     {
@@ -38,7 +54,7 @@ public class PathBlock
         UpdatePositions(path.Points[0].Position, path.Points[1].Position);
         _currentPosition = _startPosition;
 
-        ShootingDisabled = _path.Points[0].ShootingDisabled;
+        _shootingDisabled = _path.Points[0].ShootingDisabled;
     }
 
     public void Update(float deltaTime)

@@ -24,6 +24,7 @@ public interface IContentService
     SpawnConfig GetSpawnConfig();
     EnemyData GetEnemyData(string enemyName);
     PathData GetPath(string pathName);
+    EmitterData GetEmitterData(string emitterName);
 
     Texture2D BackgroundTexture { get; }
 }
@@ -39,6 +40,7 @@ public class ContentService : IContentService
     private SpawnConfig _spawnConfig;
     private Dictionary<string, EnemyData> _enemyConfigs;
     private Dictionary<string, PathData> _pathConfigs;
+    private Dictionary<string, EmitterData> _emitterConfigs;
 
     public Texture2D BackgroundTexture { get; private set; }
 
@@ -59,6 +61,9 @@ public class ContentService : IContentService
         var pathConfig = LoadJsonData<PathConfig>(content, "configs/pathConfig.json");
         _pathConfigs = pathConfig.Paths.ToDictionary(path => path.Name);
 
+        var emitterConfig = LoadJsonData<EmitterConfig>(content, "configs/emitterConfig.json");
+        _emitterConfigs = emitterConfig.Emitters.ToDictionary(x => x.Name);
+
         ValidateData();
     }
 
@@ -73,6 +78,7 @@ public class ContentService : IContentService
 
     public EnemyData GetEnemyData(string enemyName) => _enemyConfigs[enemyName];
     public PathData GetPath(string pathName) => _pathConfigs[pathName];
+    public EmitterData GetEmitterData(string emitterName) => _emitterConfigs[emitterName];
 
     private static T LoadJsonData<T>(ContentManager content, string fileName)
     {

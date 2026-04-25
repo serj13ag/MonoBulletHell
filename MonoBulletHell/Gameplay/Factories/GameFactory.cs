@@ -43,7 +43,19 @@ public class GameFactory : IGameFactory
     {
         var path = _contentService.GetPath(pathName);
         var enemyData = _contentService.GetEnemyData(enemyName);
-        var enemy = new Enemy(_debugService, _timeService, _bulletService, _contentService, position, path, enemyData);
+        var bulletEmitter = CreateEmitter(enemyData.EmitterName);
+        var enemy = new Enemy(_debugService, _timeService, _contentService, position, path, enemyData, bulletEmitter);
         return enemy;
+    }
+
+    private BulletEmitter CreateEmitter(string emitterName)
+    {
+        if (string.IsNullOrEmpty(emitterName))
+        {
+            return null; // TODO: create null object
+        }
+
+        var emitterData = _contentService.GetEmitterData(emitterName);
+        return new BulletEmitter(emitterData, _bulletService);
     }
 }
