@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Data;
 using MonoBulletHell.Gameplay.Interfaces;
@@ -13,7 +12,6 @@ namespace MonoBulletHell.Gameplay.Entities;
 public class Enemy : BaseEntity, IEntityWithCollider
 {
     private const float FlashEffectDuration = 0.2f;
-    private const float ColliderRadius = 20f;
 
     private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
@@ -21,19 +19,19 @@ public class Enemy : BaseEntity, IEntityWithCollider
 
     private readonly EnemyData _enemyData;
 
+    private readonly CircleCollider _collider;
+    private readonly PathBlock _pathBlock;
+
     private readonly Sprite _sprite;
     private readonly Effect _flashEffect;
 
-    private readonly PathBlock _pathBlock;
-
-    private Circle _collider;
     private int _currentHealth;
     private float _timeTillShoot;
 
     private float _timeTillEndFlashEffect;
     private float _flashEffectAmount;
 
-    public Circle Collider => _collider;
+    public CircleCollider Collider => _collider;
 
     public bool IsDead => _currentHealth <= 0;
     public bool PathIsFinished => _pathBlock.IsFinished;
@@ -49,11 +47,13 @@ public class Enemy : BaseEntity, IEntityWithCollider
 
         _currentHealth = enemyData.Health;
 
-        _sprite = GetEnemySprite(contentService, enemyData.SpriteName);
-        _flashEffect = contentService.GetFlashEffect();
+        _collider = new CircleCollider(enemyData.ColliderOffset, enemyData.ColliderRadius);
 
         _pathBlock = new PathBlock(path, position, enemyData.Speed);
         Position = _pathBlock.Position;
+
+        _sprite = GetEnemySprite(contentService, enemyData.SpriteName);
+        _flashEffect = contentService.GetFlashEffect();
     }
 
     public void Update()
@@ -61,15 +61,15 @@ public class Enemy : BaseEntity, IEntityWithCollider
         _pathBlock.Update(_timeService.DeltaTime);
         Position = _pathBlock.Position;
 
+        _collider.Update(Position);
+        _debugService.DrawCircle(_collider.Center, _collider.Radius, Color.GreenYellow, 2f, 10);
+
         if (_enemyData.ShootCooldown > 0)
         {
             HandleShooting();
         }
 
         HandleFlashEffect();
-
-        _collider = new Circle(Position.X, Position.Y, ColliderRadius);
-        _debugService.DrawCircle(_collider.Location, _collider.Radius, Color.GreenYellow, 2f, 10);
     }
 
     public void Render(IRenderService renderService)

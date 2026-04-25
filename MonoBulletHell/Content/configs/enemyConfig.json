@@ -4,12 +4,16 @@
       "Name": "follower",
       "Health": 3,
       "Speed": 100,
+      "ColliderOffset": "0, -10",
+      "ColliderRadius": 15,
       "SpriteName": "alienSmall"
     },
     {
       "Name": "shooter",
       "Health": 5,
       "Speed": 100,
+      "ColliderOffset": "0, -5",
+      "ColliderRadius": 20,
       "ShootCooldown": 0.5,
       "BulletSpeed": 300,
       "SpriteName": "alien"

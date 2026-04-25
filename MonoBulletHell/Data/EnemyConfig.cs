@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework;
 
 namespace MonoBulletHell.Data;
 
@@ -16,6 +17,8 @@ public class EnemyData
     public string SpriteName { get; set; }
     public int Health { get; set; }
     public float Speed { get; set; }
+    public Vector2 ColliderOffset { get; set; }
+    public float ColliderRadius { get; set; }
     public float ShootCooldown { get; set; }
     public float BulletSpeed { get; set; }
 }

@@ -90,7 +90,7 @@ public class BulletService : IBulletService
         _bullets.Clear();
     }
 
-    private static bool IsColliding(IEntityWithCollider bullet, IEntityWithCollider entityWithCollider)
+    private static bool IsColliding(Bullet bullet, IEntityWithCollider entityWithCollider)
     {
         return bullet.Collider.Intersects(entityWithCollider.Collider);
     }

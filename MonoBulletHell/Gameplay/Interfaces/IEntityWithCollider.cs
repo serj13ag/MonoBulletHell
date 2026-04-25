@@ -1,8 +1,8 @@
-using MonoBulletHell.Core;
+using MonoBulletHell.Gameplay.Entities;
 
 namespace MonoBulletHell.Gameplay.Interfaces;
 
 public interface IEntityWithCollider
 {
-    public Circle Collider { get; }
+    public CircleCollider Collider { get; }
 }

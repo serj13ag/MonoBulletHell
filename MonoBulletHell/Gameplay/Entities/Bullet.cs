@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Rendering;
@@ -16,21 +15,24 @@ public class Bullet : BaseEntity, IEntityWithCollider
     private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
 
+    private readonly CircleCollider _collider;
+
     private readonly Sprite _sprite;
 
     private Vector2 _direction;
-    private Circle _collider;
 
     public float Speed { get; init; }
     public int Damage { get; init; }
     public bool IsPlayer { get; init; }
 
-    public Circle Collider => _collider;
+    public CircleCollider Collider => _collider;
 
     public Bullet(IDebugService debugService, ITimeService timeService, Sprite sprite)
     {
         _debugService = debugService;
         _timeService = timeService;
+
+        _collider = new CircleCollider(Vector2.Zero, ColliderRadius);
 
         _sprite = sprite;
     }
@@ -39,8 +41,8 @@ public class Bullet : BaseEntity, IEntityWithCollider
     {
         Position += _direction * Speed * _timeService.DeltaTime;
 
-        _collider = new Circle(Position.X, Position.Y, ColliderRadius);
-        _debugService.DrawCircle(_collider.Location, _collider.Radius, Color.GreenYellow, 2f, 10);
+        _collider.Update(Position);
+        _debugService.DrawCircle(_collider.Center, _collider.Radius, Color.GreenYellow, 2f, 10);
     }
 
     public void SetDirection(Vector2 value)

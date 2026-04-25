@@ -1,7 +1,6 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoBulletHell.Core;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Data;
 using MonoBulletHell.Gameplay.Interfaces;
@@ -26,17 +25,18 @@ public class Ship : BaseEntity, IEntityWithCollider
 
     private readonly PlayerConfig _playerConfig;
 
+    private readonly CircleCollider _collider;
+
     private readonly Sprite _shipSprite;
     private readonly Effect _flashEffect;
 
-    private Circle _collider;
     private float _timeTillCanShoot;
     private int _currentHealth;
     private bool _isImmune;
     private float _timeTillDisableImmunity;
     private float _flashEffectAmount;
 
-    public Circle Collider => _collider;
+    public CircleCollider Collider => _collider;
     public bool IsImmune => _isImmune;
 
     public event EventHandler<EventArgs> OnDestroyed;
@@ -51,8 +51,9 @@ public class Ship : BaseEntity, IEntityWithCollider
 
         _playerConfig = playerConfig;
 
-        _flashEffect = contentService.GetFlashEffect();
+        _collider = new CircleCollider(Vector2.Zero, ColliderRadius);
 
+        _flashEffect = contentService.GetFlashEffect();
         _shipSprite = GetShipSprite(contentService, playerConfig);
     }
 
@@ -74,8 +75,8 @@ public class Ship : BaseEntity, IEntityWithCollider
         HandleShooting(deltaTime);
         HandleImmunity(deltaTime);
 
-        _collider = new Circle(Position.X, Position.Y, ColliderRadius);
-        _debugService.DrawCircle(_collider.Location, _collider.Radius, Color.GreenYellow, 2f, 10);
+        _collider.Update(Position);
+        _debugService.DrawCircle(_collider.Center, _collider.Radius, Color.GreenYellow, 2f, 10);
     }
 
     public void Render(IRenderService renderService)
