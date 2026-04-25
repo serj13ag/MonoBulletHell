@@ -5,6 +5,14 @@
       "RoundsPerSecond": 1,
       "BulletSpeed": 300,
       "StartingAngle": 270
+    },
+    {
+      "Name": "straightDown_3_lines",
+      "RoundsPerSecond": 1,
+      "BulletSpeed": 300,
+      "StartingAngle": 250,
+      "NumberOfLines": 3,
+      "AngleBetweenLines": 20
     }
   ]
 }

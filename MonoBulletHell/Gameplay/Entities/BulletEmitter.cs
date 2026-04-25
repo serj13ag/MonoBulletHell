@@ -9,6 +9,8 @@ public class BulletEmitter // TODO: organize folders
 {
     private readonly IBulletService _bulletService;
 
+    private readonly EmitterData _emitterData;
+
     private readonly Vector2 _offset;
     private readonly float _shotCooldown;
     private readonly float _bulletSpeed;
@@ -21,6 +23,8 @@ public class BulletEmitter // TODO: organize folders
     public BulletEmitter(EmitterData emitterData, IBulletService bulletService)
     {
         _bulletService = bulletService;
+
+        _emitterData = emitterData;
 
         _offset = emitterData.Offset;
         _shotCooldown = 1 / emitterData.RoundsPerSecond;
@@ -55,7 +59,16 @@ public class BulletEmitter // TODO: organize folders
 
     private void Shoot()
     {
-        _bulletService.SpawnBullet(_position + _offset, GameMathHelper.DegreeToDirection(_angle), _bulletSpeed,
+        for (var i = 0; i < _emitterData.NumberOfLines; i++)
+        {
+            var bulletAngle = _angle + _emitterData.AngleBetweenLines * i;
+            SpawnBullet(bulletAngle);
+        }
+    }
+
+    private void SpawnBullet(float angle)
+    {
+        _bulletService.SpawnBullet(_position + _offset, GameMathHelper.DegreeToDirection(angle), _bulletSpeed,
             Constants.BulletDamage, false);
     }
 }

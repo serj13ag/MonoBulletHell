@@ -18,4 +18,9 @@ public class EmitterData
     public float RoundsPerSecond { get; set; }
     public float BulletSpeed { get; set; }
     public float StartingAngle { get; set; }
+
+    public int NumberOfLines { get; set; }
+    public float AngleBetweenLines { get; set; }
+    public int NumberOfBulletsPerLine { get; set; }
+    public int AngleBetweenBulletsInLine { get; set; }
 }
