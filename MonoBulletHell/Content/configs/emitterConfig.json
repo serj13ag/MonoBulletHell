@@ -23,6 +23,13 @@
       "AngleBetweenLines": 20,
       "NumberOfBulletsPerLine": 3,
       "AngleBetweenBulletsInLine": 5
+    },
+    {
+      "Name": "straightDown_rotating",
+      "RoundsPerSecond": 5,
+      "BulletSpeed": 300,
+      "StartingAngle": 270,
+      "SpinPerSecond": 45
     }
   ]
 }

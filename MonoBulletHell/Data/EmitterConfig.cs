@@ -23,4 +23,6 @@ public class EmitterData
     public float AngleBetweenLines { get; set; }
     public int NumberOfBulletsPerLine { get; set; }
     public float AngleBetweenBulletsInLine { get; set; }
+
+    public float SpinPerSecond { get; set; }
 }

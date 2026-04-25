@@ -12,16 +12,18 @@ public class BulletEmitter // TODO: organize folders
     private readonly Vector2 _offset;
     private readonly float _shotCooldown;
     private readonly float _bulletSpeed;
-    private readonly float _angle;
 
     private readonly int _numberOfLines;
     private readonly float _angleBetweenLines;
     private readonly int _numberOfBulletsPerLine;
     private readonly float _angleBetweenBulletsInLine;
 
+    private readonly float _spinPerSecond;
+
     private Vector2 _position;
     private bool _shootingDisabled;
     private float _timeTillShoot;
+    private float _angle;
 
     public BulletEmitter(EmitterData emitterData, IBulletService bulletService)
     {
@@ -36,6 +38,8 @@ public class BulletEmitter // TODO: organize folders
         _angleBetweenLines = emitterData.AngleBetweenLines;
         _numberOfBulletsPerLine = emitterData.NumberOfBulletsPerLine == 0 ? 1 : emitterData.NumberOfBulletsPerLine;
         _angleBetweenBulletsInLine = emitterData.AngleBetweenBulletsInLine;
+
+        _spinPerSecond = emitterData.SpinPerSecond;
     }
 
     public void SetPosition(Vector2 position) => _position = position;
@@ -43,7 +47,13 @@ public class BulletEmitter // TODO: organize folders
 
     public void Update(float deltaTime)
     {
+        UpdateAngle(deltaTime);
         HandleShooting(deltaTime);
+    }
+
+    private void UpdateAngle(float deltaTime)
+    {
+        _angle += _spinPerSecond * deltaTime;
     }
 
     private void HandleShooting(float deltaTime)
