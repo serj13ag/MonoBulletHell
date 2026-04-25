@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Core.Physics;
 using MonoBulletHell.Data;
+using MonoBulletHell.Gameplay.Entities.Emitters;
 using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
@@ -16,7 +17,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
     private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
 
-    private readonly BulletEmitter _bulletEmitter;
+    private readonly IBulletEmitter _bulletEmitter;
 
     private readonly CircleCollider _collider;
     private readonly PathBlock _pathBlock;
@@ -35,7 +36,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
     public bool PathIsFinished => _pathBlock.IsFinished;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IContentService contentService, Vector2 position,
-        PathData path, EnemyData enemyData, BulletEmitter bulletEmitter)
+        PathData path, EnemyData enemyData, IBulletEmitter bulletEmitter)
     {
         _debugService = debugService;
         _timeService = timeService;
@@ -48,8 +49,8 @@ public class Enemy : BaseEntity, IEntityWithCollider
         _collider = new CircleCollider(enemyData.ColliderOffset, enemyData.ColliderRadius);
 
         _bulletEmitter = bulletEmitter;
-        _bulletEmitter?.SetPosition(Position);
-        _bulletEmitter?.SetShootingDisabled(_pathBlock.ShootingDisabled);
+        _bulletEmitter.SetPosition(Position);
+        _bulletEmitter.SetShootingDisabled(_pathBlock.ShootingDisabled);
 
         _sprite = GetEnemySprite(contentService, enemyData.SpriteName);
         _flashEffect = contentService.GetFlashEffect();
@@ -65,8 +66,8 @@ public class Enemy : BaseEntity, IEntityWithCollider
         _collider.Update(Position);
         _debugService.DrawCircle(_collider.Center, _collider.Radius, Color.GreenYellow, 2f, 10);
 
-        _bulletEmitter?.SetPosition(Position);
-        _bulletEmitter?.Update(_timeService.DeltaTime);
+        _bulletEmitter.SetPosition(Position);
+        _bulletEmitter.Update(_timeService.DeltaTime);
 
         HandleFlashEffect();
     }

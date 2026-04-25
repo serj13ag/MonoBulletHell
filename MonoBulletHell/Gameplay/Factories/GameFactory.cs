@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Gameplay.Entities;
+using MonoBulletHell.Gameplay.Entities.Emitters;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
 
@@ -48,11 +49,11 @@ public class GameFactory : IGameFactory
         return enemy;
     }
 
-    private BulletEmitter CreateEmitter(string emitterName)
+    private IBulletEmitter CreateEmitter(string emitterName)
     {
         if (string.IsNullOrEmpty(emitterName))
         {
-            return null; // TODO: create null object
+            return NullBulletEmitter.Instance;
         }
 
         var emitterData = _contentService.GetEmitterData(emitterName);

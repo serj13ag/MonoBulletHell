@@ -5,9 +5,9 @@ using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;
 
-namespace MonoBulletHell.Gameplay.Entities;
+namespace MonoBulletHell.Gameplay.Entities.Emitters;
 
-public class BulletEmitter // TODO: organize folders
+public class BulletEmitter : IBulletEmitter
 {
     private readonly IBulletService _bulletService;
 
