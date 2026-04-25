@@ -12,18 +12,18 @@ public class BulletEmitter // TODO: organize folders
     private readonly IBulletService _bulletService;
 
     private readonly Vector2 _offset;
-    private readonly float _shotCooldown;
+    private readonly IAnimatedFloat _roundsPerSecond;
 
-    private readonly float _bulletSpeed;
-    private readonly float _bulletAcceleration;
-    private readonly float _bulletAngularVelocity;
+    private readonly IAnimatedFloat _bulletSpeed;
+    private readonly IAnimatedFloat _bulletAcceleration;
+    private readonly IAnimatedFloat _bulletAngularVelocity;
 
     private readonly int _numberOfLines;
-    private readonly float _angleBetweenLines;
+    private readonly IAnimatedFloat _angleBetweenLines;
     private readonly int _numberOfBulletsPerLine;
-    private readonly float _angleBetweenBulletsInLine;
+    private readonly IAnimatedFloat _angleBetweenBulletsInLine;
 
-    private readonly float _spinPerSecond;
+    private readonly IAnimatedFloat _spinPerSecond;
 
     private float _elapsedTime;
     private Vector2 _position;
@@ -38,7 +38,7 @@ public class BulletEmitter // TODO: organize folders
         _bulletService = bulletService;
 
         _offset = emitterData.Offset;
-        _shotCooldown = 1 / emitterData.RoundsPerSecond;
+        _roundsPerSecond = emitterData.RoundsPerSecond;
         _angle = emitterData.StartingAngle;
 
         _bulletSpeed = emitterData.BulletSpeed;
@@ -59,7 +59,7 @@ public class BulletEmitter // TODO: organize folders
     public void Update(float deltaTime)
     {
         _elapsedTime += deltaTime;
-        _spinAngle += _spinPerSecond * deltaTime;
+        _spinAngle += _spinPerSecond.Evaluate(_elapsedTime) * deltaTime;
 
         HandleShooting(deltaTime);
     }
@@ -73,7 +73,8 @@ public class BulletEmitter // TODO: organize folders
                 Shoot();
             }
 
-            _timeTillShoot += _shotCooldown;
+            var shotCooldown = 1 / _roundsPerSecond.Evaluate(_elapsedTime);
+            _timeTillShoot += shotCooldown;
         }
         else
         {
@@ -87,11 +88,11 @@ public class BulletEmitter // TODO: organize folders
 
         for (var line = 0; line < _numberOfLines; line++)
         {
-            var lineAngle = totalAngle + line * _angleBetweenLines;
+            var lineAngle = totalAngle + line * _angleBetweenLines.Evaluate(_elapsedTime);
 
             for (var bullet = 0; bullet < _numberOfBulletsPerLine; bullet++)
             {
-                var bulletAngle = lineAngle + bullet * _angleBetweenBulletsInLine;
+                var bulletAngle = lineAngle + bullet * _angleBetweenBulletsInLine.Evaluate(_elapsedTime);
 
                 SpawnBullet(bulletAngle);
             }
@@ -104,11 +105,11 @@ public class BulletEmitter // TODO: organize folders
         {
             Position = _position + _offset,
             Direction = GameMathHelper.DegreeToDirection(angle),
-            Speed = _bulletSpeed,
+            Speed = _bulletSpeed.Evaluate(_elapsedTime),
             Damage = Constants.BulletDamage,
             IsPlayer = false,
-            Acceleration = _bulletAcceleration,
-            AngularVelocity = _bulletAngularVelocity,
+            Acceleration = _bulletAcceleration.Evaluate(_elapsedTime),
+            AngularVelocity = _bulletAngularVelocity.Evaluate(_elapsedTime),
         };
 
         _bulletService.SpawnBullet(bulletDto);

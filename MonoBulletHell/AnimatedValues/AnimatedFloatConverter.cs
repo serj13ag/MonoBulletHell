@@ -14,6 +14,11 @@ public class AnimatedFloatConverter : JsonConverter<IAnimatedFloat>
     public override IAnimatedFloat ReadJson(JsonReader reader, Type objectType, IAnimatedFloat existingValue,
         bool hasExistingValue, JsonSerializer serializer)
     {
+        if (reader.TokenType == JsonToken.Null)
+        {
+            return new ConstantAnimatedFloat(0f);
+        }
+
         var token = JToken.Load(reader);
 
         switch (token.Type)

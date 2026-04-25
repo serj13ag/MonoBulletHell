@@ -18,19 +18,38 @@ public class EmitterData
     public string Name { get; set; }
 
     public Vector2 Offset { get; set; }
-    public float RoundsPerSecond { get; set; }
 
     [JsonConverter(typeof(AnimatedFloatConverter))]
-    public IAnimatedFloat StartingAngle { get; set; }
+    public IAnimatedFloat RoundsPerSecond { get; set; } = new ConstantAnimatedFloat(0f);
 
-    public float BulletSpeed { get; set; }
-    public float BulletAcceleration { get; set; }
-    public float BulletAngularVelocity { get; set; }
+    [JsonConverter(typeof(AnimatedFloatConverter))]
+    public IAnimatedFloat StartingAngle { get; set; } = new ConstantAnimatedFloat(0f);
+
+    // Bullet
+
+    [JsonConverter(typeof(AnimatedFloatConverter))]
+    public IAnimatedFloat BulletSpeed { get; set; } = new ConstantAnimatedFloat(0f);
+
+    [JsonConverter(typeof(AnimatedFloatConverter))]
+    public IAnimatedFloat BulletAcceleration { get; set; } = new ConstantAnimatedFloat(0f);
+
+    [JsonConverter(typeof(AnimatedFloatConverter))]
+    public IAnimatedFloat BulletAngularVelocity { get; set; } = new ConstantAnimatedFloat(0f);
+
+    // Lines
 
     public int NumberOfLines { get; set; }
-    public float AngleBetweenLines { get; set; }
-    public int NumberOfBulletsPerLine { get; set; }
-    public float AngleBetweenBulletsInLine { get; set; }
 
-    public float SpinPerSecond { get; set; }
+    [JsonConverter(typeof(AnimatedFloatConverter))]
+    public IAnimatedFloat AngleBetweenLines { get; set; } = new ConstantAnimatedFloat(0f);
+
+    public int NumberOfBulletsPerLine { get; set; }
+
+    [JsonConverter(typeof(AnimatedFloatConverter))]
+    public IAnimatedFloat AngleBetweenBulletsInLine { get; set; } = new ConstantAnimatedFloat(0f);
+
+    // Spin
+
+    [JsonConverter(typeof(AnimatedFloatConverter))]
+    public IAnimatedFloat SpinPerSecond { get; set; } = new ConstantAnimatedFloat(0f);
 }
