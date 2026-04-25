@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
-using MonoBulletHell.Core;
 
-namespace MonoBulletHell.Gameplay.Entities;
+namespace MonoBulletHell.Core.Physics;
 
 public class CircleCollider
 {
@@ -13,7 +12,7 @@ public class CircleCollider
     public Vector2 Center => _circle.Location;
     public float Radius => _circle.Radius;
 
-    public CircleCollider(Vector2 offset, float radius) // TODO: other folder
+    public CircleCollider(Vector2 offset, float radius)
     {
         _offset = offset;
         _radius = radius;

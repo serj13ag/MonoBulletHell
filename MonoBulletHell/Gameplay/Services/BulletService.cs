@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using MonoBulletHell.Core.Physics;
 using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
-using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Helpers;
 
 namespace MonoBulletHell.Gameplay.Services;

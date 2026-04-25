@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Core.Physics;
 using MonoBulletHell.Data;
-using MonoBulletHell.Gameplay.Interfaces;
 using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
