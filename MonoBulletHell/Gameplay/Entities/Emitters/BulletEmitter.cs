@@ -7,7 +7,7 @@ using MonoBulletHell.Helpers;
 
 namespace MonoBulletHell.Gameplay.Entities.Emitters;
 
-public class BulletEmitter : IBulletEmitter
+public class BulletEmitter : BaseEntity, IBulletEmitter
 {
     private readonly IBulletService _bulletService;
 
@@ -26,7 +26,6 @@ public class BulletEmitter : IBulletEmitter
     private readonly IAnimatedFloat _spinPerSecond;
 
     private float _elapsedTime;
-    private Vector2 _position;
     private bool _shootingDisabled;
     private float _timeTillShoot;
 
@@ -53,7 +52,6 @@ public class BulletEmitter : IBulletEmitter
         _spinPerSecond = emitterData.SpinPerSecond;
     }
 
-    public void SetPosition(Vector2 position) => _position = position;
     public void SetShootingDisabled(bool value) => _shootingDisabled = value;
 
     public void Update(float deltaTime)
@@ -103,7 +101,7 @@ public class BulletEmitter : IBulletEmitter
     {
         var bulletDto = new BulletDTO
         {
-            Position = _position + _offset,
+            Position = Position + _offset,
             Direction = GameMathHelper.DegreeToDirection(angle),
             Speed = _bulletSpeed.Evaluate(_elapsedTime),
             Damage = Constants.BulletDamage,

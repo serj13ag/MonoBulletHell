@@ -6,9 +6,8 @@ public class NullBulletEmitter : IBulletEmitter
 {
     public static readonly NullBulletEmitter Instance = new NullBulletEmitter();
 
-    public void SetPosition(Vector2 position)
-    {
-    }
+    public Vector2 Position { get; set; }
+    public float Rotation { get; set; }
 
     public void SetShootingDisabled(bool pathBlockShootingDisabled)
     {

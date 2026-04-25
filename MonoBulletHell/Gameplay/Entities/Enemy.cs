@@ -49,7 +49,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
         _collider = new CircleCollider(enemyData.ColliderOffset, enemyData.ColliderRadius);
 
         _bulletEmitter = bulletEmitter;
-        _bulletEmitter.SetPosition(Position);
+        _bulletEmitter.Position = Position;
         _bulletEmitter.SetShootingDisabled(_pathBlock.ShootingDisabled);
 
         _sprite = GetEnemySprite(contentService, enemyData.SpriteName);
@@ -66,7 +66,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
         _collider.Update(Position);
         _debugService.DrawCircle(_collider.Center, _collider.Radius, Color.GreenYellow, 2f, 10);
 
-        _bulletEmitter.SetPosition(Position);
+        _bulletEmitter.Position = Position;
         _bulletEmitter.Update(_timeService.DeltaTime);
 
         HandleFlashEffect();

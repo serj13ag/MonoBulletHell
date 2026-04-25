@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace MonoBulletHell.Gameplay.Entities;
 
-public abstract class BaseEntity
+public abstract class BaseEntity : IBaseEntity
 {
     public Vector2 Position { get; set; }
 
