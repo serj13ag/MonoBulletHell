@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Core.Physics;
 using MonoBulletHell.Data;
+using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Effects;
 using MonoBulletHell.Gameplay.Entities.Emitters;
 using MonoBulletHell.Gameplay.Rendering;
@@ -16,6 +17,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
 
     private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
+    private readonly ISoundService _soundService;
 
     private readonly IBulletEmitter _bulletEmitter;
 
@@ -32,11 +34,12 @@ public class Enemy : BaseEntity, IEntityWithCollider
     public bool IsDead => _currentHealth <= 0;
     public bool PathIsFinished => _pathBlock.IsFinished;
 
-    public Enemy(IDebugService debugService, ITimeService timeService, IContentService contentService, Vector2 position,
-        PathData path, EnemyData enemyData, IBulletEmitter bulletEmitter)
+    public Enemy(IDebugService debugService, ITimeService timeService, IContentService contentService, ISoundService soundService,
+        Vector2 position, PathData path, EnemyData enemyData, IBulletEmitter bulletEmitter)
     {
         _debugService = debugService;
         _timeService = timeService;
+        _soundService = soundService;
 
         _currentHealth = enemyData.Health;
 
@@ -82,6 +85,7 @@ public class Enemy : BaseEntity, IEntityWithCollider
         if (_currentHealth > 0)
         {
             _flashEffect.Activate(FlashEffectDuration, FlashEffectDuration);
+            _soundService.PlaySoundEffect(SfxType.EnemyDamaged);
         }
     }
 

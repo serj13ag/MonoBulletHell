@@ -48,7 +48,8 @@ public class GameFactory : IGameFactory
         var path = _contentService.GetPath(pathName);
         var enemyData = _contentService.GetEnemyData(enemyName);
         var bulletEmitter = CreateEmitter(emitterName);
-        var enemy = new Enemy(_debugService, _timeService, _contentService, position, path, enemyData, bulletEmitter);
+        var enemy = new Enemy(_debugService, _timeService, _contentService, _soundService, position, path, enemyData,
+            bulletEmitter);
         return enemy;
     }
 

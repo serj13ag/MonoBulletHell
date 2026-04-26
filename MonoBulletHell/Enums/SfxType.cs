@@ -4,5 +4,6 @@ public enum SfxType
 {
     Click,
     PlayerShoot,
+    EnemyDamaged,
     EnemyDied,
 }
