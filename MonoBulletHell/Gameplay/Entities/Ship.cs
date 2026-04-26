@@ -1,10 +1,10 @@
 using System;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Core.Physics;
 using MonoBulletHell.Data;
 using MonoBulletHell.Data.DTOs;
+using MonoBulletHell.Gameplay.Effects;
 using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;
@@ -14,8 +14,8 @@ namespace MonoBulletHell.Gameplay.Entities;
 
 public class Ship : BaseEntity, IEntityWithCollider
 {
-    private const float FlashEffectSpeed = 6f;
     private const float ColliderRadius = 10f;
+    private const float FlashEffectFadeTime = 0.25f;
 
     private readonly Vector2 _bulletSpawnOffset = new Vector2(0f, -32f);
 
@@ -29,13 +29,12 @@ public class Ship : BaseEntity, IEntityWithCollider
     private readonly CircleCollider _collider;
 
     private readonly Sprite _shipSprite;
-    private readonly Effect _flashEffect;
+    private readonly FlashEffect _flashEffect;
 
     private float _timeTillCanShoot;
     private int _currentHealth;
     private bool _isImmune;
     private float _timeTillDisableImmunity;
-    private float _flashEffectAmount;
 
     public CircleCollider Collider => _collider;
     public bool IsImmune => _isImmune;
@@ -66,7 +65,8 @@ public class Ship : BaseEntity, IEntityWithCollider
         _isImmune = false;
         _timeTillDisableImmunity = 0f;
         _timeTillCanShoot = 0f;
-        _flashEffectAmount = 0f;
+
+        _flashEffect.Deactivate();
     }
 
     public void Update()
@@ -76,20 +76,15 @@ public class Ship : BaseEntity, IEntityWithCollider
         HandleShooting(deltaTime);
         HandleImmunity(deltaTime);
 
+        _flashEffect.Update(deltaTime);
+
         _collider.Update(Position);
         _debugService.DrawCircle(_collider.Center, _collider.Radius, Color.GreenYellow, 2f, 10);
     }
 
     public void Render(IRenderService renderService)
     {
-        Effect effect = null;
-        if (_isImmune)
-        {
-            _flashEffect.Parameters["flashAmount"].SetValue(_flashEffectAmount); // TODO: refactor? 
-            effect = _flashEffect;
-        }
-
-        renderService.AddSprite(_shipSprite, Position, Rotation, Layer.Ship, effect);
+        renderService.AddSprite(_shipSprite, Position, Rotation, Layer.Ship, _flashEffect.ActiveEffect);
     }
 
     public void TakeDamage(int damage)
@@ -154,16 +149,14 @@ public class Ship : BaseEntity, IEntityWithCollider
         {
             DisableImmunity();
         }
-        else
-        {
-            _flashEffectAmount = MathF.Abs(MathF.Sin(_timeTillDisableImmunity * FlashEffectSpeed));
-        }
     }
 
     private void EnableImmunity()
     {
         _isImmune = true;
         _timeTillDisableImmunity = _playerConfig.DamageImmuneCooldown;
+
+        _flashEffect.Activate(_timeTillDisableImmunity, FlashEffectFadeTime);
     }
 
     private void DisableImmunity()

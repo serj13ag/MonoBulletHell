@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Core.Physics;
 using MonoBulletHell.Data;
+using MonoBulletHell.Gameplay.Effects;
 using MonoBulletHell.Gameplay.Entities.Emitters;
 using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
@@ -23,12 +23,9 @@ public class Enemy : BaseEntity, IEntityWithCollider
     private readonly PathBlock _pathBlock;
 
     private readonly Sprite _sprite;
-    private readonly Effect _flashEffect;
+    private readonly FlashEffect _flashEffect;
 
     private int _currentHealth;
-
-    private float _timeTillEndFlashEffect;
-    private float _flashEffectAmount;
 
     public CircleCollider Collider => _collider;
 
@@ -69,20 +66,13 @@ public class Enemy : BaseEntity, IEntityWithCollider
         _bulletEmitter.Position = Position;
         _bulletEmitter.Update(_timeService.DeltaTime);
 
-        HandleFlashEffect();
+        _flashEffect.Update(_timeService.DeltaTime);
     }
 
     public void Render(IRenderService renderService)
     {
-        Effect effect = null;
-        if (_timeTillEndFlashEffect > 0)
-        {
-            _flashEffect.Parameters["flashAmount"].SetValue(_flashEffectAmount); // TODO: refactor? 
-            effect = _flashEffect;
-        }
-
         var spriteOffset = new Vector2(0f, -10f); // TODO: refactor
-        renderService.AddSprite(_sprite, Position + spriteOffset, Rotation, Layer.Enemies, effect);
+        renderService.AddSprite(_sprite, Position + spriteOffset, Rotation, Layer.Enemies, _flashEffect.ActiveEffect);
     }
 
     public void TakeDamage(int damage)
@@ -91,22 +81,13 @@ public class Enemy : BaseEntity, IEntityWithCollider
 
         if (_currentHealth > 0)
         {
-            _timeTillEndFlashEffect = FlashEffectDuration;
+            _flashEffect.Activate(FlashEffectDuration, FlashEffectDuration);
         }
     }
 
     private void OnPathShootingDisabledChanged(bool shootingDisabled)
     {
         _bulletEmitter?.SetShootingDisabled(shootingDisabled);
-    }
-
-    private void HandleFlashEffect()
-    {
-        if (_timeTillEndFlashEffect > 0)
-        {
-            _timeTillEndFlashEffect -= _timeService.DeltaTime;
-            _flashEffectAmount = _timeTillEndFlashEffect / FlashEffectDuration;
-        }
     }
 
     private static Sprite GetEnemySprite(IContentService contentService, string spriteName)

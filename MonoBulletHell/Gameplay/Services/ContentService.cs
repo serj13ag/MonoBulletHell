@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Data;
+using MonoBulletHell.Gameplay.Effects;
 using Newtonsoft.Json;
 
 namespace MonoBulletHell.Gameplay.Services;
@@ -18,7 +19,7 @@ public interface IContentService
     Sprite CreateBulletSprite(string spriteName);
     AnimatedSprite CreateBulletAnimatedSprite(string animationName);
 
-    Effect GetFlashEffect();
+    FlashEffect GetFlashEffect();
 
     PlayerConfig GetPlayerConfig();
     SpawnConfig GetSpawnConfig();
@@ -71,7 +72,7 @@ public class ContentService : IContentService
     public Sprite CreateBulletSprite(string spriteName) => _bulletsAtlas.CreateSprite(spriteName);
     public AnimatedSprite CreateBulletAnimatedSprite(string animationName) => _bulletsAtlas.CreateAnimatedSprite(animationName);
 
-    public Effect GetFlashEffect() => _flashEffect.Clone();
+    public FlashEffect GetFlashEffect() => new FlashEffect(_flashEffect.Clone());
 
     public PlayerConfig GetPlayerConfig() => _playerConfig;
     public SpawnConfig GetSpawnConfig() => _spawnConfig;
