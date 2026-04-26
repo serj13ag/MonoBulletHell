@@ -7,6 +7,7 @@ public class PlayerConfig
 {
     public int Health { get; set; }
     public float Speed { get; set; }
+    public float FocusSpeed { get; set; }
     public float ShootCooldown { get; set; }
     public float BulletSpeed { get; set; }
     public float DamageImmuneCooldown { get; set; }

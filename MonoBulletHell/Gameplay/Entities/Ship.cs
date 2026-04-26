@@ -109,7 +109,8 @@ public class Ship : BaseEntity, IEntityWithCollider
     {
         if (HasDirectionalInput(out var inputDirection))
         {
-            var newPosition = Position + inputDirection * _playerConfig.Speed * deltaTime;
+            var speed = _inputService.FocusPressed() ? _playerConfig.FocusSpeed : _playerConfig.Speed;
+            var newPosition = Position + inputDirection * speed * deltaTime;
             ScreenHelper.ClampToVirtualBounds(ref newPosition);
             Position = newPosition;
         }

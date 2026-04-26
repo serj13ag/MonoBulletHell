@@ -17,6 +17,7 @@ public interface IInputService
     bool MoveRight();
 
     bool Shoot();
+    bool FocusPressed();
 }
 
 public class InputService : IInputService
@@ -35,37 +36,13 @@ public class InputService : IInputService
         _keyboard.Update();
     }
 
-    public bool PausePressed()
-    {
-        return _keyboard.WasKeyJustPressed(Keys.Escape);
-    }
+    public bool PausePressed() => _keyboard.WasKeyJustPressed(Keys.Escape);
 
-    public bool MoveUp()
-    {
-        return _keyboard.IsKeyDown(Keys.Up) ||
-               _keyboard.IsKeyDown(Keys.W);
-    }
+    public bool MoveUp() => _keyboard.IsKeyDown(Keys.Up) || _keyboard.IsKeyDown(Keys.W);
+    public bool MoveDown() => _keyboard.IsKeyDown(Keys.Down) || _keyboard.IsKeyDown(Keys.S);
+    public bool MoveLeft() => _keyboard.IsKeyDown(Keys.Left) || _keyboard.IsKeyDown(Keys.A);
+    public bool MoveRight() => _keyboard.IsKeyDown(Keys.Right) || _keyboard.IsKeyDown(Keys.D);
 
-    public bool MoveDown()
-    {
-        return _keyboard.IsKeyDown(Keys.Down) ||
-               _keyboard.IsKeyDown(Keys.S);
-    }
-
-    public bool MoveLeft()
-    {
-        return _keyboard.IsKeyDown(Keys.Left) ||
-               _keyboard.IsKeyDown(Keys.A);
-    }
-
-    public bool MoveRight()
-    {
-        return _keyboard.IsKeyDown(Keys.Right) ||
-               _keyboard.IsKeyDown(Keys.D);
-    }
-
-    public bool Shoot()
-    {
-        return _keyboard.IsKeyDown(Keys.Space);
-    }
+    public bool Shoot() => _keyboard.IsKeyDown(Keys.Space);
+    public bool FocusPressed() => _keyboard.IsKeyDown(Keys.LeftShift);
 }
