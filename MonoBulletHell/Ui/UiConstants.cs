@@ -7,6 +7,8 @@ public static class UiConstants
     public const string GameTitleText = "MONO HELL";
     public const string StartButtonText = "START GAME";
     public const string OptionsButtonText = "OPTIONS";
+    public const string OptionsScaleLabelText = "WINDOW SCALE";
+    public const string OptionsVolumeLabelText = "VOLUME";
     public const string BackButtonText = "BACK";
     public const string QuitButtonText = "QUIT";
 

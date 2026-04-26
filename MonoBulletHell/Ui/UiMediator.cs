@@ -10,6 +10,9 @@ public interface IUiMediator
     int GetCurrentScaleIndex();
     void ResolutionScaleSelected(int scaleIndex);
 
+    float GetCurrentVolume();
+    void VolumeChanged(double sliderValue);
+
     void ButtonClicked();
 }
 
@@ -27,6 +30,9 @@ public class UiMediator : IUiMediator
     public IEnumerable<ScreenScale> GetScreenScales() => _settingsService.Scales;
     public int GetCurrentScaleIndex() => _settingsService.CurrentScaleIndex;
     public void ResolutionScaleSelected(int newScaleIndex) => _settingsService.SetScreenScaleByIndex(newScaleIndex);
+
+    public float GetCurrentVolume() => _settingsService.Volume;
+    public void VolumeChanged(double sliderValue) => _settingsService.SetVolume((float)sliderValue);
 
     public void ButtonClicked()
     {

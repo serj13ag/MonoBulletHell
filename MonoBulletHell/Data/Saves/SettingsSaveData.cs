@@ -7,4 +7,5 @@ namespace MonoBulletHell.Data.Saves;
 public class SettingsSaveData
 {
     public ScreenScale ScreenScale { get; set; }
+    public float Volume { get; set; }
 }

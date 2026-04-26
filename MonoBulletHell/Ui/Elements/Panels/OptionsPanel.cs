@@ -12,6 +12,7 @@ public class OptionsPanel : BasePanel
 
     private readonly CustomComboBox _comboBox;
     private readonly CustomButton _backButton;
+    private readonly Slider _volumeSlider;
 
     protected override Button FocusButton => _backButton;
 
@@ -42,6 +43,11 @@ public class OptionsPanel : BasePanel
         buttonsPanel.Y = -10f;
         buttonsPanel.Spacing = 5f;
 
+        var scaleText = new CustomLabel();
+        buttonsPanel.AddChild(scaleText);
+        scaleText.Anchor(Gum.Wireframe.Anchor.Top);
+        scaleText.Text = UiConstants.OptionsScaleLabelText;
+
         _comboBox = new CustomComboBox();
         buttonsPanel.AddChild(_comboBox);
         _comboBox.Anchor(Gum.Wireframe.Anchor.Top);
@@ -52,6 +58,21 @@ public class OptionsPanel : BasePanel
         }
 
         _comboBox.SelectionChanged += BoxSelectionChanged;
+
+        var volumeText = new CustomLabel();
+        buttonsPanel.AddChild(volumeText);
+        volumeText.Anchor(Gum.Wireframe.Anchor.Top);
+        volumeText.Text = UiConstants.OptionsVolumeLabelText;
+
+        _volumeSlider = new Slider();
+        buttonsPanel.AddChild(_volumeSlider);
+        _volumeSlider.Anchor(Gum.Wireframe.Anchor.Top);
+        _volumeSlider.Minimum = 0;
+        _volumeSlider.Maximum = 1;
+        _volumeSlider.TicksFrequency = 0.1;
+        _volumeSlider.IsSnapToTickEnabled = true;
+        _volumeSlider.ValueChanged += OnVolumeSliderValueChanged;
+        _volumeSlider.ValueChangeCompleted += OnVolumeSliderValueChangeCompleted;
 
         _backButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(_backButton);
@@ -64,6 +85,7 @@ public class OptionsPanel : BasePanel
         base.Enable();
 
         _comboBox.SelectedIndex = _uiMediator.GetCurrentScaleIndex();
+        _volumeSlider.Value = _uiMediator.GetCurrentVolume();
     }
 
     private void OnOptionsBackButtonClicked(object sender, EventArgs e)
@@ -75,6 +97,18 @@ public class OptionsPanel : BasePanel
     {
         var box = (ComboBox)arg1;
         _uiMediator.ResolutionScaleSelected(box.SelectedIndex);
+    }
+
+    private void OnVolumeSliderValueChanged(object sender, EventArgs e)
+    {
+        var slider = (Slider)sender;
+        _uiMediator.VolumeChanged(slider.Value);
+    }
+
+    private void OnVolumeSliderValueChangeCompleted(object sender, EventArgs e)
+    {
+        var slider = (Slider)sender;
+        _uiMediator.VolumeChanged(slider.Value);
     }
 
     private static string FormatScale(ScreenScale scale)

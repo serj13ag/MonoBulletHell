@@ -31,15 +31,17 @@ public class SoundService : ISoundService
     private const string ClickSfx = "audio/sfx_kenney_click_001";
 
     private readonly ContentManager _content;
+    private readonly ISettingsService _settingsService;
 
     private readonly List<SoundEffectInstance> _activeSoundEffectInstances = new List<SoundEffectInstance>();
 
     private Dictionary<SongType, Song> _songs;
     private Dictionary<SfxType, SoundEffect> _soundEffects;
 
-    public SoundService(ContentManager content)
+    public SoundService(ContentManager content, ISettingsService settingsService)
     {
         _content = content;
+        _settingsService = settingsService;
     }
 
     public void Initialize()
@@ -56,6 +58,10 @@ public class SoundService : ISoundService
             { SfxType.PlayerShoot, _content.Load<SoundEffect>(PlayerShootSfx) },
             { SfxType.EnemyDied, _content.Load<SoundEffect>(EnemyDiedSfx) },
         };
+
+        SetVolume(_settingsService.Volume);
+
+        _settingsService.VolumeChanged += OnVolumeChanged;
     }
 
     public void Update()
@@ -118,6 +124,17 @@ public class SoundService : ISoundService
     {
         MediaPlayer.Stop();
         StopAllSoundEffects();
+    }
+
+    private void OnVolumeChanged(float value)
+    {
+        SetVolume(value);
+    }
+
+    private void SetVolume(float volume)
+    {
+        MediaPlayer.Volume = Math.Clamp(volume, 0.0f, 1.0f);
+        SoundEffect.MasterVolume = Math.Clamp(volume, 0.0f, 1.0f);
     }
 
     private SoundEffectInstance PlaySoundEffect(SoundEffect soundEffect, float volume, float pitch, float pan, bool isLooped)
