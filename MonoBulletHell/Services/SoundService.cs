@@ -27,7 +27,7 @@ public class SoundService : ISoundService
 
     private const string PlayerShootSfx = "audio/sfx_kenney_laserSmall_000";
     private const string EnemyDamagedSfx = "audio/sfx_kenney_impactMetal_002";
-    private const string EnemyDiedSfx = "audio/sfx_kenney_lowFrequency_explosion_001";
+    private const string EnemyDiedSfx = "audio/sfx_kenney_error_005";
 
     private const string ClickSfx = "audio/sfx_kenney_click_001";
 

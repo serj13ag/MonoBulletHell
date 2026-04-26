@@ -31,6 +31,12 @@
 /processorParam:Quality=Best
 /build:audio/sfx_kenney_click_001.ogg
 
+#begin audio/sfx_kenney_error_005.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/sfx_kenney_error_005.ogg
+
 #begin audio/sfx_kenney_impactMetal_002.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor
@@ -42,12 +48,6 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:audio/sfx_kenney_laserSmall_000.ogg
-
-#begin audio/sfx_kenney_lowFrequency_explosion_001.ogg
-/importer:OggImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:audio/sfx_kenney_lowFrequency_explosion_001.ogg
 
 #begin configs/emitterConfig.json
 /copy:configs/emitterConfig.json
