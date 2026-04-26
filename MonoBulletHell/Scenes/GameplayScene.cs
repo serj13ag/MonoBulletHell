@@ -172,7 +172,7 @@ public class GameplayScene : BaseScene
 
     private void OnResumeButtonClicked()
     {
-        _gameState = GameState.Playing;
+        TogglePause();
     }
 
     private void OnRestartButtonClicked()
@@ -190,11 +190,13 @@ public class GameplayScene : BaseScene
         if (_gameState == GameState.Paused)
         {
             _ui.HidePausePanel();
+            _soundService.ResumeAll();
             _gameState = GameState.Playing;
         }
         else
         {
             _ui.ShowPausePanel();
+            _soundService.PauseAll();
             _gameState = GameState.Paused;
         }
     }

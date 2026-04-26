@@ -15,6 +15,8 @@ public interface ISoundService : IDisposable
     void PlaySong(SongType songType, bool isRepeating = true);
     SoundEffectInstance PlaySoundEffect(SfxType sfxType);
 
+    void PauseAll();
+    void ResumeAll();
     void StopAll();
 }
 
@@ -89,7 +91,25 @@ public class SoundService : ISoundService
         return PlaySoundEffect(soundEffect, 1.0f, 0.0f, 0.0f, false);
     }
 
-    // TODO: add pause/resume
+    public void PauseAll()
+    {
+        MediaPlayer.Pause();
+
+        foreach (var soundEffectInstance in _activeSoundEffectInstances)
+        {
+            soundEffectInstance.Pause();
+        }
+    }
+
+    public void ResumeAll()
+    {
+        MediaPlayer.Resume();
+
+        foreach (var soundEffectInstance in _activeSoundEffectInstances)
+        {
+            soundEffectInstance.Resume();
+        }
+    }
 
     public void StopAll()
     {
