@@ -4,6 +4,7 @@ using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Helpers;
+using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Services;
 
@@ -21,15 +22,18 @@ public class BulletService : IBulletService
     private readonly IGameContext _gameContext;
     private readonly IBulletFactory _bulletFactory;
     private readonly IParticleService _particleService;
+    private readonly IDebugService _debugService;
 
     private readonly List<Bullet> _bullets = new List<Bullet>(256);
     private readonly List<Bullet> _bulletsToDestroy = new List<Bullet>(128);
 
-    public BulletService(IGameContext gameContext, IBulletFactory bulletFactory, IParticleService particleService)
+    public BulletService(IGameContext gameContext, IBulletFactory bulletFactory, IParticleService particleService,
+        IDebugService debugService)
     {
         _gameContext = gameContext;
         _bulletFactory = bulletFactory;
         _particleService = particleService;
+        _debugService = debugService;
     }
 
     public void Update()
@@ -69,6 +73,8 @@ public class BulletService : IBulletService
         }
 
         _bulletsToDestroy.Clear();
+
+        _debugService.ShowBulletCount(_bullets.Count);
     }
 
     public void Render(IRenderService renderService)

@@ -14,6 +14,8 @@ public interface IDebugService
     void DrawCircle(Vector2 center, float radius, Color color, float thickness, int segments);
     void DrawRectangle(Rectangle rect, Color color, float thickness);
 
+    void ShowBulletCount(int bulletCount);
+
     void Update(GameTime gameTime);
     void Draw();
 }
@@ -29,6 +31,7 @@ public class DebugService : IDebugService
     }
 
     private static readonly Vector2 FpsCounterPosition = new Vector2(2, 2);
+    private static readonly Vector2 BulletCounterPosition = new Vector2(100, 2);
 
     private readonly SpriteBatch _spriteBatch;
     private readonly IInputService _inputService;
@@ -44,6 +47,8 @@ public class DebugService : IDebugService
     private double _msPerFrame;
     private double _elapsedTime;
     private int _frameCounter;
+
+    private int _bulletCount;
 
     public DebugService(GraphicsDevice graphicsDevice, SpriteBatch spriteBatch, IInputService inputService)
     {
@@ -96,6 +101,11 @@ public class DebugService : IDebugService
         AddDrawLineCommand(bottomLeft, topLeft, color, thickness);
     }
 
+    public void ShowBulletCount(int bulletCount)
+    {
+        _bulletCount = bulletCount;
+    }
+
     public void Update(GameTime gameTime)
     {
         if (_inputService.Keyboard.WasKeyJustPressed(Keys.F1))
@@ -123,6 +133,7 @@ public class DebugService : IDebugService
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 
         _spriteBatch.DrawString(_font, $"FPS: {_fps}\nm/s: {_msPerFrame:F2}", FpsCounterPosition, Color.White);
+        _spriteBatch.DrawString(_font, $"BULLETS: {_bulletCount}", BulletCounterPosition, Color.White);
 
         if (_drawCommands.Count > 0)
         {
