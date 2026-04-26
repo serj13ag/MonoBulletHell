@@ -128,7 +128,7 @@ public class Ship : BaseEntity, IEntityWithCollider
             {
                 Position = Position + _bulletSpawnOffset,
                 Direction = -Vector2.UnitY,
-                Speed = _playerConfig.Speed,
+                Speed = _playerConfig.BulletSpeed,
                 Damage = Constants.BulletDamage,
                 IsPlayer = true,
             };
