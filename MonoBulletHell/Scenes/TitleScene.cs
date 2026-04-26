@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Scenes;
+using MonoBulletHell.Enums;
 using MonoBulletHell.Services;
 using MonoBulletHell.Ui;
 using MonoBulletHell.Ui.Elements.Panels;
@@ -16,12 +17,13 @@ public class TitleScene : BaseScene
     private readonly IUiFactory _uiFactory;
     private readonly IInputService _inputService;
     private readonly ISceneService _sceneService;
+    private readonly ISoundService _soundService;
 
     private OptionsPanel _optionsPanel;
 
     public TitleScene(IGameService gameService, ContentManager contentManager, GraphicsDevice graphicsDevice,
         SpriteBatch spriteBatch, GumService gumService, IUiFactory uiFactory, IInputService inputService,
-        ISceneService sceneService)
+        ISceneService sceneService, ISoundService soundService)
         : base(contentManager, graphicsDevice, spriteBatch)
     {
         _gameService = gameService;
@@ -29,6 +31,7 @@ public class TitleScene : BaseScene
         _uiFactory = uiFactory;
         _inputService = inputService;
         _sceneService = sceneService;
+        _soundService = soundService;
     }
 
     public override void Initialize()
@@ -36,6 +39,13 @@ public class TitleScene : BaseScene
         base.Initialize();
 
         InitializeUi();
+    }
+
+    public override void Enter()
+    {
+        base.Enter();
+
+        _soundService.PlaySong(SongType.Menu);
     }
 
     public override void Update(GameTime gameTime)
@@ -64,6 +74,13 @@ public class TitleScene : BaseScene
         GraphicsDevice.Clear(Constants.Colors.BackgroundColor);
 
         _gumService.Draw();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+
+        _soundService.StopAll();
     }
 
     private void InitializeUi()

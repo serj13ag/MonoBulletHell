@@ -51,6 +51,7 @@ public class CompositionRoot
         _container.Register<ISceneService, SceneService>(new PerContainerLifetime());
         _container.Register<IDebugService, DebugService>(new PerContainerLifetime());
         _container.Register<ISettingsService, SettingsService>(new PerContainerLifetime());
+        _container.Register<ISoundService, SoundService>(new PerContainerLifetime());
         _container.Register<ISaveService, SaveService>(new PerContainerLifetime());
 
         _container.Register<IUiMediator, UiMediator>(new PerContainerLifetime());

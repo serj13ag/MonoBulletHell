@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
+using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
+using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Services;
 
@@ -18,22 +20,31 @@ public class EnemyService : IEnemyService
 {
     private readonly IGameFactory _gameFactory;
     private readonly IGameContext _context;
+    private readonly ISoundService _soundService;
 
     private readonly List<Enemy> _enemiesToDestroy = new List<Enemy>();
 
-    public EnemyService(IGameFactory gameFactory, IGameContext context)
+    public EnemyService(IGameFactory gameFactory, IGameContext context, ISoundService soundService)
     {
         _gameFactory = gameFactory;
         _context = context;
+        _soundService = soundService;
     }
 
     public void Update()
     {
+        var enemyDied = false;
+
         foreach (var enemy in _context.Enemies)
         {
             enemy.Update();
 
-            if (enemy.IsDead || enemy.PathIsFinished)
+            if (enemy.IsDead)
+            {
+                enemyDied = true;
+                _enemiesToDestroy.Add(enemy); // TODO: refactor
+            }
+            else if (enemy.PathIsFinished)
             {
                 _enemiesToDestroy.Add(enemy);
             }
@@ -42,6 +53,11 @@ public class EnemyService : IEnemyService
         foreach (var enemyToDestroy in _enemiesToDestroy)
         {
             _context.Enemies.Remove(enemyToDestroy);
+        }
+
+        if (enemyDied)
+        {
+            _soundService.PlaySoundEffect(SfxType.EnemyDied);
         }
 
         _enemiesToDestroy.Clear();

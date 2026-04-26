@@ -4,6 +4,7 @@ using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Core.Physics;
 using MonoBulletHell.Data;
 using MonoBulletHell.Data.DTOs;
+using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Effects;
 using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
@@ -23,6 +24,7 @@ public class Ship : BaseEntity, IEntityWithCollider
     private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
     private readonly IBulletService _bulletService;
+    private readonly ISoundService _soundService;
 
     private readonly PlayerConfig _playerConfig;
 
@@ -42,12 +44,13 @@ public class Ship : BaseEntity, IEntityWithCollider
     public event EventHandler<EventArgs> OnDestroyed;
 
     public Ship(IInputService inputService, IDebugService debugService, ITimeService timeService, IBulletService bulletService,
-        IContentService contentService, PlayerConfig playerConfig)
+        IContentService contentService, ISoundService soundService, PlayerConfig playerConfig)
     {
         _inputService = inputService;
         _debugService = debugService;
         _timeService = timeService;
         _bulletService = bulletService;
+        _soundService = soundService;
 
         _playerConfig = playerConfig;
 
@@ -134,6 +137,7 @@ public class Ship : BaseEntity, IEntityWithCollider
                 IsPlayer = true,
             };
             _bulletService.SpawnBullet(bulletDto);
+            _soundService.PlaySoundEffect(SfxType.PlayerShoot);
             _timeTillCanShoot += _playerConfig.ShootCooldown;
         }
     }

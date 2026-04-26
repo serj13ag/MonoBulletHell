@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Scenes;
+using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.Services;
@@ -35,6 +36,7 @@ public class GameplayScene : BaseScene
     private readonly IBackgroundService _backgroundService;
     private readonly IParticleService _particleService;
     private readonly IRenderService _renderService;
+    private readonly ISoundService _soundService;
 
     private GameState _gameState;
 
@@ -46,7 +48,7 @@ public class GameplayScene : BaseScene
         IUiFactory uiFactory, IInputService inputService, ISceneService sceneService, ITimeService timeService,
         IContentService contentService, IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService,
         IEnemySpawnService enemySpawnService, IBackgroundService backgroundService, IParticleService particleService,
-        IRenderService renderService)
+        IRenderService renderService, ISoundService soundService)
         : base(content, graphicsDevice, spriteBatch)
     {
         _gumService = gumService;
@@ -62,6 +64,7 @@ public class GameplayScene : BaseScene
         _backgroundService = backgroundService;
         _particleService = particleService;
         _renderService = renderService;
+        _soundService = soundService;
     }
 
     public override void Initialize()
@@ -137,6 +140,13 @@ public class GameplayScene : BaseScene
         _ui.Draw();
     }
 
+    public override void Exit()
+    {
+        base.Exit();
+
+        _soundService.StopAll();
+    }
+
     private void InitializeNewGame()
     {
         _bulletService.Clear();
@@ -148,6 +158,8 @@ public class GameplayScene : BaseScene
         _enemySpawnService.Initialize(_contentService.GetSpawnConfig());
 
         _ship.InitializeAt(ScreenHelper.GetLerpScreenVirtualPosition(0.5f, 0.8f));
+
+        _soundService.PlaySong(SongType.Gameplay);
 
         _gameState = GameState.Playing;
     }

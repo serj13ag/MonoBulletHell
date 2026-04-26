@@ -22,6 +22,7 @@ public class MonoBulletHellGame : Game
     private ISceneService _sceneService;
     private IDebugService _debugService;
     private ISettingsService _settingsService;
+    private ISoundService _soundService;
 
     public MonoBulletHellGame()
     {
@@ -48,9 +49,11 @@ public class MonoBulletHellGame : Game
         _screenService = _root.GetInstance<IScreenService>();
         _sceneService = _root.GetInstance<ISceneService>();
         _debugService = _root.GetInstance<IDebugService>();
+        _soundService = _root.GetInstance<ISoundService>();
 
         _settingsService.Initialize();
         _screenService.Initialize();
+        _soundService.Initialize();
         _debugService.Initialize(Content);
         InitializeGum(Content);
 
@@ -61,6 +64,7 @@ public class MonoBulletHellGame : Game
     {
         _inputService.Update();
         _debugService.Update(gameTime);
+        _soundService.Update();
 
         _gumService.Cursor.TransformMatrix = _screenService.GetTransformMatrix();
 
@@ -79,6 +83,13 @@ public class MonoBulletHellGame : Game
         _screenService.RenderResultImage();
 
         base.Draw(gameTime);
+    }
+
+    protected override void UnloadContent()
+    {
+        base.UnloadContent();
+
+        _soundService.Dispose();
     }
 
     private void InitializeGum(ContentManager content)

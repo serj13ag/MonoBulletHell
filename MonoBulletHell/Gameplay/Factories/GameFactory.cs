@@ -20,9 +20,10 @@ public class GameFactory : IGameFactory
     private readonly IContentService _contentService;
     private readonly IBulletService _bulletService;
     private readonly IGameContext _gameContext;
+    private readonly ISoundService _soundService;
 
     public GameFactory(IInputService inputService, IDebugService debugService, ITimeService timeService,
-        IContentService contentService, IBulletService bulletService, IGameContext gameContext)
+        IContentService contentService, IBulletService bulletService, IGameContext gameContext, ISoundService soundService)
     {
         _inputService = inputService;
         _debugService = debugService;
@@ -30,12 +31,14 @@ public class GameFactory : IGameFactory
         _contentService = contentService;
         _bulletService = bulletService;
         _gameContext = gameContext;
+        _soundService = soundService;
     }
 
     public Ship CreateShip()
     {
         var playerConfig = _contentService.GetPlayerConfig();
-        var ship = new Ship(_inputService, _debugService, _timeService, _bulletService, _contentService, playerConfig);
+        var ship = new Ship(_inputService, _debugService, _timeService, _bulletService, _contentService, _soundService,
+            playerConfig);
         _gameContext.RegisterShip(ship);
         return ship;
     }
