@@ -1,4 +1,3 @@
-using System;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace MonoBulletHell.Gameplay.Effects;
@@ -26,7 +25,7 @@ public class FlashEffect
         _elapsedTime = 0f;
         _isActive = true;
 
-        _effect.Parameters["flashAmount"].SetValue(1f);
+        SetFlashAmountParameter(1f);
     }
 
     public void Update(float deltaTime)
@@ -45,15 +44,33 @@ public class FlashEffect
         }
 
         var cycleDuration = _fadeTime * 2f;
-        var cycleProgress = _elapsedTime % cycleDuration / cycleDuration;
-        // Convert progress into a triangle wave: 0 → 1 → 0 shape, then flipped to 1 → 0 → 1
-        var flashAmount = MathF.Abs(2f * cycleProgress - 1f);
-        _effect.Parameters["flashAmount"].SetValue(flashAmount);
+        var timeInCycle = _elapsedTime % cycleDuration;
+
+        float flashAmount;
+        if (timeInCycle < _fadeTime)
+        {
+            // First half: 1 → 0
+            var t = timeInCycle / _fadeTime;
+            flashAmount = 1f - t;
+        }
+        else
+        {
+            // Second half: 0 → 1
+            var t = (timeInCycle - _fadeTime) / _fadeTime;
+            flashAmount = t;
+        }
+
+        SetFlashAmountParameter(flashAmount);
     }
 
     public void Deactivate()
     {
         _isActive = false;
-        _effect.Parameters["flashAmount"].SetValue(0f);
+        SetFlashAmountParameter(0f);
+    }
+
+    private void SetFlashAmountParameter(float flashAmount)
+    {
+        _effect.Parameters["flashAmount"].SetValue(flashAmount);
     }
 }
