@@ -106,6 +106,7 @@ public class Ship : BaseEntity, IEntityWithCollider
         }
 
         EnableImmunity();
+        _soundService.PlaySoundEffect(SfxType.PlayerDamaged);
     }
 
     private void HandleMovement(float deltaTime)

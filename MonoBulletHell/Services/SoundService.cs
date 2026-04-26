@@ -26,6 +26,7 @@ public class SoundService : ISoundService
     private const string GameplayMusic = "audio/music_foolboymedia_320232";
 
     private const string PlayerShootSfx = "audio/sfx_kenney_laserSmall_000";
+    private const string PlayerDamagedSfx = "audio/sfx_kenney_explosionCrunch_004";
     private const string EnemyDamagedSfx = "audio/sfx_kenney_impactMetal_002";
     private const string EnemyDiedSfx = "audio/sfx_kenney_error_005";
 
@@ -57,6 +58,7 @@ public class SoundService : ISoundService
         {
             { SfxType.Click, _content.Load<SoundEffect>(ClickSfx) },
             { SfxType.PlayerShoot, _content.Load<SoundEffect>(PlayerShootSfx) },
+            { SfxType.PlayerDamaged, _content.Load<SoundEffect>(PlayerDamagedSfx) },
             { SfxType.EnemyDamaged, _content.Load<SoundEffect>(EnemyDamagedSfx) },
             { SfxType.EnemyDied, _content.Load<SoundEffect>(EnemyDiedSfx) },
         };
