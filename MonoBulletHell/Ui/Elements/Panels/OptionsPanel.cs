@@ -17,7 +17,7 @@ public class OptionsPanel : BasePanel
 
     public event Action OnBackButtonClicked;
 
-    public OptionsPanel(IUiMediator uiMediator)
+    public OptionsPanel(UiFactory uiFactory, IUiMediator uiMediator)
     {
         _uiMediator = uiMediator;
 
@@ -53,7 +53,7 @@ public class OptionsPanel : BasePanel
 
         _comboBox.SelectionChanged += BoxSelectionChanged;
 
-        _backButton = new CustomButton();
+        _backButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(_backButton);
         _backButton.Text = UiConstants.BackButtonText;
         _backButton.Click += OnOptionsBackButtonClicked;

@@ -9,7 +9,7 @@ public class TitlePanel : Panel
     public event Action OnOptionsButtonClicked;
     public event Action OnQuitButtonClicked;
 
-    public TitlePanel()
+    public TitlePanel(UiFactory uiFactory)
     {
         Dock(Gum.Wireframe.Dock.Fill);
 
@@ -24,20 +24,20 @@ public class TitlePanel : Panel
         buttonsPanel.Anchor(Gum.Wireframe.Anchor.Center);
         buttonsPanel.Spacing = 5f;
 
-        var startButton = new CustomButton();
+        var startButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(startButton);
         startButton.Text = UiConstants.StartButtonText;
         startButton.Width = 200f;
         startButton.IsFocused = true;
         startButton.Click += StartButtonClicked;
 
-        var optionsButton = new CustomButton();
+        var optionsButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(optionsButton);
         optionsButton.Text = UiConstants.OptionsButtonText;
         optionsButton.Width = 200f;
         optionsButton.Click += OptionsButtonClicked;
 
-        var quitButton = new CustomButton();
+        var quitButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(quitButton);
         quitButton.Text = UiConstants.QuitButtonText;
         quitButton.Width = 200f;

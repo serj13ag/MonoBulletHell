@@ -15,7 +15,7 @@ public class PausePanel : BasePanel
     public event Action OnOptionsButtonClicked;
     public event Action OnQuitButtonClicked;
 
-    public PausePanel()
+    public PausePanel(UiFactory uiFactory)
     {
         Anchor(Gum.Wireframe.Anchor.Center);
         Width = 100f;
@@ -38,22 +38,22 @@ public class PausePanel : BasePanel
         buttonsPanel.Y = -10f;
         buttonsPanel.Spacing = 5f;
 
-        _resumeButton = new CustomButton();
+        _resumeButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(_resumeButton);
         _resumeButton.Text = UiConstants.ResumeButtonText;
         _resumeButton.Click += ResumeButtonClicked;
 
-        var restartButton = new CustomButton();
+        var restartButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(restartButton);
         restartButton.Text = UiConstants.RestartButtonText;
         restartButton.Click += RestartButtonClicked;
 
-        var optionsButton = new CustomButton();
+        var optionsButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(optionsButton);
         optionsButton.Text = UiConstants.OptionsButtonText;
         optionsButton.Click += OptionsButtonClicked;
         
-        var quitButton = new CustomButton();
+        var quitButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(quitButton);
         quitButton.Text = UiConstants.QuitButtonText;
         quitButton.Click += QuitButtonClicked;

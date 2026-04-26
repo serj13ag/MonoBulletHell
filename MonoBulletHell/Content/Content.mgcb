@@ -25,6 +25,12 @@
 /processorParam:Quality=Best
 /build:audio/music_foolboymedia_320232.wav
 
+#begin audio/sfx_kenney_click_001.ogg
+/importer:OggImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/sfx_kenney_click_001.ogg
+
 #begin audio/sfx_kenney_laserSmall_000.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor

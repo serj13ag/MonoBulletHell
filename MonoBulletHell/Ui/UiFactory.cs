@@ -1,3 +1,4 @@
+using MonoBulletHell.Ui.Elements;
 using MonoBulletHell.Ui.Elements.Panels;
 
 namespace MonoBulletHell.Ui;
@@ -21,21 +22,26 @@ public class UiFactory : IUiFactory
 
     public TitlePanel CreateTitlePanel()
     {
-        return new TitlePanel();
+        return new TitlePanel(this);
     }
 
     public OptionsPanel CreateOptionsPanel()
     {
-        return new OptionsPanel(_uiMediator);
+        return new OptionsPanel(this, _uiMediator);
     }
 
     public PausePanel CreatePausePanel()
     {
-        return new PausePanel();
+        return new PausePanel(this);
     }
 
     public GameOverPanel CreateGameOverPanel()
     {
-        return new GameOverPanel();
+        return new GameOverPanel(this);
+    }
+
+    public CustomButton CreateCustomButton()
+    {
+        return new CustomButton(_uiMediator);
     }
 }

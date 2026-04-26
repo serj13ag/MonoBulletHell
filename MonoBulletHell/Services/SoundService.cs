@@ -28,6 +28,8 @@ public class SoundService : ISoundService
     private const string PlayerShootSfx = "audio/sfx_kenney_laserSmall_000";
     private const string EnemyDiedSfx = "audio/sfx_kenney_lowFrequency_explosion_001";
 
+    private const string ClickSfx = "audio/sfx_kenney_click_001";
+
     private readonly ContentManager _content;
 
     private readonly List<SoundEffectInstance> _activeSoundEffectInstances = new List<SoundEffectInstance>();
@@ -50,6 +52,7 @@ public class SoundService : ISoundService
 
         _soundEffects = new Dictionary<SfxType, SoundEffect>
         {
+            { SfxType.Click, _content.Load<SoundEffect>(ClickSfx) },
             { SfxType.PlayerShoot, _content.Load<SoundEffect>(PlayerShootSfx) },
             { SfxType.EnemyDied, _content.Load<SoundEffect>(EnemyDiedSfx) },
         };

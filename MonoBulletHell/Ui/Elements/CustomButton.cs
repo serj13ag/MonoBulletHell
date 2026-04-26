@@ -5,8 +5,12 @@ namespace MonoBulletHell.Ui.Elements;
 
 public class CustomButton : Button
 {
-    public CustomButton()
+    private readonly IUiMediator _uiMediator;
+
+    public CustomButton(IUiMediator uiMediator)
     {
+        _uiMediator = uiMediator;
+
         var buttonVisual = (ButtonVisual)Visual;
         buttonVisual.BackgroundColor = Constants.Colors.BackgroundHighlight;
 
@@ -14,5 +18,12 @@ public class CustomButton : Button
         textComponent.UseCustomFont = true;
         textComponent.CustomFontFile = UiConstants.FontPath;
         textComponent.Text = UiConstants.GameTitleText;
+    }
+
+    protected override void OnClick()
+    {
+        base.OnClick();
+
+        _uiMediator.ButtonClicked();
     }
 }

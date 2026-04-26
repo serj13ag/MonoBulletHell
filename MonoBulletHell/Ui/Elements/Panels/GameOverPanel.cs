@@ -13,7 +13,7 @@ public class GameOverPanel : BasePanel
     public event Action OnRestartButtonClicked;
     public event Action OnQuitButtonClicked;
 
-    public GameOverPanel()
+    public GameOverPanel(UiFactory uiFactory)
     {
         Anchor(Gum.Wireframe.Anchor.Center);
         Width = 100f;
@@ -36,12 +36,12 @@ public class GameOverPanel : BasePanel
         buttonsPanel.Y = -10f;
         buttonsPanel.Spacing = 5f;
 
-        _restartButton = new CustomButton();
+        _restartButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(_restartButton);
         _restartButton.Text = UiConstants.RestartButtonText;
         _restartButton.Click += RestartButtonClicked;
 
-        var quitButton = new CustomButton();
+        var quitButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(quitButton);
         quitButton.Text = UiConstants.QuitButtonText;
         quitButton.Click += QuitButtonClicked;
