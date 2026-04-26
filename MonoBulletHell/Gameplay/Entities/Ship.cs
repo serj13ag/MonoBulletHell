@@ -18,7 +18,7 @@ public class Ship : BaseEntity, IEntityWithCollider
     private const float ColliderRadius = 10f;
     private const float FlashEffectFadeTime = 0.25f;
 
-    private readonly Vector2 _bulletSpawnOffset = new Vector2(0f, -32f);
+    private readonly Vector2 _bulletSpawnOffset = new Vector2(0f, -20f);
 
     private readonly IInputService _inputService;
     private readonly IDebugService _debugService;
