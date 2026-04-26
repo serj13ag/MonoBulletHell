@@ -45,7 +45,6 @@ public class SceneService : ISceneService
         }
 
         _activeScene?.Update(gameTime);
-        _activeScene?.LateUpdate(gameTime);
     }
 
     public void Draw(GameTime gameTime)

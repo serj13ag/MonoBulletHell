@@ -12,6 +12,7 @@ public class SpriteRenderRequest
 
     public Layer Layer { get; }
     public Effect Effect { get; }
+    public float PositionY => _position.Y;
 
     public SpriteRenderRequest(Sprite sprite, Vector2 position, float rotation, Layer layer, Effect effect = null)
     {

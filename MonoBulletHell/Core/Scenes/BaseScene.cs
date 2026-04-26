@@ -35,10 +35,6 @@ public abstract class BaseScene
     {
     }
 
-    public virtual void LateUpdate(GameTime gameTime)
-    {
-    }
-
     public virtual void Draw(GameTime gameTime)
     {
     }

@@ -119,26 +119,19 @@ public class GameplayScene : BaseScene
         _ship.Update();
     }
 
-    public override void LateUpdate(GameTime gameTime)
-    {
-        base.LateUpdate(gameTime);
-
-        _backgroundService.Render(_renderService);
-        _ship.Render(_renderService);
-
-        _bulletService.Render(_renderService);
-        _enemyService.Render(_renderService);
-        _particleService.Render(_renderService);
-
-        _renderService.PrepareDraw();
-    }
-
     public override void Draw(GameTime gameTime)
     {
         base.Draw(gameTime);
 
         GraphicsDevice.Clear(Constants.Colors.BackgroundColor);
 
+        _backgroundService.Render(_renderService);
+        _ship.Render(_renderService);
+        _bulletService.Render(_renderService);
+        _enemyService.Render(_renderService);
+        _particleService.Render(_renderService);
+
+        _renderService.PrepareDraw();
         _renderService.Draw(SpriteBatch);
 
         _ui.Draw();

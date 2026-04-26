@@ -29,7 +29,7 @@ public class RenderService : IRenderService
     };
 
     private BackgroundRenderRequest _backgroundBatch;
-    private readonly List<SpriteRenderRequest> _spriteRequests = new List<SpriteRenderRequest>(64);
+    private readonly List<SpriteRenderRequest> _spriteRequests = new List<SpriteRenderRequest>(512);
 
     public void SetBackgroundBatch(Texture2D texture, int verticalOffset)
     {
@@ -71,7 +71,7 @@ public class RenderService : IRenderService
                 return 1;
             }
 
-            return 0;
+            return a.PositionY.CompareTo(b.PositionY);
         });
     }
 
