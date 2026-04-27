@@ -11,7 +11,7 @@ using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Entities;
 
-public class Enemy : BaseEntity, IEntityWithCollider
+public class Enemy : BaseEntity
 {
     private const float FlashEffectDuration = 0.2f;
 

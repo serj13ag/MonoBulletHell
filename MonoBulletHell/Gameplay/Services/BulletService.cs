@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using MonoBulletHell.Core.Physics;
 using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
@@ -86,7 +85,7 @@ public class BulletService : IBulletService
     {
         foreach (var enemy in _gameContext.Enemies)
         {
-            if (!IsColliding(bullet, enemy))
+            if (!bullet.IsColliding(enemy.Collider))
             {
                 continue;
             }
@@ -101,7 +100,7 @@ public class BulletService : IBulletService
     private void HandleEnemyBulletCollision(Bullet bullet)
     {
         var ship = _gameContext.Ship;
-        if (ship.IsImmune || !IsColliding(bullet, ship))
+        if (ship.IsImmune || !bullet.IsColliding(ship.Collider))
         {
             return;
         }
@@ -124,10 +123,5 @@ public class BulletService : IBulletService
         }
 
         _bulletsToDestroy.Clear();
-    }
-
-    private static bool IsColliding(Bullet bullet, IEntityWithCollider entityWithCollider)
-    {
-        return bullet.Collider.Intersects(entityWithCollider.Collider);
     }
 }

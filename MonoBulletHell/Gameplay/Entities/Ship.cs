@@ -13,7 +13,7 @@ using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Entities;
 
-public class Ship : BaseEntity, IEntityWithCollider
+public class Ship : BaseEntity
 {
     private const float ColliderRadius = 10f;
     private const float FlashEffectFadeTime = 0.25f;

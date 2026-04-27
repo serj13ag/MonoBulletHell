@@ -9,7 +9,7 @@ using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Entities;
 
-public class Bullet : BaseEntity, IEntityWithCollider
+public class Bullet : BaseEntity
 {
     private const float ColliderRadius = 6f;
 
@@ -28,8 +28,6 @@ public class Bullet : BaseEntity, IEntityWithCollider
 
     public int Damage { get; }
     public bool IsPlayer { get; }
-
-    public CircleCollider Collider => _collider;
 
     public Bullet(IDebugService debugService, ITimeService timeService, Sprite sprite, BulletDTO bulletDto)
     {
@@ -65,6 +63,11 @@ public class Bullet : BaseEntity, IEntityWithCollider
     public void Render(IRenderService renderService)
     {
         renderService.AddSprite(_sprite, Position, Rotation, Layer.Bullets);
+    }
+
+    public bool IsColliding(CircleCollider otherCollider)
+    {
+        return _collider.Intersects(otherCollider);
     }
 
     private void SetDirection(Vector2 value)
