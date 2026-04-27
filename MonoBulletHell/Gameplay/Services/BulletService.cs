@@ -85,7 +85,7 @@ public class BulletService : IBulletService
     {
         foreach (var enemy in _gameContext.Enemies)
         {
-            if (!bullet.IsColliding(enemy.Collider))
+            if (!bullet.Collider.Intersects(enemy.Collider))
             {
                 continue;
             }
@@ -100,7 +100,7 @@ public class BulletService : IBulletService
     private void HandleEnemyBulletCollision(Bullet bullet)
     {
         var ship = _gameContext.Ship;
-        if (ship.IsImmune || !bullet.IsColliding(ship.Collider))
+        if (ship.IsImmune || !bullet.Collider.Intersects(ship.Collider))
         {
             return;
         }

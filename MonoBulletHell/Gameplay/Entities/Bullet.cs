@@ -29,6 +29,8 @@ public class Bullet : BaseEntity
     public int Damage { get; }
     public bool IsPlayer { get; }
 
+    public CircleCollider Collider => _collider;
+
     public Bullet(IDebugService debugService, ITimeService timeService, Sprite sprite, BulletDTO bulletDto)
     {
         _debugService = debugService;
@@ -63,11 +65,6 @@ public class Bullet : BaseEntity
     public void Render(IRenderService renderService)
     {
         renderService.AddSprite(_sprite, Position, Rotation, Layer.Bullets);
-    }
-
-    public bool IsColliding(CircleCollider otherCollider)
-    {
-        return _collider.Intersects(otherCollider);
     }
 
     private void SetDirection(Vector2 value)
