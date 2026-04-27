@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoBulletHell.Core.Input;
 using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Enums;
 using MonoBulletHell.Services;

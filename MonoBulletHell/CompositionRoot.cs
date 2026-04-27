@@ -3,6 +3,7 @@ using LightInject;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoBulletHell.Core.Input;
 using MonoBulletHell.Gameplay;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.Services;

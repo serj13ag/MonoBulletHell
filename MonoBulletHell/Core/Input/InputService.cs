@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework.Input;
-using MonoBulletHell.Core.Input;
 
-namespace MonoBulletHell.Services;
+namespace MonoBulletHell.Core.Input;
 
 public interface IInputService
 {

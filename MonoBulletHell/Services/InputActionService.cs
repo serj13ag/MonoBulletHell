@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Input;
+using MonoBulletHell.Core.Input;
 
 namespace MonoBulletHell.Services;
 
