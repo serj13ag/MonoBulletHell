@@ -108,7 +108,7 @@ public class DebugService : IDebugService
 
     public void Update(GameTime gameTime)
     {
-        if (_inputService.Keyboard.WasKeyJustPressed(Keys.F1))
+        if (_inputService.DebugWasJustPressed())
         {
             _enabled = !_enabled;
         }

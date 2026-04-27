@@ -14,7 +14,7 @@ public interface IGameFactory
 
 public class GameFactory : IGameFactory
 {
-    private readonly IInputService _inputService;
+    private readonly IInputActionService _inputActionService;
     private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
     private readonly IContentService _contentService;
@@ -22,10 +22,10 @@ public class GameFactory : IGameFactory
     private readonly IGameContext _gameContext;
     private readonly ISoundService _soundService;
 
-    public GameFactory(IInputService inputService, IDebugService debugService, ITimeService timeService,
+    public GameFactory(IInputActionService inputActionService, IDebugService debugService, ITimeService timeService,
         IContentService contentService, IBulletService bulletService, IGameContext gameContext, ISoundService soundService)
     {
-        _inputService = inputService;
+        _inputActionService = inputActionService;
         _debugService = debugService;
         _timeService = timeService;
         _contentService = contentService;
@@ -37,7 +37,7 @@ public class GameFactory : IGameFactory
     public Ship CreateShip()
     {
         var playerConfig = _contentService.GetPlayerConfig();
-        var ship = new Ship(_inputService, _debugService, _timeService, _bulletService, _contentService, _soundService,
+        var ship = new Ship(_inputActionService, _debugService, _timeService, _bulletService, _contentService, _soundService,
             playerConfig);
         _gameContext.RegisterShip(ship);
         return ship;

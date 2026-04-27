@@ -52,7 +52,7 @@ public class TitleScene : BaseScene
     {
         base.Update(gameTime);
 
-        if (_inputService.PausePressed())
+        if (_inputService.CancelWasJustPressed())
         {
             if (_optionsPanel.IsVisible)
             {

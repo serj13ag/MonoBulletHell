@@ -9,15 +9,8 @@ public interface IInputService
 
     void Update();
 
-    bool PausePressed();
-
-    bool MoveUp();
-    bool MoveDown();
-    bool MoveLeft();
-    bool MoveRight();
-
-    bool Shoot();
-    bool FocusPressed();
+    bool CancelWasJustPressed();
+    bool DebugWasJustPressed();
 }
 
 public class InputService : IInputService
@@ -36,13 +29,6 @@ public class InputService : IInputService
         _keyboard.Update();
     }
 
-    public bool PausePressed() => _keyboard.WasKeyJustPressed(Keys.Escape);
-
-    public bool MoveUp() => _keyboard.IsKeyDown(Keys.Up) || _keyboard.IsKeyDown(Keys.W);
-    public bool MoveDown() => _keyboard.IsKeyDown(Keys.Down) || _keyboard.IsKeyDown(Keys.S);
-    public bool MoveLeft() => _keyboard.IsKeyDown(Keys.Left) || _keyboard.IsKeyDown(Keys.A);
-    public bool MoveRight() => _keyboard.IsKeyDown(Keys.Right) || _keyboard.IsKeyDown(Keys.D);
-
-    public bool Shoot() => _keyboard.IsKeyDown(Keys.Space);
-    public bool FocusPressed() => _keyboard.IsKeyDown(Keys.LeftShift);
+    public bool CancelWasJustPressed() => _keyboard.WasKeyJustPressed(Keys.Escape);
+    public bool DebugWasJustPressed() => _keyboard.WasKeyJustPressed(Keys.F1);
 }

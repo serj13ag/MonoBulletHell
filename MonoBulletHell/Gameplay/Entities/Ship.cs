@@ -20,7 +20,7 @@ public class Ship : BaseEntity, IEntityWithCollider
 
     private readonly Vector2 _bulletSpawnOffset = new Vector2(0f, -20f);
 
-    private readonly IInputService _inputService;
+    private readonly IInputActionService _inputActionService;
     private readonly IDebugService _debugService;
     private readonly ITimeService _timeService;
     private readonly IBulletService _bulletService;
@@ -43,10 +43,10 @@ public class Ship : BaseEntity, IEntityWithCollider
 
     public event EventHandler<EventArgs> OnDestroyed;
 
-    public Ship(IInputService inputService, IDebugService debugService, ITimeService timeService, IBulletService bulletService,
+    public Ship(IInputActionService inputActionService, IDebugService debugService, ITimeService timeService, IBulletService bulletService,
         IContentService contentService, ISoundService soundService, PlayerConfig playerConfig)
     {
-        _inputService = inputService;
+        _inputActionService = inputActionService;
         _debugService = debugService;
         _timeService = timeService;
         _bulletService = bulletService;
@@ -113,7 +113,7 @@ public class Ship : BaseEntity, IEntityWithCollider
     {
         if (HasDirectionalInput(out var inputDirection))
         {
-            var speed = _inputService.FocusPressed() ? _playerConfig.FocusSpeed : _playerConfig.Speed;
+            var speed = _inputActionService.Focus() ? _playerConfig.FocusSpeed : _playerConfig.Speed;
             var newPosition = Position + inputDirection * speed * deltaTime;
             ScreenHelper.ClampToVirtualBounds(ref newPosition);
             Position = newPosition;
@@ -127,7 +127,7 @@ public class Ship : BaseEntity, IEntityWithCollider
             _timeTillCanShoot -= deltaTime;
         }
 
-        if (_inputService.Shoot() && _timeTillCanShoot <= 0f)
+        if (_inputActionService.Shoot() && _timeTillCanShoot <= 0f)
         {
             var bulletDto = new BulletDTO()
             {
@@ -175,22 +175,22 @@ public class Ship : BaseEntity, IEntityWithCollider
     {
         inputDirection = Vector2.Zero;
 
-        if (_inputService.MoveUp())
+        if (_inputActionService.MoveUp())
         {
             inputDirection.Y -= 1f;
         }
 
-        if (_inputService.MoveDown())
+        if (_inputActionService.MoveDown())
         {
             inputDirection.Y += 1f;
         }
 
-        if (_inputService.MoveLeft())
+        if (_inputActionService.MoveLeft())
         {
             inputDirection.X -= 1f;
         }
 
-        if (_inputService.MoveRight())
+        if (_inputActionService.MoveRight())
         {
             inputDirection.X += 1f;
         }

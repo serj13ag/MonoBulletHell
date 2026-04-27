@@ -102,7 +102,7 @@ public class GameplayScene : BaseScene
             return;
         }
 
-        if (_inputService.PausePressed())
+        if (_inputService.CancelWasJustPressed())
         {
             TogglePause();
         }
