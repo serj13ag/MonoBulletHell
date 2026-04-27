@@ -13,4 +13,5 @@ public class PlayerConfig
     public float DamageImmuneCooldown { get; set; }
 
     public string SpriteName { get; set; }
+    public string CoreSpriteName { get; set; }
 }

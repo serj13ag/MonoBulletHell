@@ -15,7 +15,7 @@ namespace MonoBulletHell.Gameplay.Entities;
 
 public class Ship : BaseEntity
 {
-    private const float ColliderRadius = 10f;
+    private const float ColliderRadius = 5f;
     private const float FlashEffectFadeTime = 0.25f;
 
     private readonly Vector2 _bulletSpawnOffset = new Vector2(0f, -20f);
@@ -31,6 +31,7 @@ public class Ship : BaseEntity
     private readonly CircleCollider _collider;
 
     private readonly Sprite _shipSprite;
+    private readonly Sprite _shipCoreSprite;
     private readonly FlashEffect _flashEffect;
 
     private float _timeTillCanShoot;
@@ -43,7 +44,8 @@ public class Ship : BaseEntity
 
     public event EventHandler<EventArgs> OnDestroyed;
 
-    public Ship(IInputActionService inputActionService, IDebugService debugService, ITimeService timeService, IBulletService bulletService,
+    public Ship(IInputActionService inputActionService, IDebugService debugService, ITimeService timeService,
+        IBulletService bulletService,
         IContentService contentService, ISoundService soundService, PlayerConfig playerConfig)
     {
         _inputActionService = inputActionService;
@@ -54,10 +56,11 @@ public class Ship : BaseEntity
 
         _playerConfig = playerConfig;
 
-        _collider = new CircleCollider(Vector2.Zero, ColliderRadius);
+        _collider = new CircleCollider(new Vector2(0f, 5f), ColliderRadius);
 
         _flashEffect = contentService.GetFlashEffect();
         _shipSprite = GetShipSprite(contentService, playerConfig);
+        _shipCoreSprite = GetShipCoreSprite(contentService, playerConfig);
     }
 
     public void InitializeAt(Vector2 position)
@@ -88,6 +91,7 @@ public class Ship : BaseEntity
     public void Render(IRenderService renderService)
     {
         renderService.AddSprite(_shipSprite, Position, Rotation, Layer.Ship, _flashEffect.ActiveEffect);
+        renderService.AddSprite(_shipCoreSprite, Position, Rotation, Layer.Ship, _flashEffect.ActiveEffect);
     }
 
     public void TakeDamage(int damage)
@@ -209,6 +213,14 @@ public class Ship : BaseEntity
         var sprite = contentService.CreateShipSprite(playerConfig.SpriteName);
         sprite.CenterOrigin();
         sprite.Color = Constants.Colors.BackgroundHighlight;
+        return sprite;
+    }
+
+    private static Sprite GetShipCoreSprite(IContentService contentService, PlayerConfig playerConfig)
+    {
+        var sprite = contentService.CreateShipSprite(playerConfig.CoreSpriteName);
+        sprite.CenterOrigin();
+        sprite.Color = Constants.Colors.Orange;
         return sprite;
     }
 }
