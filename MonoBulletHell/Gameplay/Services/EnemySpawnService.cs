@@ -18,7 +18,7 @@ public class EnemySpawnService : IEnemySpawnService
 
     private readonly Queue<WaveData> _waves = new Queue<WaveData>();
 
-    private float _passedTime;
+    private float _elapsedTime;
     private WaveData _nextWaveToSpawn;
 
     public EnemySpawnService(ITimeService timeService, IEnemyService enemyService)
@@ -29,7 +29,7 @@ public class EnemySpawnService : IEnemySpawnService
 
     public void Initialize(SpawnConfig spawnConfig)
     {
-        _passedTime = 0f;
+        _elapsedTime = 0f;
 
         _waves.Clear();
         foreach (var waveData in spawnConfig.Waves)
@@ -42,17 +42,11 @@ public class EnemySpawnService : IEnemySpawnService
 
     public void Update()
     {
-        if (_nextWaveToSpawn == null)
-        {
-            return;
-        }
+        _elapsedTime += _timeService.DeltaTime;
 
-        _passedTime += _timeService.DeltaTime;
-
-        if (_passedTime > _nextWaveToSpawn.SpawnTime)
+        while (_nextWaveToSpawn != null && _elapsedTime >= _nextWaveToSpawn.SpawnTime)
         {
             SpawnWave(_nextWaveToSpawn);
-
             TrySetNextWave();
         }
     }

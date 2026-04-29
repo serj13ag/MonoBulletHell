@@ -9,6 +9,8 @@ namespace MonoBulletHell.Gameplay.Entities.Emitters;
 
 public class BulletEmitter : BaseEntity, IBulletEmitter
 {
+    private const float FallbackShotCooldown = 0.05f;
+
     private readonly IBulletService _bulletService;
 
     private readonly Vector2 _offset;
@@ -64,19 +66,21 @@ public class BulletEmitter : BaseEntity, IBulletEmitter
 
     private void HandleShooting(float deltaTime)
     {
-        if (_timeTillShoot <= 0f)
+        _timeTillShoot -= deltaTime;
+
+        while (_timeTillShoot <= 0f)
         {
             if (!_shootingDisabled)
             {
                 Shoot();
             }
 
-            var shotCooldown = 1 / _roundsPerSecond.Evaluate(_elapsedTime);
+            var roundsPerSecond = _roundsPerSecond.Evaluate(_elapsedTime);
+            var shotCooldown = roundsPerSecond > 0f
+                ? 1f / roundsPerSecond
+                : FallbackShotCooldown;
+
             _timeTillShoot += shotCooldown;
-        }
-        else
-        {
-            _timeTillShoot -= deltaTime;
         }
     }
 
