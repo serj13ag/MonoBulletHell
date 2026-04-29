@@ -103,7 +103,7 @@ public class Ship : BaseEntity
 
         _currentHealth -= damage;
 
-        if (_currentHealth == 0)
+        if (_currentHealth <= 0)
         {
             OnDestroyed?.Invoke(this, EventArgs.Empty);
             return;
