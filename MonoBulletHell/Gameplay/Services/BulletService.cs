@@ -24,7 +24,6 @@ public class BulletService : IBulletService
     private readonly IDebugService _debugService;
 
     private readonly List<Bullet> _bullets = new List<Bullet>(512);
-    private readonly List<Bullet> _bulletsToDestroy = new List<Bullet>(128);
 
     public BulletService(IGameContext gameContext, IBulletFactory bulletFactory, IParticleService particleService,
         IDebugService debugService)
@@ -37,27 +36,26 @@ public class BulletService : IBulletService
 
     public void Update()
     {
-        foreach (var bullet in _bullets)
+        for (var i = _bullets.Count - 1; i >= 0; i--)
         {
+            var bullet = _bullets[i];
             bullet.Update();
 
             if (ScreenHelper.IsOutOfVirtualBounds(bullet.Position))
             {
-                MarkForDestroy(bullet);
+                _bullets.RemoveAt(i);
                 continue;
             }
 
-            if (bullet.IsPlayer)
+            var shouldDestroy = bullet.IsPlayer
+                ? HandlePlayerBulletCollision(bullet)
+                : HandleEnemyBulletCollision(bullet);
+
+            if (shouldDestroy)
             {
-                HandlePlayerBulletCollision(bullet);
-            }
-            else
-            {
-                HandleEnemyBulletCollision(bullet);
+                _bullets.RemoveAt(i);
             }
         }
-
-        RemoveDestroyedBullets();
 
         _debugService.ShowBulletCount(_bullets.Count);
     }
@@ -81,7 +79,7 @@ public class BulletService : IBulletService
         _bullets.Clear();
     }
 
-    private void HandlePlayerBulletCollision(Bullet bullet)
+    private bool HandlePlayerBulletCollision(Bullet bullet)
     {
         foreach (var enemy in _gameContext.Enemies)
         {
@@ -92,36 +90,22 @@ public class BulletService : IBulletService
 
             enemy.TakeDamage(bullet.Damage);
             _particleService.CreateBulletImpact(bullet.Position);
-            MarkForDestroy(bullet);
-            return;
+            return true;
         }
+
+        return false;
     }
 
-    private void HandleEnemyBulletCollision(Bullet bullet)
+    private bool HandleEnemyBulletCollision(Bullet bullet)
     {
         var ship = _gameContext.Ship;
         if (ship.IsImmune || !bullet.Collider.Intersects(ship.Collider))
         {
-            return;
+            return false;
         }
 
         ship.TakeDamage(bullet.Damage);
         _particleService.CreateBulletImpact(bullet.Position);
-        MarkForDestroy(bullet);
-    }
-
-    private void MarkForDestroy(Bullet bullet)
-    {
-        _bulletsToDestroy.Add(bullet);
-    }
-
-    private void RemoveDestroyedBullets()
-    {
-        foreach (var bulletToDestroy in _bulletsToDestroy)
-        {
-            _bullets.Remove(bulletToDestroy);
-        }
-
-        _bulletsToDestroy.Clear();
+        return true;
     }
 }
