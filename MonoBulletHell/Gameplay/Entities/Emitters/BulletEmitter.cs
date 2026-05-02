@@ -114,6 +114,6 @@ public class BulletEmitter : BaseEntity, IBulletEmitter
             AngularVelocity = _bulletAngularVelocity.Evaluate(_elapsedTime),
         };
 
-        _bulletService.SpawnBullet(bulletDto);
+        _bulletService.SpawnBullet(in bulletDto);
     }
 }

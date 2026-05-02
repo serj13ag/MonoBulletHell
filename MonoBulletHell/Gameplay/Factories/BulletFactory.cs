@@ -8,7 +8,7 @@ namespace MonoBulletHell.Gameplay.Factories;
 
 public interface IBulletFactory
 {
-    Bullet CreateBullet(BulletDTO bulletDto);
+    Bullet CreateBullet(in BulletDTO bulletDto);
 }
 
 public class BulletFactory : IBulletFactory
@@ -24,9 +24,9 @@ public class BulletFactory : IBulletFactory
         _contentService = contentService;
     }
 
-    public Bullet CreateBullet(BulletDTO bulletDto)
+    public Bullet CreateBullet(in BulletDTO bulletDto)
     {
-        var bullet = new Bullet(_debugService, _timeService, GetBulletSprite(bulletDto.IsPlayer), bulletDto);
+        var bullet = new Bullet(_debugService, _timeService, GetBulletSprite(bulletDto.IsPlayer), in bulletDto);
         return bullet;
     }
 

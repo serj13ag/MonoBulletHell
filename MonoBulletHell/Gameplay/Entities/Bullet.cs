@@ -31,7 +31,7 @@ public class Bullet : BaseEntity
 
     public CircleCollider Collider => _collider;
 
-    public Bullet(IDebugService debugService, ITimeService timeService, Sprite sprite, BulletDTO bulletDto)
+    public Bullet(IDebugService debugService, ITimeService timeService, Sprite sprite, in BulletDTO bulletDto)
     {
         _debugService = debugService;
         _timeService = timeService;

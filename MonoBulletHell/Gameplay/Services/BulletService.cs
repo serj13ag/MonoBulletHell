@@ -12,7 +12,7 @@ public interface IBulletService
     void Update();
     void Render(IRenderService renderService);
 
-    void SpawnBullet(BulletDTO bulletDto);
+    void SpawnBullet(in BulletDTO bulletDto);
     void Clear();
 }
 
@@ -68,9 +68,9 @@ public class BulletService : IBulletService
         }
     }
 
-    public void SpawnBullet(BulletDTO bulletDto)
+    public void SpawnBullet(in BulletDTO bulletDto)
     {
-        var bullet = _bulletFactory.CreateBullet(bulletDto);
+        var bullet = _bulletFactory.CreateBullet(in bulletDto);
         _bullets.Add(bullet);
     }
 

@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 
 namespace MonoBulletHell.Data.DTOs;
 
-public struct BulletDTO
+public readonly struct BulletDTO
 {
     public Vector2 Position { get; init; }
     public Vector2 Direction { get; init; }

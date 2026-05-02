@@ -141,7 +141,7 @@ public class Ship : BaseEntity
                 Damage = Constants.BulletDamage,
                 IsPlayer = true,
             };
-            _bulletService.SpawnBullet(bulletDto);
+            _bulletService.SpawnBullet(in bulletDto);
             _soundService.PlaySoundEffect(SfxType.PlayerShoot);
             _timeTillCanShoot += _playerConfig.ShootCooldown;
         }
