@@ -18,23 +18,30 @@ public class Bullet : BaseEntity
 
     private readonly CircleCollider _collider;
 
-    private readonly Sprite _sprite;
+    private Sprite _sprite;
 
-    private readonly float _acceleration;
-    private readonly float _angularVelocity;
+    private float _acceleration;
+    private float _angularVelocity;
 
     private float _speed;
     private Vector2 _direction;
 
-    public int Damage { get; }
-    public bool IsPlayer { get; }
+    public int Damage { get; private set; }
+    public bool IsPlayer { get; private set; }
 
     public CircleCollider Collider => _collider;
 
-    public Bullet(IDebugService debugService, ITimeService timeService, Sprite sprite, in BulletDTO bulletDto)
+    public Bullet(IDebugService debugService, ITimeService timeService)
     {
         _debugService = debugService;
         _timeService = timeService;
+
+        _collider = new CircleCollider(Vector2.Zero, ColliderRadius);
+    }
+
+    public void Init(Sprite sprite, in BulletDTO bulletDto)
+    {
+        _sprite = sprite;
 
         Position = bulletDto.Position;
         _speed = bulletDto.Speed;
@@ -44,9 +51,7 @@ public class Bullet : BaseEntity
         _angularVelocity = bulletDto.AngularVelocity;
         SetDirection(bulletDto.Direction);
 
-        _collider = new CircleCollider(Vector2.Zero, ColliderRadius);
-
-        _sprite = sprite;
+        _collider.Update(Position);
     }
 
     public void Update()

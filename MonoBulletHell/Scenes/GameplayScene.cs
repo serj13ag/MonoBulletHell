@@ -90,6 +90,8 @@ public class GameplayScene : BaseScene
     {
         base.Enter();
 
+        _bulletFactory.Prewarm();
+
         _ship = _gameFactory.CreateShip();
         _ship.OnDestroyed += OnShipDestroyed;
 

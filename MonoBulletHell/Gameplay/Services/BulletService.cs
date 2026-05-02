@@ -43,7 +43,7 @@ public class BulletService : IBulletService
 
             if (ScreenHelper.IsOutOfVirtualBounds(bullet.Position))
             {
-                _bullets.RemoveAt(i);
+                RemoveBulletAt(i);
                 continue;
             }
 
@@ -53,7 +53,7 @@ public class BulletService : IBulletService
 
             if (shouldDestroy)
             {
-                _bullets.RemoveAt(i);
+                RemoveBulletAt(i);
             }
         }
 
@@ -76,7 +76,23 @@ public class BulletService : IBulletService
 
     public void Clear()
     {
+        foreach (var bullet in _bullets)
+        {
+            _bulletFactory.ReleaseBullet(bullet);
+        }
+
         _bullets.Clear();
+    }
+
+    private void RemoveBulletAt(int index)
+    {
+        var bullet = _bullets[index];
+        var lastIndex = _bullets.Count - 1;
+
+        _bullets[index] = _bullets[lastIndex];
+        _bullets.RemoveAt(lastIndex);
+
+        _bulletFactory.ReleaseBullet(bullet);
     }
 
     private bool HandlePlayerBulletCollision(Bullet bullet)
