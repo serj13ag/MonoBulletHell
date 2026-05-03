@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MonoBulletHell.Data;
+using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 
@@ -60,9 +61,9 @@ public class BossService : IBossService, IDisposable
         _boss.HealthChanged += OnBossHealthChanged;
     }
 
-    private void OnBossHealthChanged(int newHealth)
+    private void OnBossHealthChanged(HealthChangedDTO healthChangedDto)
     {
-        if (newHealth <= 0)
+        if (healthChangedDto.NewHealth <= 0)
         {
             BossDied?.Invoke();
             return;
@@ -73,7 +74,7 @@ public class BossService : IBossService, IDisposable
             return;
         }
 
-        var healthPercent = newHealth / (float)_boss.Health;
+        var healthPercent = healthChangedDto.NewHealth / (float)healthChangedDto.MaxHealth;
         if (healthPercent <= _nextStage.HealthPercent)
         {
             var pathBlock = _gameFactory.CreatePathBlock(_nextStage.PathName, _boss.Position);

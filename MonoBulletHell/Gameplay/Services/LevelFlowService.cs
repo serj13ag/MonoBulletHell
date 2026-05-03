@@ -89,7 +89,7 @@ public class LevelFlowService : ILevelFlowService
                 _bossService.BossDied += OnBossDied;
                 break;
             case LevelFlowState.Win:
-                _sceneService.ChangeScene(SceneType.Title);
+                _sceneService.ChangeScene(SceneType.Title); // TODO: show panel
                 break;
             case LevelFlowState.Empty:
             default:

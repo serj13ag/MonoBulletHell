@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Core.Physics;
 using MonoBulletHell.Data;
+using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Effects;
 using MonoBulletHell.Gameplay.Entities.Emitters;
@@ -21,6 +22,7 @@ public class Enemy : BaseEntity
     private readonly ITimeService _timeService;
     private readonly ISoundService _soundService;
 
+    private readonly int _health;
     private readonly CircleCollider _collider;
 
     private readonly Sprite _sprite;
@@ -33,12 +35,10 @@ public class Enemy : BaseEntity
 
     public CircleCollider Collider => _collider;
 
-    public int Health { get; }
-
     public bool IsDead => _currentHealth <= 0;
     public bool PathIsFinished => _pathBlock.IsFinished;
 
-    public event Action<int> HealthChanged; // TODO: use custom event args
+    public event Action<HealthChangedDTO> HealthChanged;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IContentService contentService, ISoundService soundService,
         EnemyData enemyData, IPathBlock pathBlock, IBulletEmitter bulletEmitter)
@@ -47,7 +47,7 @@ public class Enemy : BaseEntity
         _timeService = timeService;
         _soundService = soundService;
 
-        Health = enemyData.Health;
+        _health = enemyData.Health;
         _currentHealth = enemyData.Health;
 
         _pathBlock = pathBlock;
@@ -86,6 +86,8 @@ public class Enemy : BaseEntity
 
     public void TakeDamage(int damage)
     {
+        var prevHealth = _currentHealth;
+
         _currentHealth -= damage;
         _currentHealth = Math.Max(0, _currentHealth);
 
@@ -95,7 +97,12 @@ public class Enemy : BaseEntity
             _soundService.PlaySoundEffect(SfxType.EnemyDamaged);
         }
 
-        HealthChanged?.Invoke(_currentHealth);
+        HealthChanged?.Invoke(new HealthChangedDTO()
+        {
+            MaxHealth = _health,
+            PreviousHealth = prevHealth,
+            NewHealth = _currentHealth,
+        });
     }
 
     public void ChangePathBlock(IPathBlock pathBlock)
