@@ -28,4 +28,16 @@ public class PathPointData
     public float WaitTime { get; set; }
     public float SpeedMultiplier { get; set; }
     public bool ShootingDisabled { get; set; }
+
+    public PathPointData Clone(Vector2 offset)
+    {
+        return new PathPointData()
+        {
+            Position = Position + offset,
+            ControlPoints = ControlPoints,
+            WaitTime = WaitTime,
+            SpeedMultiplier = SpeedMultiplier,
+            ShootingDisabled = ShootingDisabled,
+        };
+    }
 }

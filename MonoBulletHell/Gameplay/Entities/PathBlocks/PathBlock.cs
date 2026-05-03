@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Data;
 using MonoBulletHell.Helpers;
@@ -7,8 +8,7 @@ namespace MonoBulletHell.Gameplay.Entities.PathBlocks;
 
 public class PathBlock
 {
-    private readonly Vector2 _initialPosition;
-    private readonly PathData _path;
+    private readonly List<PathPointData> _pathPoints;
     private readonly float _speed;
 
     private int _currentIndex;
@@ -42,19 +42,18 @@ public class PathBlock
 
     public event Action<bool> ShootingDisabledChanged;
 
-    public PathBlock(PathData path, Vector2 initialPosition)
+    public PathBlock(float speed, int loops, List<PathPointData> pathPoints)
     {
-        _initialPosition = initialPosition; // TODO: create path in runtime from data
-        _path = path;
-        _speed = path.Speed;
+        _pathPoints = pathPoints;
+        _speed = speed;
 
-        _loopsLeft = path.Loops;
+        _loopsLeft = loops;
         _currentIndex = 0;
 
-        UpdatePositions(path.Points[0].Position, path.Points[1].Position);
+        UpdatePositions(pathPoints[0].Position, pathPoints[1].Position);
         _currentPosition = _startPosition;
 
-        _shootingDisabled = _path.Points[0].ShootingDisabled;
+        _shootingDisabled = _pathPoints[0].ShootingDisabled;
     }
 
     public void Update(float deltaTime)
@@ -83,9 +82,9 @@ public class PathBlock
     {
         var moveSpeed = _speed;
 
-        if (_path.Points[_currentIndex].SpeedMultiplier > 0f)
+        if (_pathPoints[_currentIndex].SpeedMultiplier > 0f)
         {
-            moveSpeed *= _path.Points[_currentIndex].SpeedMultiplier;
+            moveSpeed *= _pathPoints[_currentIndex].SpeedMultiplier;
         }
 
         var distance = Vector2.Distance(_startPosition, _targetPosition);
@@ -104,7 +103,7 @@ public class PathBlock
         }
         else
         {
-            var nextPoint = _path.Points[_currentIndex + 1];
+            var nextPoint = _pathPoints[_currentIndex + 1];
             _currentPosition = CalculateCurrentPosition(nextPoint);
         }
     }
@@ -124,7 +123,7 @@ public class PathBlock
     {
         _currentIndex++;
 
-        var point = _path.Points[_currentIndex];
+        var point = _pathPoints[_currentIndex];
 
         ShootingDisabled = point.ShootingDisabled;
 
@@ -141,13 +140,13 @@ public class PathBlock
 
     private void MoveToNextSegment()
     {
-        if (_currentIndex >= _path.Points.Count - 1)
+        if (_currentIndex >= _pathPoints.Count - 1)
         {
             HandleEndOfPath();
             return;
         }
 
-        UpdatePositions(_path.Points[_currentIndex].Position, _path.Points[_currentIndex + 1].Position);
+        UpdatePositions(_pathPoints[_currentIndex].Position, _pathPoints[_currentIndex + 1].Position);
     }
 
     private void HandleEndOfPath()
@@ -157,8 +156,8 @@ public class PathBlock
             _loopsLeft--;
             _currentIndex = 0;
 
-            ShootingDisabled = _path.Points[0].ShootingDisabled;
-            UpdatePositions(_path.Points[0].Position, _path.Points[1].Position);
+            ShootingDisabled = _pathPoints[0].ShootingDisabled;
+            UpdatePositions(_pathPoints[0].Position, _pathPoints[1].Position);
         }
         else
         {
@@ -172,13 +171,13 @@ public class PathBlock
         {
             case 1:
             {
-                var c = nextPoint.ControlPoints[0] + _initialPosition;
+                var c = nextPoint.ControlPoints[0];
                 return GameMathHelper.QuadraticBezier(_startPosition, c, _targetPosition, _progress);
             }
             case 2:
             {
-                var c1 = nextPoint.ControlPoints[0] + _initialPosition;
-                var c2 = nextPoint.ControlPoints[1] + _initialPosition;
+                var c1 = nextPoint.ControlPoints[0];
+                var c2 = nextPoint.ControlPoints[1];
                 return GameMathHelper.CubicBezier(_startPosition, c1, c2, _targetPosition, _progress);
             }
             default:
@@ -188,8 +187,8 @@ public class PathBlock
 
     private void UpdatePositions(Vector2 start, Vector2 target)
     {
-        _startPosition = _initialPosition + start;
-        _targetPosition = _initialPosition + target;
+        _startPosition = start;
+        _targetPosition = target;
         _progress = 0f;
     }
 }
