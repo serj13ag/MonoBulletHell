@@ -52,6 +52,7 @@ public class Enemy : BaseEntity
 
         _pathBlock = pathBlock;
         Position = _pathBlock.Position;
+        _pathBlock.ShootingDisabledChanged += OnPathShootingDisabledChanged;
 
         _collider = new CircleCollider(enemyData.ColliderOffset, enemyData.ColliderRadius);
 
@@ -61,8 +62,6 @@ public class Enemy : BaseEntity
 
         _sprite = GetEnemySprite(contentService, enemyData.SpriteName);
         _flashEffect = contentService.GetFlashEffect();
-
-        _pathBlock.ShootingDisabledChanged += OnPathShootingDisabledChanged;
     }
 
     public void Update()
@@ -99,9 +98,18 @@ public class Enemy : BaseEntity
         HealthChanged?.Invoke(_currentHealth);
     }
 
-    public void ChangePath(PathBlock pathBlock)
+    public void ChangePathBlock(PathBlock pathBlock)
     {
-        // TODO: impl
+        if (_pathBlock != null)
+        {
+            _pathBlock.ShootingDisabledChanged -= OnPathShootingDisabledChanged;
+        }
+
+        _pathBlock = pathBlock;
+        Position = _pathBlock.Position;
+        _bulletEmitter.SetShootingDisabled(_pathBlock.ShootingDisabled);
+
+        _pathBlock.ShootingDisabledChanged += OnPathShootingDisabledChanged;
     }
 
     public void ChangeEmitter(IBulletEmitter emitter)

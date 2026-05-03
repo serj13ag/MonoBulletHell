@@ -16,6 +16,7 @@ public class PathData
     public string Name { get; set; }
     public float Speed { get; set; }
     public int Loops { get; set; }
+    public PathType Type { get; set; }
     public List<PathPointData> Points { get; set; }
     // TODO: add inverse bool
 }
@@ -29,11 +30,11 @@ public class PathPointData
     public float SpeedMultiplier { get; set; }
     public bool ShootingDisabled { get; set; }
 
-    public PathPointData Clone(Vector2 offset)
+    public PathPointData Clone(Vector2 positionOverride)
     {
         return new PathPointData()
         {
-            Position = Position + offset,
+            Position = positionOverride,
             ControlPoints = ControlPoints,
             WaitTime = WaitTime,
             SpeedMultiplier = SpeedMultiplier,

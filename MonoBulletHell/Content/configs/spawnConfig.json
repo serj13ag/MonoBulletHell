@@ -37,7 +37,7 @@
       },
       {
         "HealthPercent": 0.7,
-        "PathName": "down",
+        "PathName": "testLoop",
         "EmitterName": "straightDown_3_lines"
       },
       {

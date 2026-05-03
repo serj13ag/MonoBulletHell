@@ -11,6 +11,7 @@ public class PathBlock
     private readonly List<PathPointData> _pathPoints;
     private readonly float _speed;
 
+    private bool _movingToFirstPoint;
     private int _currentIndex;
     private float _waitTimer;
     private bool _isWaiting;
@@ -42,7 +43,7 @@ public class PathBlock
 
     public event Action<bool> ShootingDisabledChanged;
 
-    public PathBlock(float speed, int loops, List<PathPointData> pathPoints)
+    public PathBlock(float speed, int loops, List<PathPointData> pathPoints, Vector2? startPosition = null)
     {
         _pathPoints = pathPoints;
         _speed = speed;
@@ -50,7 +51,16 @@ public class PathBlock
         _loopsLeft = loops;
         _currentIndex = 0;
 
-        UpdatePositions(pathPoints[0].Position, pathPoints[1].Position);
+        if (startPosition.HasValue)
+        {
+            _movingToFirstPoint = true;
+            UpdatePositions(startPosition.Value, pathPoints[0].Position);
+        }
+        else
+        {
+            UpdatePositions(pathPoints[0].Position, pathPoints[1].Position);
+        }
+
         _currentPosition = _startPosition;
 
         _shootingDisabled = _pathPoints[0].ShootingDisabled;
@@ -71,11 +81,6 @@ public class PathBlock
         {
             UpdateMoving(deltaTime);
         }
-    }
-
-    public void ChangePath(PathData path)
-    {
-        // TODO: impl
     }
 
     private void UpdateMoving(float deltaTime)
@@ -104,7 +109,7 @@ public class PathBlock
         else
         {
             var nextPoint = _pathPoints[_currentIndex + 1];
-            _currentPosition = CalculateCurrentPosition(nextPoint);
+            _currentPosition = CalculateCurrentPosition(nextPoint); // TODO: fix with starting
         }
     }
 
@@ -121,6 +126,13 @@ public class PathBlock
 
     private void OnReachPoint()
     {
+        if (_movingToFirstPoint)
+        {
+            _movingToFirstPoint = false;
+            UpdatePositions(_pathPoints[0].Position, _pathPoints[1].Position);
+            return;
+        }
+
         _currentIndex++;
 
         var point = _pathPoints[_currentIndex];

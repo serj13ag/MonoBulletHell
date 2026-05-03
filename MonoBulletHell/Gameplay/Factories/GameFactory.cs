@@ -1,4 +1,5 @@
-using System.Collections.Generic;
+using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Data;
 using MonoBulletHell.Gameplay.Entities;
@@ -62,14 +63,26 @@ public class GameFactory : IGameFactory
     public PathBlock CreatePathBlock(string pathName, Vector2 position)
     {
         var path = _contentService.GetPath(pathName);
-
-        var pathPoints = new List<PathPointData>();
-        foreach (var pathPointData in path.Points)
+        switch (path.Type)
         {
-            pathPoints.Add(pathPointData.Clone(position));
+            case PathType.Relative:
+            {
+                var pathPoints = path.Points
+                    .Select(pathPointData => pathPointData.Clone(pathPointData.Position + position))
+                    .ToList();
+                return new PathBlock(path.Speed, path.Loops, pathPoints);
+            }
+            case PathType.Absolute:
+            {
+                var pathPoints = path.Points
+                    .Select(pathPointData => pathPointData.Clone(pathPointData.Position))
+                    .ToList();
+                return new PathBlock(path.Speed, path.Loops, pathPoints, position);
+            }
+            case PathType.Undefined:
+            default:
+                throw new ArgumentOutOfRangeException();
         }
-
-        return new PathBlock(path.Speed, path.Loops, pathPoints);
     }
 
     public IBulletEmitter CreateEmitter(string emitterName)

@@ -3,6 +3,7 @@
     {
       "Name": "down",
       "Speed": 30,
+      "Type": "Relative",
       "Points": [
         {
           "Position": "0, 0"
@@ -15,6 +16,7 @@
     {
       "Name": "downRight",
       "Speed": 30,
+      "Type": "Relative",
       "Points": [
         {
           "Position": "0, 0"
@@ -27,6 +29,7 @@
     {
       "Name": "downLeft",
       "Speed": 30,
+      "Type": "Relative",
       "Points": [
         {
           "Position": "0, 0"
@@ -38,11 +41,12 @@
     },
     {
       "Name": "testLoop",
-      "Speed": 30,
-      "Loops": 1,
+      "Speed": 100,
+      "Loops": 10,
+      "Type": "Absolute",
       "Points": [
         {
-          "Position": "0, 0",
+          "Position": "30, 30",
           "ShootingDisabled": true
         },
         {
@@ -51,13 +55,17 @@
           "SpeedMultiplier": 2
         },
         {
-          "Position": "320, 0"
+          "Position": "290, 30"
+        },
+        {
+          "Position": "30, 30"
         }
       ]
     },
     {
       "Name": "testCurve",
       "Speed": 30,
+      "Type": "Relative",
       "Points": [
         {
           "Position": "0, 0"
