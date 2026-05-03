@@ -38,7 +38,7 @@ public class Enemy : BaseEntity
     public bool IsDead => _currentHealth <= 0;
     public bool PathIsFinished => _pathBlock.IsFinished;
 
-    public event Action<int> HealthChanged;
+    public event Action<int> HealthChanged; // TODO: use custom event args
 
     public Enemy(IDebugService debugService, ITimeService timeService, IContentService contentService, ISoundService soundService,
         EnemyData enemyData, IPathBlock pathBlock, IBulletEmitter bulletEmitter)
