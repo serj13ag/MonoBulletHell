@@ -65,8 +65,9 @@ public class GameplayUi : ContainerRuntime
         _pausePanel.Disable();
     }
 
-    public void ShowGameOverPanel()
+    public void ShowGameOverPanel(bool isWin)
     {
+        _gameOverPanel.UpdateTitle(isWin);
         _gameOverPanel.Enable();
     }
 

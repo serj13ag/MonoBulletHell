@@ -188,13 +188,13 @@ public class GameplayScene : BaseScene
     private void OnShipDestroyed(object sender, EventArgs e)
     {
         _gameState = GameState.GameOver;
-        _ui.ShowGameOverPanel();
+        _ui.ShowGameOverPanel(false);
     }
 
     private void LevelFinished()
     {
-        // TODO: add win panel
-        _sceneService.ChangeScene(SceneType.Title);
+        _gameState = GameState.GameOver;
+        _ui.ShowGameOverPanel(true);
     }
 
     private void OnResumeButtonClicked()

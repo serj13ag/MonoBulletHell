@@ -15,6 +15,7 @@ public static class UiConstants
     public const string PausePanelTitleText = "PAUSED";
     public const string ResumeButtonText = "RESUME";
 
-    public const string GameOverPanelTitleText = "GAME OVER";
+    public const string GameOverPanelWinTitleText = "WIN";
+    public const string GameOverPanelLostTitleText = "GAME OVER";
     public const string RestartButtonText = "RESTART";
 }

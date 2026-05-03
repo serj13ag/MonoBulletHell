@@ -6,6 +6,7 @@ namespace MonoBulletHell.Ui.Elements.Panels;
 
 public class GameOverPanel : BasePanel
 {
+    private readonly CustomLabel _titleText;
     private readonly Button _restartButton;
 
     protected override Button FocusButton => _restartButton;
@@ -24,11 +25,10 @@ public class GameOverPanel : BasePanel
         background.Dock(Gum.Wireframe.Dock.Fill);
         background.Color = Constants.Colors.BackgroundDark;
 
-        var titleText = new CustomLabel();
-        AddChild(titleText);
-        titleText.Anchor(Gum.Wireframe.Anchor.Top);
-        titleText.Text = UiConstants.GameOverPanelTitleText;
-        titleText.Y = 10f;
+        _titleText = new CustomLabel();
+        AddChild(_titleText);
+        _titleText.Anchor(Gum.Wireframe.Anchor.Top);
+        _titleText.Y = 10f;
 
         var buttonsPanel = new StackPanel();
         AddChild(buttonsPanel);
@@ -45,6 +45,11 @@ public class GameOverPanel : BasePanel
         buttonsPanel.AddChild(quitButton);
         quitButton.Text = UiConstants.QuitButtonText;
         quitButton.Click += QuitButtonClicked;
+    }
+
+    public void UpdateTitle(bool isWin)
+    {
+        _titleText.Text = isWin ? UiConstants.GameOverPanelWinTitleText : UiConstants.GameOverPanelLostTitleText;
     }
 
     private void RestartButtonClicked(object sender, EventArgs e)

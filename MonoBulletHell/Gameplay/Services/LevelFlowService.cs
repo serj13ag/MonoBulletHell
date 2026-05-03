@@ -60,6 +60,7 @@ public class LevelFlowService : ILevelFlowService
         switch (_currentState)
         {
             case LevelFlowState.Empty:
+            case LevelFlowState.Finished:
                 break;
             case LevelFlowState.SpawningWaves:
                 _enemySpawnService.LastWaveSpawned -= OnLastWaveSpawned;
@@ -70,7 +71,6 @@ public class LevelFlowService : ILevelFlowService
             case LevelFlowState.BossFight:
                 _bossService.BossDied -= OnBossDied;
                 break;
-            case LevelFlowState.Finished:
             default:
                 throw new ArgumentOutOfRangeException(nameof(_currentState), _currentState, null);
         }
