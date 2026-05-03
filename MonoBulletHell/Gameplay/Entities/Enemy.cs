@@ -26,7 +26,7 @@ public class Enemy : BaseEntity
     private readonly Sprite _sprite;
     private readonly FlashEffect _flashEffect;
 
-    private PathBlock _pathBlock;
+    private IPathBlock _pathBlock;
     private IBulletEmitter _bulletEmitter;
 
     private int _currentHealth;
@@ -41,7 +41,7 @@ public class Enemy : BaseEntity
     public event Action<int> HealthChanged;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IContentService contentService, ISoundService soundService,
-        EnemyData enemyData, PathBlock pathBlock, IBulletEmitter bulletEmitter)
+        EnemyData enemyData, IPathBlock pathBlock, IBulletEmitter bulletEmitter)
     {
         _debugService = debugService;
         _timeService = timeService;
@@ -98,7 +98,7 @@ public class Enemy : BaseEntity
         HealthChanged?.Invoke(_currentHealth);
     }
 
-    public void ChangePathBlock(PathBlock pathBlock)
+    public void ChangePathBlock(IPathBlock pathBlock)
     {
         if (_pathBlock != null)
         {

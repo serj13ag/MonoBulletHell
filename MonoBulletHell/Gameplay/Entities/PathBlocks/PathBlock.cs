@@ -6,7 +6,7 @@ using MonoBulletHell.Helpers;
 
 namespace MonoBulletHell.Gameplay.Entities.PathBlocks;
 
-public class PathBlock
+public class PathBlock : IPathBlock
 {
     private readonly List<PathPointData> _pathPoints;
     private readonly float _speed;

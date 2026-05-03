@@ -14,7 +14,7 @@ public interface IGameFactory
 {
     Ship CreateShip();
     Enemy CreateEnemy(Vector2 position, string pathName, string enemyName, string emitterName);
-    PathBlock CreatePathBlock(string pathName, Vector2 position);
+    IPathBlock CreatePathBlock(string pathName, Vector2 position);
     IBulletEmitter CreateEmitter(string emitterName);
 }
 
@@ -60,8 +60,13 @@ public class GameFactory : IGameFactory
         return enemy;
     }
 
-    public PathBlock CreatePathBlock(string pathName, Vector2 position)
+    public IPathBlock CreatePathBlock(string pathName, Vector2 position)
     {
+        if (string.IsNullOrEmpty(pathName))
+        {
+            return new StaticPathBlock(position);
+        }
+
         var path = _contentService.GetPath(pathName);
         switch (path.Type)
         {

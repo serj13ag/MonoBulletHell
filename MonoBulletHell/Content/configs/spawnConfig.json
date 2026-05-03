@@ -80,7 +80,6 @@
       },
       {
         "HealthPercent": 0.4,
-        "PathName": "down",
         "EmitterName": "straightDown_rotating_curve_loop"
       }
     ]
