@@ -9,7 +9,7 @@ public class TitlePanel : Panel
     public event Action OnOptionsButtonClicked;
     public event Action OnQuitButtonClicked;
 
-    public TitlePanel(UiFactory uiFactory)
+    public TitlePanel(IUiFactory uiFactory)
     {
         Dock(Gum.Wireframe.Dock.Fill);
 

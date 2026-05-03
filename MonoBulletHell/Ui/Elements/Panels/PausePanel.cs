@@ -15,7 +15,7 @@ public class PausePanel : BasePanel
     public event Action OnOptionsButtonClicked;
     public event Action OnQuitButtonClicked;
 
-    public PausePanel(UiFactory uiFactory)
+    public PausePanel(IUiFactory uiFactory)
     {
         Anchor(Gum.Wireframe.Anchor.Center);
         Width = 100f;

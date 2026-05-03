@@ -18,7 +18,7 @@ public class OptionsPanel : BasePanel
 
     public event Action OnBackButtonClicked;
 
-    public OptionsPanel(UiFactory uiFactory, IUiMediator uiMediator)
+    public OptionsPanel(IUiFactory uiFactory, IUiMediator uiMediator)
     {
         _uiMediator = uiMediator;
 

@@ -14,7 +14,7 @@ public class GameOverPanel : BasePanel
     public event Action OnRestartButtonClicked;
     public event Action OnQuitButtonClicked;
 
-    public GameOverPanel(UiFactory uiFactory)
+    public GameOverPanel(IUiFactory uiFactory)
     {
         Anchor(Gum.Wireframe.Anchor.Center);
         Width = 100f;

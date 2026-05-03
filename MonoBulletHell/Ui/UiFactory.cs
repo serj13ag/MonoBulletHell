@@ -9,6 +9,7 @@ public interface IUiFactory
     OptionsPanel CreateOptionsPanel();
     PausePanel CreatePausePanel();
     GameOverPanel CreateGameOverPanel();
+    CustomButton CreateCustomButton();
 }
 
 public class UiFactory : IUiFactory
