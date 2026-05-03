@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Core.Physics;
@@ -19,20 +20,24 @@ public class Enemy : BaseEntity
     private readonly ITimeService _timeService;
     private readonly ISoundService _soundService;
 
-    private readonly IBulletEmitter _bulletEmitter;
-
     private readonly CircleCollider _collider;
     private readonly PathBlock _pathBlock;
 
     private readonly Sprite _sprite;
     private readonly FlashEffect _flashEffect;
 
+    private IBulletEmitter _bulletEmitter;
+
     private int _currentHealth;
 
     public CircleCollider Collider => _collider;
 
+    public int Health { get; }
+
     public bool IsDead => _currentHealth <= 0;
     public bool PathIsFinished => _pathBlock.IsFinished;
+
+    public event Action<int> HealthChanged;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IContentService contentService, ISoundService soundService,
         Vector2 position, PathData path, EnemyData enemyData, IBulletEmitter bulletEmitter)
@@ -41,6 +46,7 @@ public class Enemy : BaseEntity
         _timeService = timeService;
         _soundService = soundService;
 
+        Health = enemyData.Health;
         _currentHealth = enemyData.Health;
 
         _pathBlock = new PathBlock(path, position, enemyData.Speed);
@@ -81,12 +87,27 @@ public class Enemy : BaseEntity
     public void TakeDamage(int damage)
     {
         _currentHealth -= damage;
+        _currentHealth = Math.Max(0, _currentHealth);
 
         if (_currentHealth > 0)
         {
             _flashEffect.Activate(FlashEffectDuration, FlashEffectDuration);
             _soundService.PlaySoundEffect(SfxType.EnemyDamaged);
         }
+
+        HealthChanged?.Invoke(_currentHealth);
+    }
+
+    public void ChangePath(PathData pathData)
+    {
+        _pathBlock.ChangePath(pathData);
+    }
+
+    public void ChangeEmitter(IBulletEmitter emitter)
+    {
+        _bulletEmitter = emitter;
+        _bulletEmitter.Position = Position;
+        _bulletEmitter.SetShootingDisabled(_pathBlock.ShootingDisabled);
     }
 
     private void OnPathShootingDisabledChanged(bool shootingDisabled)

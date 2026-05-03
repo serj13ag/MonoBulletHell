@@ -16,6 +16,14 @@
       "ColliderRadius": 20,
       "EmitterName": "straightDown",
       "SpriteName": "alien"
+    },
+    {
+      "Name": "boss",
+      "Health": 100,
+      "Speed": 30,
+      "ColliderOffset": "0, -5",
+      "ColliderRadius": 20,
+      "SpriteName": "alien"
     }
   ]
 }

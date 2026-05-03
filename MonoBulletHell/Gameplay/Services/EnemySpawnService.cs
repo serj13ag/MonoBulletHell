@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using MonoBulletHell.Data;
 using MonoBulletHell.Helpers;
@@ -6,6 +7,8 @@ namespace MonoBulletHell.Gameplay.Services;
 
 public interface IEnemySpawnService
 {
+    event Action LastWaveSpawned;
+
     void Initialize(SpawnConfig spawnConfig);
 
     void Update();
@@ -26,6 +29,8 @@ public class EnemySpawnService : IEnemySpawnService
         _timeService = timeService;
         _enemyService = enemyService;
     }
+
+    public event Action LastWaveSpawned;
 
     public void Initialize(SpawnConfig spawnConfig)
     {
@@ -69,6 +74,14 @@ public class EnemySpawnService : IEnemySpawnService
 
     private void TrySetNextWave()
     {
-        _nextWaveToSpawn = _waves.Count > 0 ? _waves.Dequeue() : null;
+        if (_waves.Count > 0)
+        {
+            _nextWaveToSpawn = _waves.Dequeue();
+        }
+        else
+        {
+            _nextWaveToSpawn = null;
+            LastWaveSpawned?.Invoke();
+        }
     }
 }

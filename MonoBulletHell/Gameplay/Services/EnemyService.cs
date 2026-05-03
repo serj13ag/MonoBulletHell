@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Enums;
+using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Services;
 
@@ -11,6 +12,7 @@ public interface IEnemyService
     void Render(IRenderService renderService);
 
     void SpawnEnemy(Vector2 position, string pathName, string enemyName, string emitterName);
+    Enemy SpawnBoss(string enemyName, Vector2 position, string pathName, string emitterName);
     void Clear();
 }
 
@@ -66,6 +68,13 @@ public class EnemyService : IEnemyService
     {
         var enemy = _gameFactory.CreateEnemy(position, pathName, enemyName, emitterName);
         _context.Enemies.Add(enemy);
+    }
+
+    public Enemy SpawnBoss(string enemyName, Vector2 position, string pathName, string emitterName)
+    {
+        var boss = _gameFactory.CreateEnemy(position, pathName, enemyName, emitterName);
+        _context.Enemies.Add(boss);
+        return boss;
     }
 
     public void Clear()

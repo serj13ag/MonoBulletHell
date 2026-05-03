@@ -10,6 +10,7 @@ public interface IGameFactory
 {
     Ship CreateShip();
     Enemy CreateEnemy(Vector2 position, string pathName, string enemyName, string emitterName);
+    IBulletEmitter CreateEmitter(string emitterName);
 }
 
 public class GameFactory : IGameFactory
@@ -53,7 +54,7 @@ public class GameFactory : IGameFactory
         return enemy;
     }
 
-    private IBulletEmitter CreateEmitter(string emitterName)
+    public IBulletEmitter CreateEmitter(string emitterName)
     {
         if (string.IsNullOrEmpty(emitterName))
         {
