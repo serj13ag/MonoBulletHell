@@ -10,6 +10,7 @@ namespace MonoBulletHell.Gameplay.Services;
 public interface IBossService
 {
     bool HasBoss { get; }
+    Enemy Boss { get; }
 
     event Action BossDied;
 
@@ -30,6 +31,7 @@ public class BossService : IBossService, IDisposable
     private BossStageData _nextStage;
 
     public bool HasBoss => _bossData != null;
+    public Enemy Boss => _boss;
 
     public event Action BossDied;
 

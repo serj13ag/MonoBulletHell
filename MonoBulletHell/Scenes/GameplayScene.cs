@@ -8,6 +8,7 @@ using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Factories;
 using MonoBulletHell.Gameplay.Services;
+using MonoBulletHell.Gameplay.Ui;
 using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 using MonoBulletHell.Ui;
@@ -100,7 +101,7 @@ public class GameplayScene : BaseScene
         _ship = _gameFactory.CreateShip();
         _ship.OnDestroyed += OnShipDestroyed;
 
-        _levelFlowService.LevelFinished += LevelFinished;
+        _levelFlowService.LevelFinished += OnLevelFinished;
 
         InitializeNewGame();
     }
@@ -161,7 +162,7 @@ public class GameplayScene : BaseScene
         _soundService.StopAll();
 
         _ship.OnDestroyed -= OnShipDestroyed;
-        _levelFlowService.LevelFinished -= LevelFinished;
+        _levelFlowService.LevelFinished -= OnLevelFinished;
 
         DisposeUi();
     }
@@ -193,7 +194,7 @@ public class GameplayScene : BaseScene
         _ui.ShowGameOverPanel(false);
     }
 
-    private void LevelFinished()
+    private void OnLevelFinished()
     {
         _gameState = GameState.GameOver;
         _ui.ShowGameOverPanel(true);
@@ -234,7 +235,7 @@ public class GameplayScene : BaseScene
     {
         _gumService.Root.Children.Clear();
 
-        _ui = new GameplayUi(_gumService, _uiFactory);
+        _ui = new GameplayUi(_gumService, _uiFactory, _levelFlowService, _bossService);
 
         _ui.ResumeButtonClicked += OnResumeButtonClicked;
         _ui.RestartButtonClicked += OnRestartButtonClicked;

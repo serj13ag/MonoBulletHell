@@ -4,6 +4,7 @@ namespace MonoBulletHell.Gameplay.Services;
 
 public interface ILevelFlowService
 {
+    event Action BossFightStarted;
     event Action LevelFinished;
 
     void StartLevel();
@@ -26,6 +27,7 @@ public class LevelFlowService : ILevelFlowService
 
     private LevelFlowState _currentState;
 
+    public event Action BossFightStarted;
     public event Action LevelFinished;
 
     public LevelFlowService(IEnemySpawnService enemySpawnService, IEnemyService enemyService, IBossService bossService)
@@ -80,6 +82,7 @@ public class LevelFlowService : ILevelFlowService
             case LevelFlowState.BossFight:
                 _bossService.SpawnBoss();
                 _bossService.BossDied += OnBossDied;
+                BossFightStarted?.Invoke();
                 break;
             case LevelFlowState.Finished:
                 LevelFinished?.Invoke();

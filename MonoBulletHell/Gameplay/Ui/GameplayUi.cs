@@ -1,10 +1,12 @@
 using System;
 using Microsoft.Xna.Framework;
+using MonoBulletHell.Gameplay.Services;
+using MonoBulletHell.Ui;
 using MonoBulletHell.Ui.Elements.Panels;
 using MonoGameGum;
 using MonoGameGum.GueDeriving;
 
-namespace MonoBulletHell.Ui;
+namespace MonoBulletHell.Gameplay.Ui;
 
 public class GameplayUi : ContainerRuntime
 {
@@ -14,11 +16,13 @@ public class GameplayUi : ContainerRuntime
     private readonly OptionsPanel _optionsPanel;
     private readonly GameOverPanel _gameOverPanel;
 
+    private readonly BossHealthBar _bossHealthBar;
+
     public event Action ResumeButtonClicked;
     public event Action RestartButtonClicked;
     public event Action QuitButtonClicked;
 
-    public GameplayUi(GumService gumService, IUiFactory uiFactory)
+    public GameplayUi(GumService gumService, IUiFactory uiFactory, ILevelFlowService levelFlowService, IBossService bossService)
     {
         _gumService = gumService;
 
@@ -43,6 +47,12 @@ public class GameplayUi : ContainerRuntime
         _gameOverPanel.Disable();
         _gameOverPanel.OnRestartButtonClicked += OnRestartButtonClicked;
         _gameOverPanel.OnQuitButtonClicked += OnQuitButtonClicked;
+
+        _bossHealthBar = new BossHealthBar(bossService);
+        AddChild(_bossHealthBar);
+        _bossHealthBar.Disable();
+
+        levelFlowService.BossFightStarted += OnBossFightStarted;
     }
 
     public void Update(GameTime gameTime)
@@ -71,9 +81,19 @@ public class GameplayUi : ContainerRuntime
         _gameOverPanel.Enable();
     }
 
+    private void OnBossFightStarted()
+    {
+        _bossHealthBar.Enable();
+    }
+
     private void HideGameOverPanel()
     {
         _gameOverPanel.Disable();
+    }
+
+    private void HideBossHealthBar()
+    {
+        _bossHealthBar.Disable();
     }
 
     private void OnResumeButtonClicked()
@@ -86,12 +106,14 @@ public class GameplayUi : ContainerRuntime
     {
         HidePausePanel();
         HideGameOverPanel();
+        HideBossHealthBar();
         RestartButtonClicked?.Invoke();
     }
 
     private void OnQuitButtonClicked()
     {
         HidePausePanel();
+        HideBossHealthBar();
         QuitButtonClicked?.Invoke();
     }
 
