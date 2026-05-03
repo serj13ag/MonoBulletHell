@@ -3,7 +3,6 @@
     {
       "Name": "follower",
       "Health": 3,
-      "Speed": 100,
       "ColliderOffset": "0, -10",
       "ColliderRadius": 15,
       "SpriteName": "alienSmall"
@@ -11,7 +10,6 @@
     {
       "Name": "shooter",
       "Health": 5,
-      "Speed": 50,
       "ColliderOffset": "0, -5",
       "ColliderRadius": 20,
       "EmitterName": "straightDown",
@@ -20,7 +18,6 @@
     {
       "Name": "boss",
       "Health": 100,
-      "Speed": 30,
       "ColliderOffset": "0, -5",
       "ColliderRadius": 20,
       "SpriteName": "alien"
