@@ -57,25 +57,19 @@ public class LevelFlowService : ILevelFlowService
 
     private void SetState(LevelFlowState newState)
     {
-        switch (_currentState)
+        if (_currentState == newState)
         {
-            case LevelFlowState.Empty:
-            case LevelFlowState.Finished:
-                break;
-            case LevelFlowState.SpawningWaves:
-                _enemySpawnService.LastWaveSpawned -= OnLastWaveSpawned;
-                break;
-            case LevelFlowState.FightingLastEnemies:
-                _enemyService.AllEnemiesDied -= OnAllEnemiesDied;
-                break;
-            case LevelFlowState.BossFight:
-                _bossService.BossDied -= OnBossDied;
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(_currentState), _currentState, null);
+            return;
         }
 
-        switch (newState)
+        ExitState(_currentState);
+        _currentState = newState;
+        EnterState(newState);
+    }
+
+    private void EnterState(LevelFlowState state)
+    {
+        switch (state)
         {
             case LevelFlowState.SpawningWaves:
                 _enemySpawnService.LastWaveSpawned += OnLastWaveSpawned;
@@ -92,9 +86,28 @@ public class LevelFlowService : ILevelFlowService
                 break;
             case LevelFlowState.Empty:
             default:
-                throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
         }
+    }
 
-        _currentState = newState;
+    private void ExitState(LevelFlowState state)
+    {
+        switch (state)
+        {
+            case LevelFlowState.Empty:
+            case LevelFlowState.Finished:
+                break;
+            case LevelFlowState.SpawningWaves:
+                _enemySpawnService.LastWaveSpawned -= OnLastWaveSpawned;
+                break;
+            case LevelFlowState.FightingLastEnemies:
+                _enemyService.AllEnemiesDied -= OnAllEnemiesDied;
+                break;
+            case LevelFlowState.BossFight:
+                _bossService.BossDied -= OnBossDied;
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(state), state, null);
+        }
     }
 }

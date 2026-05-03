@@ -162,6 +162,8 @@ public class GameplayScene : BaseScene
 
         _ship.OnDestroyed -= OnShipDestroyed;
         _levelFlowService.LevelFinished -= LevelFinished;
+
+        DisposeUi();
     }
 
     private void InitializeNewGame()
@@ -237,5 +239,16 @@ public class GameplayScene : BaseScene
         _ui.ResumeButtonClicked += OnResumeButtonClicked;
         _ui.RestartButtonClicked += OnRestartButtonClicked;
         _ui.QuitButtonClicked += OnQuitButtonClicked;
+    }
+
+    private void DisposeUi()
+    {
+        _gumService.Root.Children.Clear();
+
+        _ui.ResumeButtonClicked -= OnResumeButtonClicked;
+        _ui.RestartButtonClicked -= OnRestartButtonClicked;
+        _ui.QuitButtonClicked -= OnQuitButtonClicked;
+
+        _ui = null;
     }
 }
