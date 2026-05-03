@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Entities;
@@ -8,6 +10,8 @@ namespace MonoBulletHell.Gameplay.Services;
 
 public interface IEnemyService
 {
+    event Action AllEnemiesDied;
+
     void Update();
     void Render(IRenderService renderService);
 
@@ -21,6 +25,8 @@ public class EnemyService : IEnemyService
     private readonly IGameFactory _gameFactory;
     private readonly IGameContext _context;
     private readonly ISoundService _soundService;
+
+    public event Action AllEnemiesDied;
 
     public EnemyService(IGameFactory gameFactory, IGameContext context, ISoundService soundService)
     {
@@ -42,11 +48,11 @@ public class EnemyService : IEnemyService
             if (enemy.IsDead)
             {
                 enemyDied = true;
-                enemies.RemoveAt(i);
+                RemoveEnemyAt(enemies, i);
             }
             else if (enemy.PathIsFinished)
             {
-                enemies.RemoveAt(i);
+                RemoveEnemyAt(enemies, i);
             }
         }
 
@@ -80,5 +86,14 @@ public class EnemyService : IEnemyService
     public void Clear()
     {
         _context.Enemies.Clear();
+    }
+
+    private void RemoveEnemyAt(List<Enemy> enemies, int index)
+    {
+        enemies.RemoveAt(index);
+        if (enemies.Count == 0)
+        {
+            AllEnemiesDied?.Invoke();
+        }
     }
 }

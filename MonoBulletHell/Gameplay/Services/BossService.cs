@@ -39,10 +39,24 @@ public class BossService : IBossService, IDisposable
             _stages.Enqueue(bossStage);
         }
 
-        _enemySpawnService.LastWaveSpawned += OnAllWavesSpawned;
+        _enemySpawnService.LastWaveSpawned += OnLastWaveSpawned;
     }
 
-    private void OnAllWavesSpawned()
+    private void OnLastWaveSpawned()
+    {
+        _enemySpawnService.LastWaveSpawned -= OnLastWaveSpawned;
+
+        _enemyService.AllEnemiesDied += OnAllEnemiesDied;
+    }
+
+    private void OnAllEnemiesDied()
+    {
+        _enemyService.AllEnemiesDied -= OnAllEnemiesDied;
+
+        SpawnBoss();
+    }
+
+    private void SpawnBoss()
     {
         var firstStage = _stages.Dequeue();
         _nextStage = _stages.Dequeue();
@@ -74,7 +88,8 @@ public class BossService : IBossService, IDisposable
 
     public void Dispose()
     {
-        _enemySpawnService.LastWaveSpawned -= OnAllWavesSpawned;
+        _enemySpawnService.LastWaveSpawned -= OnLastWaveSpawned;
+        _enemyService.AllEnemiesDied -= OnAllEnemiesDied;
 
         if (_boss != null)
         {
