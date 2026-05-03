@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Entities.Emitters;
+using MonoBulletHell.Gameplay.Entities.PathBlocks;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
 
@@ -10,6 +11,7 @@ public interface IGameFactory
 {
     Ship CreateShip();
     Enemy CreateEnemy(Vector2 position, string pathName, string enemyName, string emitterName);
+    PathBlock CreatePathBlock(string pathName, Vector2 position);
     IBulletEmitter CreateEmitter(string emitterName);
 }
 
@@ -46,12 +48,19 @@ public class GameFactory : IGameFactory
 
     public Enemy CreateEnemy(Vector2 position, string pathName, string enemyName, string emitterName)
     {
-        var path = _contentService.GetPath(pathName);
         var enemyData = _contentService.GetEnemyData(enemyName);
+
+        var pathBlock = CreatePathBlock(pathName, position);
         var bulletEmitter = CreateEmitter(emitterName);
-        var enemy = new Enemy(_debugService, _timeService, _contentService, _soundService, position, path, enemyData,
-            bulletEmitter);
+
+        var enemy = new Enemy(_debugService, _timeService, _contentService, _soundService, enemyData, pathBlock, bulletEmitter);
         return enemy;
+    }
+
+    public PathBlock CreatePathBlock(string pathName, Vector2 position)
+    {
+        var path = _contentService.GetPath(pathName);
+        return new PathBlock(path, position);
     }
 
     public IBulletEmitter CreateEmitter(string emitterName)

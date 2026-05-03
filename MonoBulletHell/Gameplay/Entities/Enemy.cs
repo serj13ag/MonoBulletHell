@@ -6,6 +6,7 @@ using MonoBulletHell.Data;
 using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Effects;
 using MonoBulletHell.Gameplay.Entities.Emitters;
+using MonoBulletHell.Gameplay.Entities.PathBlocks;
 using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
@@ -21,11 +22,11 @@ public class Enemy : BaseEntity
     private readonly ISoundService _soundService;
 
     private readonly CircleCollider _collider;
-    private readonly PathBlock _pathBlock;
 
     private readonly Sprite _sprite;
     private readonly FlashEffect _flashEffect;
 
+    private PathBlock _pathBlock;
     private IBulletEmitter _bulletEmitter;
 
     private int _currentHealth;
@@ -40,7 +41,7 @@ public class Enemy : BaseEntity
     public event Action<int> HealthChanged;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IContentService contentService, ISoundService soundService,
-        Vector2 position, PathData path, EnemyData enemyData, IBulletEmitter bulletEmitter)
+        EnemyData enemyData, PathBlock pathBlock, IBulletEmitter bulletEmitter)
     {
         _debugService = debugService;
         _timeService = timeService;
@@ -49,7 +50,7 @@ public class Enemy : BaseEntity
         Health = enemyData.Health;
         _currentHealth = enemyData.Health;
 
-        _pathBlock = new PathBlock(path, position, enemyData.Speed);
+        _pathBlock = pathBlock;
         Position = _pathBlock.Position;
 
         _collider = new CircleCollider(enemyData.ColliderOffset, enemyData.ColliderRadius);
@@ -98,9 +99,9 @@ public class Enemy : BaseEntity
         HealthChanged?.Invoke(_currentHealth);
     }
 
-    public void ChangePath(PathData pathData)
+    public void ChangePath(PathBlock pathBlock)
     {
-        _pathBlock.ChangePath(pathData);
+        // TODO: impl
     }
 
     public void ChangeEmitter(IBulletEmitter emitter)

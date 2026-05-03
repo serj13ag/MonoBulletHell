@@ -15,7 +15,6 @@ public class BossService : IBossService, IDisposable
 {
     private readonly IEnemySpawnService _enemySpawnService;
     private readonly IGameFactory _gameFactory;
-    private readonly IContentService _contentService;
     private readonly IEnemyService _enemyService;
 
     private readonly Queue<BossStageData> _stages = new Queue<BossStageData>();
@@ -25,11 +24,10 @@ public class BossService : IBossService, IDisposable
     private Enemy _boss;
     private BossStageData _nextStage;
 
-    public BossService(IEnemySpawnService enemySpawnService, IGameFactory gameFactory, IContentService contentService, IEnemyService enemyService)
+    public BossService(IEnemySpawnService enemySpawnService, IGameFactory gameFactory, IEnemyService enemyService)
     {
         _enemySpawnService = enemySpawnService;
         _gameFactory = gameFactory;
-        _contentService = contentService;
         _enemyService = enemyService;
     }
 
@@ -64,8 +62,8 @@ public class BossService : IBossService, IDisposable
         var healthPercent = newHealth / (float)_boss.Health;
         if (healthPercent <= _nextStage.HealthPercent)
         {
-            var path = _contentService.GetPath(_nextStage.PathName);
-            _boss.ChangePath(path);
+            var pathBlock = _gameFactory.CreatePathBlock(_nextStage.PathName, _boss.Position);
+            _boss.ChangePath(pathBlock);
 
             var emitter = _gameFactory.CreateEmitter(_nextStage.EmitterName);
             _boss.ChangeEmitter(emitter);

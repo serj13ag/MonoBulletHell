@@ -2,6 +2,7 @@
   "Paths": [
     {
       "Name": "down",
+      "Speed": 30,
       "Points": [
         {
           "Position": "0, 0"
@@ -13,6 +14,7 @@
     },
     {
       "Name": "downRight",
+      "Speed": 30,
       "Points": [
         {
           "Position": "0, 0"
@@ -24,6 +26,7 @@
     },
     {
       "Name": "downLeft",
+      "Speed": 30,
       "Points": [
         {
           "Position": "0, 0"
@@ -35,6 +38,7 @@
     },
     {
       "Name": "testLoop",
+      "Speed": 30,
       "Loops": 1,
       "Points": [
         {
@@ -53,6 +57,7 @@
     },
     {
       "Name": "testCurve",
+      "Speed": 30,
       "Points": [
         {
           "Position": "0, 0"

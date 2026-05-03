@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using MonoBulletHell.Data;
 using MonoBulletHell.Helpers;
 
-namespace MonoBulletHell.Gameplay;
+namespace MonoBulletHell.Gameplay.Entities.PathBlocks;
 
 public class PathBlock
 {
@@ -42,11 +42,11 @@ public class PathBlock
 
     public event Action<bool> ShootingDisabledChanged;
 
-    public PathBlock(PathData path, Vector2 initialPosition, float speed)
+    public PathBlock(PathData path, Vector2 initialPosition)
     {
         _initialPosition = initialPosition; // TODO: create path in runtime from data
         _path = path;
-        _speed = speed;
+        _speed = path.Speed;
 
         _loopsLeft = path.Loops;
         _currentIndex = 0;
