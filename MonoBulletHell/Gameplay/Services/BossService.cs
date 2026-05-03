@@ -8,12 +8,16 @@ namespace MonoBulletHell.Gameplay.Services;
 
 public interface IBossService
 {
+    bool HasBoss { get; }
+
+    event Action BossDied;
+
     void Initialize(SpawnConfig spawnConfig);
+    void SpawnBoss();
 }
 
 public class BossService : IBossService, IDisposable
 {
-    private readonly IEnemySpawnService _enemySpawnService;
     private readonly IGameFactory _gameFactory;
     private readonly IEnemyService _enemyService;
 
@@ -24,39 +28,29 @@ public class BossService : IBossService, IDisposable
     private Enemy _boss;
     private BossStageData _nextStage;
 
-    public BossService(IEnemySpawnService enemySpawnService, IGameFactory gameFactory, IEnemyService enemyService)
+    public bool HasBoss => _bossData != null;
+
+    public event Action BossDied;
+
+    public BossService(IGameFactory gameFactory, IEnemyService enemyService)
     {
-        _enemySpawnService = enemySpawnService;
         _gameFactory = gameFactory;
         _enemyService = enemyService;
     }
 
     public void Initialize(SpawnConfig spawnConfig)
     {
-        _bossData = spawnConfig.Boss;
-        foreach (var bossStage in spawnConfig.Boss.Stages)
+        if (spawnConfig.Boss != null)
         {
-            _stages.Enqueue(bossStage);
+            _bossData = spawnConfig.Boss;
+            foreach (var bossStage in spawnConfig.Boss.Stages)
+            {
+                _stages.Enqueue(bossStage);
+            }
         }
-
-        _enemySpawnService.LastWaveSpawned += OnLastWaveSpawned;
     }
 
-    private void OnLastWaveSpawned()
-    {
-        _enemySpawnService.LastWaveSpawned -= OnLastWaveSpawned;
-
-        _enemyService.AllEnemiesDied += OnAllEnemiesDied;
-    }
-
-    private void OnAllEnemiesDied()
-    {
-        _enemyService.AllEnemiesDied -= OnAllEnemiesDied;
-
-        SpawnBoss();
-    }
-
-    private void SpawnBoss()
+    public void SpawnBoss()
     {
         var firstStage = _stages.Dequeue();
         _nextStage = _stages.Dequeue();
@@ -68,6 +62,12 @@ public class BossService : IBossService, IDisposable
 
     private void OnBossHealthChanged(int newHealth)
     {
+        if (newHealth <= 0)
+        {
+            BossDied?.Invoke();
+            return;
+        }
+
         if (_nextStage == null)
         {
             return;
@@ -88,9 +88,6 @@ public class BossService : IBossService, IDisposable
 
     public void Dispose()
     {
-        _enemySpawnService.LastWaveSpawned -= OnLastWaveSpawned;
-        _enemyService.AllEnemiesDied -= OnAllEnemiesDied;
-
         if (_boss != null)
         {
             _boss.HealthChanged -= OnBossHealthChanged;

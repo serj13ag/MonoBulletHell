@@ -40,6 +40,7 @@ public class GameplayScene : BaseScene
     private readonly ISoundService _soundService;
     private readonly IBulletFactory _bulletFactory;
     private readonly IBossService _bossService;
+    private readonly ILevelFlowService _levelFlowService;
 
     private GameState _gameState;
 
@@ -51,7 +52,8 @@ public class GameplayScene : BaseScene
         IUiFactory uiFactory, IInputService inputService, ISceneService sceneService, ITimeService timeService,
         IContentService contentService, IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService,
         IEnemySpawnService enemySpawnService, IBackgroundService backgroundService, IParticleService particleService,
-        IRenderService renderService, ISoundService soundService, IBulletFactory bulletFactory, IBossService bossService)
+        IRenderService renderService, ISoundService soundService, IBulletFactory bulletFactory, IBossService bossService,
+        ILevelFlowService levelFlowService)
         : base(content, graphicsDevice, spriteBatch)
     {
         _gumService = gumService;
@@ -70,6 +72,7 @@ public class GameplayScene : BaseScene
         _soundService = soundService;
         _bulletFactory = bulletFactory;
         _bossService = bossService;
+        _levelFlowService = levelFlowService;
     }
 
     public override void Initialize()
@@ -161,6 +164,8 @@ public class GameplayScene : BaseScene
         _bulletService.Clear();
         _enemyService.Clear();
         _particleService.Clear();
+
+        _levelFlowService.StartLevel();
 
         _backgroundService.Initialize(_contentService.BackgroundTexture);
 
