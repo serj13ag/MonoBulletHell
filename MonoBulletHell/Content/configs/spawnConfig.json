@@ -24,6 +24,44 @@
         "Spacing": 50,
         "Rotation": 90
       }
+    },
+    {
+      "SpawnTime": 5,
+      "Position": "160, 0",
+      "PathName": "down",
+      "EnemyName": "follower",
+      "Formation": {
+        "Type": "VShape",
+        "Rows": 3,
+        "SpacingX": 40,
+        "SpacingY": 40
+      }
+    },
+    {
+      "SpawnTime": 8,
+      "Position": "0, 0",
+      "PathName": "downRight",
+      "EnemyName": "shooter",
+      "EmitterName": "straightDown_3_lines",
+      "Formation": {
+        "Type": "Line",
+        "Count": 3,
+        "Spacing": 50,
+        "Rotation": 135
+      }
+    },
+    {
+      "SpawnTime": 8,
+      "Position": "320, 0",
+      "PathName": "downLeft",
+      "EnemyName": "shooter",
+      "EmitterName": "straightDown_3_lines",
+      "Formation": {
+        "Type": "Line",
+        "Count": 3,
+        "Spacing": 50,
+        "Rotation": 45
+      }
     }
   ],
   "Boss": {
