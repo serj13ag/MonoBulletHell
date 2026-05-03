@@ -74,6 +74,11 @@ public class PathBlock
         }
     }
 
+    public void ChangePath(PathData path)
+    {
+        // TODO: impl
+    }
+
     private void UpdateMoving(float deltaTime)
     {
         var moveSpeed = _speed;

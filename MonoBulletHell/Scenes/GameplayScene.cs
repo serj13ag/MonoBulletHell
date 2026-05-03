@@ -39,6 +39,7 @@ public class GameplayScene : BaseScene
     private readonly IRenderService _renderService;
     private readonly ISoundService _soundService;
     private readonly IBulletFactory _bulletFactory;
+    private readonly IBossService _bossService;
 
     private GameState _gameState;
 
@@ -50,7 +51,7 @@ public class GameplayScene : BaseScene
         IUiFactory uiFactory, IInputService inputService, ISceneService sceneService, ITimeService timeService,
         IContentService contentService, IBulletService bulletService, IGameFactory gameFactory, IEnemyService enemyService,
         IEnemySpawnService enemySpawnService, IBackgroundService backgroundService, IParticleService particleService,
-        IRenderService renderService, ISoundService soundService, IBulletFactory bulletFactory)
+        IRenderService renderService, ISoundService soundService, IBulletFactory bulletFactory, IBossService bossService)
         : base(content, graphicsDevice, spriteBatch)
     {
         _gumService = gumService;
@@ -68,6 +69,7 @@ public class GameplayScene : BaseScene
         _renderService = renderService;
         _soundService = soundService;
         _bulletFactory = bulletFactory;
+        _bossService = bossService;
     }
 
     public override void Initialize()
@@ -162,7 +164,9 @@ public class GameplayScene : BaseScene
 
         _backgroundService.Initialize(_contentService.BackgroundTexture);
 
-        _enemySpawnService.Initialize(_contentService.GetSpawnConfig());
+        var spawnConfig = _contentService.GetSpawnConfig();
+        _enemySpawnService.Initialize(spawnConfig);
+        _bossService.Initialize(spawnConfig);
 
         _ship.InitializeAt(ScreenHelper.GetLerpScreenVirtualPosition(0.5f, 0.8f));
 
