@@ -43,6 +43,9 @@ public class BossService : IBossService, IDisposable
 
     public void Initialize(SpawnConfig spawnConfig)
     {
+        _bossData = null;
+        _stages.Clear();
+
         if (spawnConfig.Boss != null)
         {
             _bossData = spawnConfig.Boss;
