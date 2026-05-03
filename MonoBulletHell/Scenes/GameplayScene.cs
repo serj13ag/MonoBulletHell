@@ -100,6 +100,8 @@ public class GameplayScene : BaseScene
         _ship = _gameFactory.CreateShip();
         _ship.OnDestroyed += OnShipDestroyed;
 
+        _levelFlowService.LevelFinished += LevelFinished;
+
         InitializeNewGame();
     }
 
@@ -157,6 +159,9 @@ public class GameplayScene : BaseScene
         base.Exit();
 
         _soundService.StopAll();
+
+        _ship.OnDestroyed -= OnShipDestroyed;
+        _levelFlowService.LevelFinished -= LevelFinished;
     }
 
     private void InitializeNewGame()
@@ -184,6 +189,12 @@ public class GameplayScene : BaseScene
     {
         _gameState = GameState.GameOver;
         _ui.ShowGameOverPanel();
+    }
+
+    private void LevelFinished()
+    {
+        // TODO: add win panel
+        _sceneService.ChangeScene(SceneType.Title);
     }
 
     private void OnResumeButtonClicked()

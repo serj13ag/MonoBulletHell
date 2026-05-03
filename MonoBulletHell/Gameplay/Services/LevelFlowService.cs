@@ -1,17 +1,16 @@
 using System;
-using MonoBulletHell.Scenes;
-using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Services;
 
 public interface ILevelFlowService
 {
+    event Action LevelFinished;
+
     void StartLevel();
 }
 
 public class LevelFlowService : ILevelFlowService
 {
-    private readonly ISceneService _sceneService;
     private readonly IEnemySpawnService _enemySpawnService;
     private readonly IEnemyService _enemyService;
     private readonly IBossService _bossService;
@@ -22,15 +21,15 @@ public class LevelFlowService : ILevelFlowService
         SpawningWaves,
         FightingLastEnemies,
         BossFight,
-        Win,
+        Finished,
     }
 
     private LevelFlowState _currentState;
 
-    public LevelFlowService(ISceneService sceneService, IEnemySpawnService enemySpawnService, IEnemyService enemyService,
-        IBossService bossService)
+    public event Action LevelFinished;
+
+    public LevelFlowService(IEnemySpawnService enemySpawnService, IEnemyService enemyService, IBossService bossService)
     {
-        _sceneService = sceneService;
         _enemySpawnService = enemySpawnService;
         _enemyService = enemyService;
         _bossService = bossService;
@@ -48,12 +47,12 @@ public class LevelFlowService : ILevelFlowService
 
     private void OnAllEnemiesDied()
     {
-        SetState(_bossService.HasBoss ? LevelFlowState.BossFight : LevelFlowState.Win);
+        SetState(_bossService.HasBoss ? LevelFlowState.BossFight : LevelFlowState.Finished);
     }
 
     private void OnBossDied()
     {
-        SetState(LevelFlowState.Win);
+        SetState(LevelFlowState.Finished);
     }
 
     private void SetState(LevelFlowState newState)
@@ -71,7 +70,7 @@ public class LevelFlowService : ILevelFlowService
             case LevelFlowState.BossFight:
                 _bossService.BossDied -= OnBossDied;
                 break;
-            case LevelFlowState.Win:
+            case LevelFlowState.Finished:
             default:
                 throw new ArgumentOutOfRangeException(nameof(_currentState), _currentState, null);
         }
@@ -88,8 +87,8 @@ public class LevelFlowService : ILevelFlowService
                 _bossService.SpawnBoss();
                 _bossService.BossDied += OnBossDied;
                 break;
-            case LevelFlowState.Win:
-                _sceneService.ChangeScene(SceneType.Title); // TODO: show panel
+            case LevelFlowState.Finished:
+                LevelFinished?.Invoke();
                 break;
             case LevelFlowState.Empty:
             default:
