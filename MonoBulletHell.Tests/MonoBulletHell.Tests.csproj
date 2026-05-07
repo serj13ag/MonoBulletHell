@@ -3,11 +3,9 @@
         <TargetFramework>net10.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="MSTest" Version="4.0.2"/>
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1"/>
         <PackageReference Include="NUnit" Version="4.6.0"/>
-    </ItemGroup>
-    <ItemGroup>
-        <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting"/>
+        <PackageReference Include="NUnit3TestAdapter" Version="4.6.0"/>
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\MonoBulletHell\MonoBulletHell.csproj"/>
