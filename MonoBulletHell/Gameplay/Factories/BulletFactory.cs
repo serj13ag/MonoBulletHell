@@ -58,12 +58,10 @@ public class BulletFactory : IBulletFactory
 
     public Bullet CreateBullet(in BulletDTO bulletDto)
     {
-        if (_bulletPool.Count == 0)
-        {
-            return new Bullet(_debugService, _timeService);
-        }
+        var bullet = _bulletPool.Count == 0
+            ? new Bullet(_debugService, _timeService)
+            : _bulletPool.Pop();
 
-        var bullet = _bulletPool.Pop();
         bullet.Init(GetBulletSprite(bulletDto.IsPlayer), in bulletDto);
         return bullet;
     }
