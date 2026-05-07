@@ -1,7 +1,7 @@
 {
   "Paths": [
     {
-      "Name": "down",
+      "Name": "path_down",
       "Speed": 30,
       "Type": "Relative",
       "Points": [
@@ -14,7 +14,7 @@
       ]
     },
     {
-      "Name": "downRight",
+      "Name": "path_downRight",
       "Speed": 30,
       "Type": "Relative",
       "Points": [
@@ -27,7 +27,7 @@
       ]
     },
     {
-      "Name": "downLeft",
+      "Name": "path_downLeft",
       "Speed": 30,
       "Type": "Relative",
       "Points": [
@@ -40,7 +40,7 @@
       ]
     },
     {
-      "Name": "boss_1",
+      "Name": "path_boss_1",
       "Speed": 30,
       "Type": "Absolute",
       "Loops": 10,
@@ -60,7 +60,7 @@
       ]
     },
     {
-      "Name": "boss_2",
+      "Name": "path_boss_2",
       "Speed": 50,
       "Type": "Absolute",
       "Loops": 10,
@@ -89,7 +89,7 @@
       ]
     },
     {
-      "Name": "boss_3",
+      "Name": "path_boss_3",
       "Speed": 30,
       "Type": "Absolute",
       "Loops": 10,

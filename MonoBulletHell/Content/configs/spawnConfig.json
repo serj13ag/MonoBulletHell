@@ -3,7 +3,7 @@
     {
       "SpawnTime": 1,
       "Position": "40, 0",
-      "PathName": "down",
+      "PathName": "path_down",
       "EnemyName": "follower",
       "Formation": {
         "Type": "Line",
@@ -15,7 +15,7 @@
     {
       "SpawnTime": 3,
       "Position": "280, 0",
-      "PathName": "down",
+      "PathName": "path_down",
       "EnemyName": "follower",
       "EmitterName": "straightDown",
       "Formation": {
@@ -28,7 +28,7 @@
     {
       "SpawnTime": 5,
       "Position": "160, 0",
-      "PathName": "down",
+      "PathName": "path_down",
       "EnemyName": "follower",
       "Formation": {
         "Type": "VShape",
@@ -40,7 +40,7 @@
     {
       "SpawnTime": 8,
       "Position": "0, 0",
-      "PathName": "downRight",
+      "PathName": "path_downRight",
       "EnemyName": "shooter",
       "EmitterName": "straightDown_3_lines",
       "Formation": {
@@ -53,7 +53,7 @@
     {
       "SpawnTime": 8,
       "Position": "320, 0",
-      "PathName": "downLeft",
+      "PathName": "path_downLeft",
       "EnemyName": "shooter",
       "EmitterName": "straightDown_3_lines",
       "Formation": {
@@ -70,17 +70,17 @@
     "Stages": [
       {
         "HealthPercent": 1,
-        "PathName": "boss_1",
+        "PathName": "path_boss_1",
         "EmitterName": "straightDown_rotating"
       },
       {
         "HealthPercent": 0.7,
-        "PathName": "boss_2",
+        "PathName": "path_boss_2",
         "EmitterName": "straightDown_3_lines"
       },
       {
         "HealthPercent": 0.4,
-        "PathName": "boss_3",
+        "PathName": "path_boss_3",
         "EmitterName": "straightDown_rotating_curve_loop"
       }
     ]
