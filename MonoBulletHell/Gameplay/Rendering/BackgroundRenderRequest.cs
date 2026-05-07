@@ -21,6 +21,6 @@ public class BackgroundRenderRequest
     public void Draw(SpriteBatch spriteBatch)
     {
         var sourceRectangle = new Rectangle(new Point(0, _verticalOffset), DestinationRectangle.Size);
-        spriteBatch.Draw(_texture, DestinationRectangle, sourceRectangle, Constants.Colors.BackgroundColor.Adjust(-20f));
+        spriteBatch.Draw(_texture, DestinationRectangle, sourceRectangle, Constants.Colors.GameplayBackgroundTexture);
     }
 }

@@ -12,7 +12,7 @@ public class CustomButton : Button
         _uiMediator = uiMediator;
 
         var buttonVisual = (ButtonVisual)Visual;
-        buttonVisual.BackgroundColor = Constants.Colors.BackgroundHighlight;
+        buttonVisual.BackgroundColor = Constants.Colors.UiButton;
 
         var textComponent = buttonVisual.TextInstance;
         textComponent.UseCustomFont = true;

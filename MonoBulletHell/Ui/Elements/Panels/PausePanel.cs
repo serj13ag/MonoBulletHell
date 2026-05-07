@@ -24,7 +24,7 @@ public class PausePanel : BasePanel
         var background = new ColoredRectangleRuntime();
         AddChild(background);
         background.Dock(Gum.Wireframe.Dock.Fill);
-        background.Color = Constants.Colors.BackgroundDark;
+        background.Color = Constants.Colors.UiPanel;
 
         var titleText = new CustomLabel();
         AddChild(titleText);

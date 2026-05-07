@@ -141,7 +141,7 @@ public class GameplayScene : BaseScene
     {
         base.Draw(gameTime);
 
-        GraphicsDevice.Clear(Constants.Colors.BackgroundColor);
+        GraphicsDevice.Clear(Constants.Colors.SceneGameplayBackground);
 
         _backgroundService.Render(_renderService);
         _ship.Render(_renderService);

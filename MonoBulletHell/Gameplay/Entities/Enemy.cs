@@ -135,7 +135,7 @@ public class Enemy : BaseEntity
     {
         var sprite = contentService.CreateShipSprite(spriteName);
         sprite.CenterOrigin();
-        sprite.Color = Constants.Colors.BackgroundHighlight;
+        sprite.Color = Constants.Colors.Enemy;
         return sprite;
     }
 }

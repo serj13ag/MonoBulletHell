@@ -41,11 +41,11 @@ public class BulletFactory : IBulletFactory
     {
         _playerBulletSprite = _contentService.CreateBulletSprite("shipBullet");
         _playerBulletSprite.CenterOrigin();
-        _playerBulletSprite.Color = Constants.Colors.ShipProjectile;
+        _playerBulletSprite.Color = Constants.Colors.PlayerBullet;
 
         _enemyBulletSprite = _contentService.CreateBulletSprite("enemyBullet");
         _enemyBulletSprite.CenterOrigin();
-        _enemyBulletSprite.Color = Constants.Colors.Orange;
+        _enemyBulletSprite.Color = Constants.Colors.EnemyBullet;
     }
 
     public void Prewarm()

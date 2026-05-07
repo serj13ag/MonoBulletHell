@@ -212,7 +212,7 @@ public class Ship : BaseEntity
     {
         var sprite = contentService.CreateShipSprite(playerConfig.SpriteName);
         sprite.CenterOrigin();
-        sprite.Color = Constants.Colors.BackgroundHighlight;
+        sprite.Color = Constants.Colors.PlayerShip;
         return sprite;
     }
 
@@ -220,7 +220,7 @@ public class Ship : BaseEntity
     {
         var sprite = contentService.CreateShipSprite(playerConfig.CoreSpriteName);
         sprite.CenterOrigin();
-        sprite.Color = Constants.Colors.Orange;
+        sprite.Color = Constants.Colors.PlayerShipCore;
         return sprite;
     }
 }

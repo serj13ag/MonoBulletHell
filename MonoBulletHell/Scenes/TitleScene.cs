@@ -72,7 +72,7 @@ public class TitleScene : BaseScene
     {
         base.Draw(gameTime);
 
-        GraphicsDevice.Clear(Constants.Colors.BackgroundColor);
+        GraphicsDevice.Clear(Constants.Colors.SceneTitleBackground);
 
         _gumService.Draw();
     }
