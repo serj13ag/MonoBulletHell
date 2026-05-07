@@ -1,3 +1,4 @@
+using Gum.Wireframe;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -6,6 +7,7 @@ using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Enums;
 using MonoBulletHell.Services;
 using MonoBulletHell.Ui;
+using MonoBulletHell.Ui.Elements;
 using MonoBulletHell.Ui.Elements.Panels;
 using MonoGameGum;
 
@@ -100,6 +102,12 @@ public class TitleScene : BaseScene
         _optionsPanel.AddToRoot();
         _optionsPanel.OnBackButtonClicked += OnOptionsBackButtonClicked;
         _optionsPanel.Disable();
+
+        var controlsLabel = new CustomLabel();
+        controlsLabel.AddToRoot();
+        controlsLabel.Anchor(Anchor.Bottom);
+        controlsLabel.Y = -20;
+        controlsLabel.Text = "MOVE: WASD\nFOCUS: SHIFT\nFIRE: SPACE";
     }
 
     private void StartButtonClicked()
