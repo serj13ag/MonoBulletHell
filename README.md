@@ -44,6 +44,7 @@ The codebase is organized around small systems with clear responsibilities:
 | `Services` | Global services for content, scene switching, screen scaling, audio, settings, saves, and serialization |
 | `Ui` | Gum UI factories, panels, and custom controls |
 | `Content/configs` | JSON-driven gameplay and presentation tuning |
+| `MonoBulletHell.Tests` | NUnit test project for test coverage |
 
 The main runtime composition happens in `CompositionRoot`, where global services are registered once and gameplay services are scoped per scene. This keeps scene-specific state isolated while allowing shared services such as content, settings, sound, and screen rendering to remain available across the application.
 
@@ -75,6 +76,11 @@ Program
 - UI: Gum.MonoGame
 - DI: LightInject
 - Serialization: Newtonsoft.Json
+- Tests: NUnit
+
+## Testing
+
+The solution includes `MonoBulletHell.Tests`, an NUnit test project that references the main game project. Current coverage focuses on math in `GameMathHelper`.
 
 ## Content Configuration
 
