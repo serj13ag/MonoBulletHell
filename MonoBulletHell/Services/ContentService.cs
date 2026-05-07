@@ -22,7 +22,7 @@ public interface IContentService
 
     PlayerConfig GetPlayerConfig();
     ColorConfig GetColorConfig();
-    SpawnConfig GetSpawnConfig();
+    LevelConfig GetLevelConfig();
     EnemyData GetEnemyData(string enemyName);
     PathData GetPath(string pathName);
     EmitterData GetEmitterData(string emitterName);
@@ -40,7 +40,7 @@ public class ContentService : IContentService
     private Effect _flashEffect;
 
     private GameConfig _gameConfig;
-    private SpawnConfig _spawnConfig;
+    private LevelConfig _levelConfig;
     private Dictionary<string, EnemyData> _enemyConfigs;
     private Dictionary<string, PathData> _pathConfigs;
     private Dictionary<string, EmitterData> _emitterConfigs;
@@ -61,7 +61,7 @@ public class ContentService : IContentService
         _flashEffect = content.Load<Effect>("shaders/flashEffect");
 
         _gameConfig = LoadJsonData<GameConfig>(content, "configs/gameConfig.json");
-        _spawnConfig = LoadJsonData<SpawnConfig>(content, "configs/spawnConfig.json");
+        _levelConfig = LoadJsonData<LevelConfig>(content, "configs/levelConfig.json");
 
         var enemies = LoadJsonData<List<EnemyData>>(content, "configs/enemies.json");
         _enemyConfigs = enemies.ToDictionary(x => x.Name);
@@ -84,7 +84,7 @@ public class ContentService : IContentService
     public PlayerConfig GetPlayerConfig() => _gameConfig.Player;
     public ColorConfig GetColorConfig() => _gameConfig.Colors;
 
-    public SpawnConfig GetSpawnConfig() => _spawnConfig;
+    public LevelConfig GetLevelConfig() => _levelConfig;
 
     public EnemyData GetEnemyData(string enemyName) => _enemyConfigs[enemyName];
     public PathData GetPath(string pathName) => _pathConfigs[pathName];
@@ -122,8 +122,8 @@ public class ContentService : IContentService
                 }
             }
 
-            var isUsed = _spawnConfig.Waves.Any(x => x.PathName == path.Name) ||
-                         _spawnConfig.Boss.Stages.Any(x => x.PathName == path.Name);
+            var isUsed = _levelConfig.Waves.Any(x => x.PathName == path.Name) ||
+                         _levelConfig.Boss.Stages.Any(x => x.PathName == path.Name);
             if (!isUsed)
             {
                 Console.WriteLine($"Warning: Unused path: {path.Name}");
@@ -133,7 +133,7 @@ public class ContentService : IContentService
 
     private void ValidateWaves()
     {
-        foreach (var waveData in _spawnConfig.Waves)
+        foreach (var waveData in _levelConfig.Waves)
         {
             if (!_pathConfigs.ContainsKey(waveData.PathName))
             {
@@ -146,8 +146,8 @@ public class ContentService : IContentService
     {
         foreach (var emitter in _emitterConfigs.Values)
         {
-            var isUsed = _spawnConfig.Waves.Any(x => x.EmitterName == emitter.Name) ||
-                         _spawnConfig.Boss.Stages.Any(x => x.EmitterName == emitter.Name);
+            var isUsed = _levelConfig.Waves.Any(x => x.EmitterName == emitter.Name) ||
+                         _levelConfig.Boss.Stages.Any(x => x.EmitterName == emitter.Name);
             if (!isUsed)
             {
                 Console.WriteLine($"Warning: Unused emitter: {emitter.Name}");
@@ -159,8 +159,8 @@ public class ContentService : IContentService
     {
         foreach (var enemy in _enemyConfigs.Values)
         {
-            var isUsed = _spawnConfig.Waves.Any(x => x.EnemyName == enemy.Name) ||
-                         _spawnConfig.Boss.EnemyName == enemy.Name;
+            var isUsed = _levelConfig.Waves.Any(x => x.EnemyName == enemy.Name) ||
+                         _levelConfig.Boss.EnemyName == enemy.Name;
             if (!isUsed)
             {
                 Console.WriteLine($"Warning: Unused enemy: {enemy.Name}");

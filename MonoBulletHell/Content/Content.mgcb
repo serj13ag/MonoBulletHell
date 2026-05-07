@@ -64,11 +64,11 @@
 #begin configs/gameConfig.json
 /copy:configs/gameConfig.json
 
+#begin configs/levelConfig.json
+/copy:configs/levelConfig.json
+
 #begin configs/paths.json
 /copy:configs/paths.json
-
-#begin configs/spawnConfig.json
-/copy:configs/spawnConfig.json
 
 #begin fonts/default.spritefont
 /importer:FontDescriptionImporter

@@ -175,9 +175,9 @@ public class GameplayScene : BaseScene
 
         _backgroundService.Initialize(_contentService.BackgroundTexture);
 
-        var spawnConfig = _contentService.GetSpawnConfig();
-        _enemySpawnService.Initialize(spawnConfig);
-        _bossService.Initialize(spawnConfig);
+        var levelConfig = _contentService.GetLevelConfig();
+        _enemySpawnService.Initialize(levelConfig);
+        _bossService.Initialize(levelConfig);
 
         _ship.InitializeAt(ScreenHelper.GetLerpScreenVirtualPosition(0.5f, 0.8f));
 

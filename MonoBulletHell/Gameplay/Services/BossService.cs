@@ -14,7 +14,7 @@ public interface IBossService
 
     event Action BossDied;
 
-    void Initialize(SpawnConfig spawnConfig);
+    void Initialize(LevelConfig levelConfig);
     void SpawnBoss();
 }
 
@@ -41,15 +41,15 @@ public class BossService : IBossService, IDisposable
         _enemyService = enemyService;
     }
 
-    public void Initialize(SpawnConfig spawnConfig)
+    public void Initialize(LevelConfig levelConfig)
     {
         _bossData = null;
         _stages.Clear();
 
-        if (spawnConfig.Boss != null)
+        if (levelConfig.Boss != null)
         {
-            _bossData = spawnConfig.Boss;
-            foreach (var bossStage in spawnConfig.Boss.Stages)
+            _bossData = levelConfig.Boss;
+            foreach (var bossStage in levelConfig.Boss.Stages)
             {
                 _stages.Enqueue(bossStage);
             }

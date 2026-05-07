@@ -9,7 +9,7 @@ public interface IEnemySpawnService
 {
     event Action LastWaveSpawned;
 
-    void Initialize(SpawnConfig spawnConfig);
+    void Initialize(LevelConfig levelConfig);
 
     void Update();
 }
@@ -32,12 +32,12 @@ public class EnemySpawnService : IEnemySpawnService
 
     public event Action LastWaveSpawned;
 
-    public void Initialize(SpawnConfig spawnConfig)
+    public void Initialize(LevelConfig levelConfig)
     {
         _elapsedTime = 0f;
 
         _waves.Clear();
-        foreach (var waveData in spawnConfig.Waves)
+        foreach (var waveData in levelConfig.Waves)
         {
             _waves.Enqueue(waveData);
         }
