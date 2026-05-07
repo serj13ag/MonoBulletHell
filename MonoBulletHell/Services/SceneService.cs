@@ -59,8 +59,6 @@ public class SceneService : ISceneService
 
         _sceneScope?.Dispose();
 
-        GC.Collect();
-
         _sceneScope = _scopeFactory.Invoke();
 
         _activeScene = GetNextScene(nextSceneType, _sceneScope);
