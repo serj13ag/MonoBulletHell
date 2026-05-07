@@ -109,7 +109,7 @@ public class PathBlock : IPathBlock
         else
         {
             var nextPoint = _pathPoints[_currentIndex + 1];
-            _currentPosition = CalculateCurrentPosition(nextPoint); // TODO: fix with starting
+            _currentPosition = CalculateCurrentPosition(nextPoint);
         }
     }
 
@@ -179,7 +179,12 @@ public class PathBlock : IPathBlock
 
     private Vector2 CalculateCurrentPosition(PathPointData nextPoint)
     {
-        switch (nextPoint.ControlPoints?.Count)
+        if (_movingToFirstPoint || nextPoint.ControlPoints == null)
+        {
+            return Vector2.Lerp(_startPosition, _targetPosition, _progress);
+        }
+
+        switch (nextPoint.ControlPoints.Count)
         {
             case 1:
             {
@@ -193,7 +198,7 @@ public class PathBlock : IPathBlock
                 return GameMathHelper.CubicBezier(_startPosition, c1, c2, _targetPosition, _progress);
             }
             default:
-                return Vector2.Lerp(_startPosition, _targetPosition, _progress);
+                throw new ArgumentOutOfRangeException();
         }
     }
 
