@@ -47,6 +47,27 @@ The codebase is organized around small systems with clear responsibilities:
 
 The main runtime composition happens in `CompositionRoot`, where global services are registered once and gameplay services are scoped per scene. This keeps scene-specific state isolated while allowing shared services such as content, settings, sound, and screen rendering to remain available across the application.
 
+### Runtime Flow
+
+```text
+Program
+  -> MonoBulletHellGame
+      -> CompositionRoot
+          -> Global services
+          -> SceneService
+              -> TitleScene
+              -> GameplayScene
+                  -> Gameplay services
+                      -> EnemySpawnService
+                      -> EnemyService
+                      -> BossService
+                      -> BulletService
+                      -> ParticleService
+                      -> RenderService
+```
+
+`MonoBulletHellGame` owns the MonoGame lifecycle and delegates update/draw work to the active scene. `SceneService` handles scene transitions and creates scene-scoped services through LightInject, keeping gameplay state isolated from menu state.
+
 ## Technical Details
 
 - Language: C#
