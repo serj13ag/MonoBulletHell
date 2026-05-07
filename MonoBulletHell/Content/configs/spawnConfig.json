@@ -70,16 +70,17 @@
     "Stages": [
       {
         "HealthPercent": 1,
-        "PathName": "down",
+        "PathName": "boss_1",
         "EmitterName": "straightDown_rotating"
       },
       {
         "HealthPercent": 0.7,
-        "PathName": "testLoop",
+        "PathName": "boss_2",
         "EmitterName": "straightDown_3_lines"
       },
       {
         "HealthPercent": 0.4,
+        "PathName": "boss_3",
         "EmitterName": "straightDown_rotating_curve_loop"
       }
     ]
