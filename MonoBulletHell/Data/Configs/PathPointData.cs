@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
-namespace MonoBulletHell.Data;
+namespace MonoBulletHell.Data.Configs;
 
 [Serializable]
 public class PathPointData

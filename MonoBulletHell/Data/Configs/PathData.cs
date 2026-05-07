@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace MonoBulletHell.Data;
+namespace MonoBulletHell.Data.Configs;
 
 [Serializable]
 public class PathData

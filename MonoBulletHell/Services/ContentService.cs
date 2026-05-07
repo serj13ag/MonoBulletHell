@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
-using MonoBulletHell.Data;
+using MonoBulletHell.Data.Configs;
 using MonoBulletHell.Gameplay.Effects;
 using Newtonsoft.Json;
 

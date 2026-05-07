@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 using MonoBulletHell.AnimatedValues;
-using MonoBulletHell.Data;
+using MonoBulletHell.Data.Configs;
 using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Helpers;

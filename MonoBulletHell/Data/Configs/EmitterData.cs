@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using MonoBulletHell.AnimatedValues;
 using Newtonsoft.Json;
 
-namespace MonoBulletHell.Data;
+namespace MonoBulletHell.Data.Configs;
 
 [Serializable]
 public class EmitterData

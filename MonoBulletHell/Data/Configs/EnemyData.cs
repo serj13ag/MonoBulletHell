@@ -1,7 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace MonoBulletHell.Data;
+namespace MonoBulletHell.Data.Configs;
 
 [Serializable]
 public class EnemyData

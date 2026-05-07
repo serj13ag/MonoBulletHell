@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using MonoBulletHell.Data;
+using MonoBulletHell.Data.Configs;
 using MonoBulletHell.Helpers;
 
 namespace MonoBulletHell.Gameplay.Services;

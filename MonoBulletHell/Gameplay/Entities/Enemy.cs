@@ -2,7 +2,7 @@ using System;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Core.Physics;
-using MonoBulletHell.Data;
+using MonoBulletHell.Data.Configs;
 using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Enums;
 using MonoBulletHell.Gameplay.Effects;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Data;
+using MonoBulletHell.Data.Configs;
 
 namespace MonoBulletHell.Helpers;
 

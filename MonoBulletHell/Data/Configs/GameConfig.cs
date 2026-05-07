@@ -1,6 +1,6 @@
 using System;
 
-namespace MonoBulletHell.Data;
+namespace MonoBulletHell.Data.Configs;
 
 [Serializable]
 public class GameConfig
