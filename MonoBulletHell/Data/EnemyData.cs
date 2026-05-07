@@ -1,14 +1,7 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 
 namespace MonoBulletHell.Data;
-
-[Serializable]
-public class EnemyConfig
-{
-    public List<EnemyData> Enemies { get; set; }
-}
 
 [Serializable]
 public class EnemyData

@@ -1,118 +1,116 @@
-{
-  "Paths": [
-    {
-      "Name": "path_down",
-      "Speed": 30,
-      "Type": "Relative",
-      "Points": [
-        {
-          "Position": "0, 0"
-        },
-        {
-          "Position": "0, 480"
-        }
-      ]
-    },
-    {
-      "Name": "path_downRight",
-      "Speed": 30,
-      "Type": "Relative",
-      "Points": [
-        {
-          "Position": "0, 0"
-        },
-        {
-          "Position": "320, 480"
-        }
-      ]
-    },
-    {
-      "Name": "path_downLeft",
-      "Speed": 30,
-      "Type": "Relative",
-      "Points": [
-        {
-          "Position": "0, 0"
-        },
-        {
-          "Position": "-320, 480"
-        }
-      ]
-    },
-    {
-      "Name": "path_boss_1",
-      "Speed": 30,
-      "Type": "Absolute",
-      "Loops": 10,
-      "Points": [
-        {
-          "Position": "160, 50",
-          "WaitTime": 4
-        },
-        {
-          "Position": "160, 80",
-          "WaitTime": 4
-        },
-        {
-          "Position": "160, 50",
-          "WaitTime": 4
-        }
-      ]
-    },
-    {
-      "Name": "path_boss_2",
-      "Speed": 50,
-      "Type": "Absolute",
-      "Loops": 10,
-      "Points": [
-        {
-          "Position": "50, 50",
-          "WaitTime": 1,
-          "ControlPoints": [
-            "160, 240"
-          ]
-        },
-        {
-          "Position": "270, 50",
-          "WaitTime": 1,
-          "ControlPoints": [
-            "160, 240"
-          ]
-        },
-        {
-          "Position": "50, 50",
-          "WaitTime": 1,
-          "ControlPoints": [
-            "160, 240"
-          ]
-        }
-      ]
-    },
-    {
-      "Name": "path_boss_3",
-      "Speed": 30,
-      "Type": "Absolute",
-      "Loops": 10,
-      "Points": [
-        {
-          "Position": "160, 40",
-          "ControlPoints": [
-            "420, 140"
-          ]
-        },
-        {
-          "Position": "160, 240",
-          "ControlPoints": [
-            "-100, 140"
-          ]
-        },
-        {
-          "Position": "160, 40",
-          "ControlPoints": [
-            "420, 140"
-          ]
-        }
-      ]
-    }
-  ]
-}
+[
+  {
+    "Name": "path_down",
+    "Speed": 30,
+    "Type": "Relative",
+    "Points": [
+      {
+        "Position": "0, 0"
+      },
+      {
+        "Position": "0, 480"
+      }
+    ]
+  },
+  {
+    "Name": "path_downRight",
+    "Speed": 30,
+    "Type": "Relative",
+    "Points": [
+      {
+        "Position": "0, 0"
+      },
+      {
+        "Position": "320, 480"
+      }
+    ]
+  },
+  {
+    "Name": "path_downLeft",
+    "Speed": 30,
+    "Type": "Relative",
+    "Points": [
+      {
+        "Position": "0, 0"
+      },
+      {
+        "Position": "-320, 480"
+      }
+    ]
+  },
+  {
+    "Name": "path_boss_1",
+    "Speed": 30,
+    "Type": "Absolute",
+    "Loops": 10,
+    "Points": [
+      {
+        "Position": "160, 50",
+        "WaitTime": 4
+      },
+      {
+        "Position": "160, 80",
+        "WaitTime": 4
+      },
+      {
+        "Position": "160, 50",
+        "WaitTime": 4
+      }
+    ]
+  },
+  {
+    "Name": "path_boss_2",
+    "Speed": 50,
+    "Type": "Absolute",
+    "Loops": 10,
+    "Points": [
+      {
+        "Position": "50, 50",
+        "WaitTime": 1,
+        "ControlPoints": [
+          "160, 240"
+        ]
+      },
+      {
+        "Position": "270, 50",
+        "WaitTime": 1,
+        "ControlPoints": [
+          "160, 240"
+        ]
+      },
+      {
+        "Position": "50, 50",
+        "WaitTime": 1,
+        "ControlPoints": [
+          "160, 240"
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "path_boss_3",
+    "Speed": 30,
+    "Type": "Absolute",
+    "Loops": 10,
+    "Points": [
+      {
+        "Position": "160, 40",
+        "ControlPoints": [
+          "420, 140"
+        ]
+      },
+      {
+        "Position": "160, 240",
+        "ControlPoints": [
+          "-100, 140"
+        ]
+      },
+      {
+        "Position": "160, 40",
+        "ControlPoints": [
+          "420, 140"
+        ]
+      }
+    ]
+  }
+]

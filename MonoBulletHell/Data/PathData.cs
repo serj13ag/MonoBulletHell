@@ -5,12 +5,6 @@ using Microsoft.Xna.Framework;
 namespace MonoBulletHell.Data;
 
 [Serializable]
-public class PathConfig
-{
-    public List<PathData> Paths { get; set; }
-}
-
-[Serializable]
 public class PathData
 {
     public string Name { get; set; }

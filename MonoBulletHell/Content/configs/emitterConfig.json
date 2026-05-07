@@ -1,66 +1,64 @@
-{
-  "Emitters": [
-    {
-      "Name": "straightDown",
-      "RoundsPerSecond": 1,
-      "BulletSpeed": 300,
-      "StartingAngle": 270
-    },
-    {
-      "Name": "straightDown_3_lines",
-      "RoundsPerSecond": 1,
-      "BulletSpeed": 100,
-      "StartingAngle": 250,
-      "NumberOfLines": 3,
-      "AngleBetweenLines": 20
-    },
-    {
-      "Name": "straightDown_3_lines_3_bullets",
-      "RoundsPerSecond": 1,
-      "BulletSpeed": 200,
-      "StartingAngle": 245,
-      "NumberOfLines": 3,
-      "AngleBetweenLines": 20,
-      "NumberOfBulletsPerLine": 3,
-      "AngleBetweenBulletsInLine": 5
-    },
-    {
-      "Name": "straightDown_rotating",
-      "RoundsPerSecond": 5,
-      "BulletSpeed": 300,
-      "StartingAngle": 270,
-      "SpinPerSecond": 45
-    },
-    {
-      "Name": "straightDown_accelerated_rotated",
-      "RoundsPerSecond": 1,
-      "BulletSpeed": 100,
-      "BulletAcceleration": 100,
-      "BulletAngularVelocity": 30,
-      "StartingAngle": 270
-    },
-    {
-      "Name": "straightDown_rotating_curve_loop",
-      "RoundsPerSecond": 5,
-      "BulletSpeed": 300,
-      "StartingAngle": {
-        "Duration": 2,
-        "Looped": true,
-        "Keyframes": [
-          {
-            "Time": 0,
-            "Value": 250
-          },
-          {
-            "Time": 1,
-            "Value": 290
-          },
-          {
-            "Time": 2,
-            "Value": 250
-          }
-        ]
-      }
+[
+  {
+    "Name": "straightDown",
+    "RoundsPerSecond": 1,
+    "BulletSpeed": 300,
+    "StartingAngle": 270
+  },
+  {
+    "Name": "straightDown_3_lines",
+    "RoundsPerSecond": 1,
+    "BulletSpeed": 100,
+    "StartingAngle": 250,
+    "NumberOfLines": 3,
+    "AngleBetweenLines": 20
+  },
+  {
+    "Name": "straightDown_3_lines_3_bullets",
+    "RoundsPerSecond": 1,
+    "BulletSpeed": 200,
+    "StartingAngle": 245,
+    "NumberOfLines": 3,
+    "AngleBetweenLines": 20,
+    "NumberOfBulletsPerLine": 3,
+    "AngleBetweenBulletsInLine": 5
+  },
+  {
+    "Name": "straightDown_rotating",
+    "RoundsPerSecond": 5,
+    "BulletSpeed": 300,
+    "StartingAngle": 270,
+    "SpinPerSecond": 45
+  },
+  {
+    "Name": "straightDown_accelerated_rotated",
+    "RoundsPerSecond": 1,
+    "BulletSpeed": 100,
+    "BulletAcceleration": 100,
+    "BulletAngularVelocity": 30,
+    "StartingAngle": 270
+  },
+  {
+    "Name": "straightDown_rotating_curve_loop",
+    "RoundsPerSecond": 5,
+    "BulletSpeed": 300,
+    "StartingAngle": {
+      "Duration": 2,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 250
+        },
+        {
+          "Time": 1,
+          "Value": 290
+        },
+        {
+          "Time": 2,
+          "Value": 250
+        }
+      ]
     }
-  ]
-}
+  }
+]

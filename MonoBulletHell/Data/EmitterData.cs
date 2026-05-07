@@ -1,16 +1,9 @@
 using System;
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.AnimatedValues;
 using Newtonsoft.Json;
 
 namespace MonoBulletHell.Data;
-
-[Serializable]
-public class EmitterConfig
-{
-    public List<EmitterData> Emitters { get; set; }
-}
 
 [Serializable]
 public class EmitterData

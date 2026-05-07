@@ -57,14 +57,14 @@ public class ContentService : IContentService
         _gameConfig = LoadJsonData<GameConfig>(content, "configs/gameConfig.json");
         _spawnConfig = LoadJsonData<SpawnConfig>(content, "configs/spawnConfig.json");
 
-        var enemyConfig = LoadJsonData<EnemyConfig>(content, "configs/enemyConfig.json");
-        _enemyConfigs = enemyConfig.Enemies.ToDictionary(x => x.Name);
+        var enemies = LoadJsonData<List<EnemyData>>(content, "configs/enemyConfig.json");
+        _enemyConfigs = enemies.ToDictionary(x => x.Name);
 
-        var pathConfig = LoadJsonData<PathConfig>(content, "configs/pathConfig.json");
-        _pathConfigs = pathConfig.Paths.ToDictionary(path => path.Name);
+        var paths = LoadJsonData<List<PathData>>(content, "configs/pathConfig.json");
+        _pathConfigs = paths.ToDictionary(path => path.Name);
 
-        var emitterConfig = LoadJsonData<EmitterConfig>(content, "configs/emitterConfig.json");
-        _emitterConfigs = emitterConfig.Emitters.ToDictionary(x => x.Name);
+        var emitters = LoadJsonData<List<EmitterData>>(content, "configs/emitterConfig.json");
+        _emitterConfigs = emitters.ToDictionary(x => x.Name);
 
         ValidateData();
     }
