@@ -11,7 +11,7 @@ using MonoGameGum;
 
 namespace MonoBulletHell;
 
-// TODO: add few test, gifs or images to readme
+// TODO: add gifs or images to readme
 
 public class MonoBulletHellGame : Game
 {
