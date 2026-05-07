@@ -96,6 +96,12 @@ public class ContentService : IContentService
 
     private void ValidateData()
     {
+        ValidatePaths();
+        ValidateWaves();
+    }
+
+    private void ValidatePaths()
+    {
         foreach (var path in _pathConfigs.Values)
         {
             if (path.Points.Count < 2)
@@ -111,7 +117,10 @@ public class ContentService : IContentService
                 }
             }
         }
+    }
 
+    private void ValidateWaves()
+    {
         foreach (var waveData in _spawnConfig.Waves)
         {
             if (!_pathConfigs.ContainsKey(waveData.PathName))
