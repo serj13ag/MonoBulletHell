@@ -10,6 +10,7 @@ public class PathBlock : IPathBlock
 {
     private readonly List<PathPointData> _pathPoints;
     private readonly float _speed;
+    private readonly bool _infinitelyLooped;
 
     private bool _movingToFirstPoint;
     private int _currentIndex;
@@ -43,10 +44,11 @@ public class PathBlock : IPathBlock
 
     public event Action<bool> ShootingDisabledChanged;
 
-    public PathBlock(float speed, int loops, List<PathPointData> pathPoints, Vector2? startPosition = null)
+    public PathBlock(float speed, bool infinitelyLooped, int loops, List<PathPointData> pathPoints, Vector2? startPosition = null)
     {
         _pathPoints = pathPoints;
         _speed = speed;
+        _infinitelyLooped = infinitelyLooped;
 
         _loopsLeft = loops;
         _currentIndex = 0;
@@ -163,18 +165,21 @@ public class PathBlock : IPathBlock
 
     private void HandleEndOfPath()
     {
-        if (_loopsLeft > 0)
-        {
-            _loopsLeft--;
-            _currentIndex = 0;
-
-            ShootingDisabled = _pathPoints[0].ShootingDisabled;
-            UpdatePositions(_pathPoints[0].Position, _pathPoints[1].Position);
-        }
-        else
+        var shouldLoop = _infinitelyLooped || _loopsLeft > 0;
+        if (!shouldLoop)
         {
             IsFinished = true;
+            return;
         }
+
+        if (!_infinitelyLooped)
+        {
+            _loopsLeft--;
+        }
+
+        _currentIndex = 0;
+        ShootingDisabled = _pathPoints[0].ShootingDisabled;
+        UpdatePositions(_pathPoints[0].Position, _pathPoints[1].Position);
     }
 
     private Vector2 CalculateCurrentPosition(PathPointData nextPoint)

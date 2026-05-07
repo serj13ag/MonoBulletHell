@@ -75,14 +75,14 @@ public class GameFactory : IGameFactory
                 var pathPoints = path.Points
                     .Select(pathPointData => pathPointData.Clone(pathPointData.Position + position))
                     .ToList();
-                return new PathBlock(path.Speed, path.Loops, pathPoints);
+                return new PathBlock(path.Speed, path.InfinitelyLooped, path.Loops, pathPoints);
             }
             case PathType.Absolute:
             {
                 var pathPoints = path.Points
                     .Select(pathPointData => pathPointData.Clone(pathPointData.Position))
                     .ToList();
-                return new PathBlock(path.Speed, path.Loops, pathPoints, position);
+                return new PathBlock(path.Speed, path.InfinitelyLooped, path.Loops, pathPoints, position);
             }
             case PathType.Undefined:
             default:

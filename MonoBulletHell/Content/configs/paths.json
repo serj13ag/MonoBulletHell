@@ -42,7 +42,7 @@
     "Name": "path_boss_1",
     "Speed": 30,
     "Type": "Absolute",
-    "Loops": 10,
+    "InfinitelyLooped": true,
     "Points": [
       {
         "Position": "160, 50",
@@ -62,7 +62,7 @@
     "Name": "path_boss_2",
     "Speed": 50,
     "Type": "Absolute",
-    "Loops": 10,
+    "InfinitelyLooped": true,
     "Points": [
       {
         "Position": "50, 50",
@@ -91,7 +91,7 @@
     "Name": "path_boss_3",
     "Speed": 30,
     "Type": "Absolute",
-    "Loops": 10,
+    "InfinitelyLooped": true,
     "Points": [
       {
         "Position": "160, 40",
