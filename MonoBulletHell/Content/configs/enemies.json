@@ -1,20 +1,20 @@
 [
   {
-    "Name": "follower",
+    "Name": "enemy_follower",
     "Health": 3,
     "ColliderOffset": "0, -10",
     "ColliderRadius": 15,
     "SpriteName": "alienSmall"
   },
   {
-    "Name": "shooter",
+    "Name": "enemy_shooter",
     "Health": 5,
     "ColliderOffset": "0, -5",
     "ColliderRadius": 20,
     "SpriteName": "alien"
   },
   {
-    "Name": "boss",
+    "Name": "enemy_boss",
     "Health": 100,
     "ColliderOffset": "0, -5",
     "ColliderRadius": 20,

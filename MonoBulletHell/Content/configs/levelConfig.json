@@ -4,7 +4,7 @@
       "SpawnTime": 1,
       "Position": "40, 0",
       "PathName": "path_down",
-      "EnemyName": "follower",
+      "EnemyName": "enemy_follower",
       "Formation": {
         "Type": "Line",
         "Count": 3,
@@ -16,7 +16,7 @@
       "SpawnTime": 3,
       "Position": "280, 0",
       "PathName": "path_down",
-      "EnemyName": "follower",
+      "EnemyName": "enemy_follower",
       "EmitterName": "straightDown",
       "Formation": {
         "Type": "Line",
@@ -29,7 +29,7 @@
       "SpawnTime": 5,
       "Position": "160, 0",
       "PathName": "path_down",
-      "EnemyName": "follower",
+      "EnemyName": "enemy_follower",
       "Formation": {
         "Type": "VShape",
         "Rows": 3,
@@ -41,7 +41,7 @@
       "SpawnTime": 8,
       "Position": "0, 0",
       "PathName": "path_downRight",
-      "EnemyName": "shooter",
+      "EnemyName": "enemy_shooter",
       "EmitterName": "straightDown_3_lines",
       "Formation": {
         "Type": "Line",
@@ -54,7 +54,7 @@
       "SpawnTime": 8,
       "Position": "320, 0",
       "PathName": "path_downLeft",
-      "EnemyName": "shooter",
+      "EnemyName": "enemy_shooter",
       "EmitterName": "straightDown_3_lines",
       "Formation": {
         "Type": "Line",
@@ -65,7 +65,7 @@
     }
   ],
   "Boss": {
-    "EnemyName": "boss",
+    "EnemyName": "enemy_boss",
     "Position": "160, 0",
     "Stages": [
       {
