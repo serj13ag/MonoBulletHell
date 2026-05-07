@@ -102,4 +102,133 @@ public class GameMathHelperTests
     }
 
     #endregion
+
+    #region QuadraticBezier Tests
+
+    [Test]
+    public void QuadraticBezier_TAtZero_ReturnsP0()
+    {
+        var p0 = new Vector2(0, 0);
+        var p1 = new Vector2(5, 10);
+        var p2 = new Vector2(10, 0);
+
+        var result = GameMathHelper.QuadraticBezier(p0, p1, p2, 0f);
+
+        Assert.That(result.X, Is.EqualTo(p0.X).Within(Tolerance));
+        Assert.That(result.Y, Is.EqualTo(p0.Y).Within(Tolerance));
+    }
+
+    [Test]
+    public void QuadraticBezier_TAtOne_ReturnsP2()
+    {
+        var p0 = new Vector2(0, 0);
+        var p1 = new Vector2(5, 10);
+        var p2 = new Vector2(10, 0);
+
+        var result = GameMathHelper.QuadraticBezier(p0, p1, p2, 1f);
+
+        Assert.That(result.X, Is.EqualTo(p2.X).Within(Tolerance));
+        Assert.That(result.Y, Is.EqualTo(p2.Y).Within(Tolerance));
+    }
+
+    [Test]
+    public void QuadraticBezier_TAtHalf_ReturnsMidpoint()
+    {
+        var p0 = new Vector2(0, 0);
+        var p1 = new Vector2(5, 10);
+        var p2 = new Vector2(10, 0);
+
+        var result = GameMathHelper.QuadraticBezier(p0, p1, p2, 0.5f);
+
+        // At t=0.5: 0.25*p0 + 0.5*p1 + 0.25*p2
+        Assert.That(result.X, Is.EqualTo(5f).Within(Tolerance));
+        Assert.That(result.Y, Is.EqualTo(5f).Within(Tolerance));
+    }
+
+    [Test]
+    public void QuadraticBezier_CollinearPoints_ReturnsPointOnLine()
+    {
+        var p0 = new Vector2(0, 0);
+        var p1 = new Vector2(5, 5);
+        var p2 = new Vector2(10, 10);
+
+        var result = GameMathHelper.QuadraticBezier(p0, p1, p2, 0.5f);
+
+        Assert.That(result.X, Is.EqualTo(5f).Within(Tolerance));
+        Assert.That(result.Y, Is.EqualTo(5f).Within(Tolerance));
+    }
+
+    #endregion
+
+    #region CubicBezier Tests
+
+    [Test]
+    public void CubicBezier_TAtZero_ReturnsP0()
+    {
+        var p0 = new Vector2(0, 0);
+        var p1 = new Vector2(2, 8);
+        var p2 = new Vector2(8, 8);
+        var p3 = new Vector2(10, 0);
+
+        var result = GameMathHelper.CubicBezier(p0, p1, p2, p3, 0f);
+
+        Assert.That(result.X, Is.EqualTo(p0.X).Within(Tolerance));
+        Assert.That(result.Y, Is.EqualTo(p0.Y).Within(Tolerance));
+    }
+
+    [Test]
+    public void CubicBezier_TAtOne_ReturnsP3()
+    {
+        var p0 = new Vector2(0, 0);
+        var p1 = new Vector2(2, 8);
+        var p2 = new Vector2(8, 8);
+        var p3 = new Vector2(10, 0);
+
+        var result = GameMathHelper.CubicBezier(p0, p1, p2, p3, 1f);
+
+        Assert.That(result.X, Is.EqualTo(p3.X).Within(Tolerance));
+        Assert.That(result.Y, Is.EqualTo(p3.Y).Within(Tolerance));
+    }
+
+    [Test]
+    public void CubicBezier_TAtHalf_ReturnsExpectedMidpoint()
+    {
+        var p0 = new Vector2(0, 0);
+        var p1 = new Vector2(2, 8);
+        var p2 = new Vector2(8, 8);
+        var p3 = new Vector2(10, 0);
+
+        var result = GameMathHelper.CubicBezier(p0, p1, p2, p3, 0.5f);
+
+        // At t=0.5: 0.125*p0 + 0.375*p1 + 0.375*p2 + 0.125*p3 = (5, 6)
+        Assert.That(result.X, Is.EqualTo(5f).Within(Tolerance));
+        Assert.That(result.Y, Is.EqualTo(6f).Within(Tolerance));
+    }
+
+    [Test]
+    public void CubicBezier_CollinearPoints_ReturnsPointOnLine()
+    {
+        var p0 = new Vector2(0, 0);
+        var p1 = new Vector2(2, 2);
+        var p2 = new Vector2(8, 8);
+        var p3 = new Vector2(10, 10);
+
+        var result = GameMathHelper.CubicBezier(p0, p1, p2, p3, 0.5f);
+
+        Assert.That(result.X, Is.EqualTo(5f).Within(Tolerance));
+        Assert.That(result.Y, Is.EqualTo(5f).Within(Tolerance));
+    }
+
+    [Test]
+    public void CubicBezier_SamePointAllControls_ReturnsTheSamePoint()
+    {
+        var p = new Vector2(3, 7);
+
+        var result = GameMathHelper.CubicBezier(p, p, p, p, 0.5f);
+
+        Assert.That(result.X, Is.EqualTo(p.X).Within(Tolerance));
+        Assert.That(result.Y, Is.EqualTo(p.Y).Within(Tolerance));
+    }
+
+    #endregion
 }
