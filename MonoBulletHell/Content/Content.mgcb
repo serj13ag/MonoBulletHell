@@ -55,17 +55,17 @@
 /processorParam:Quality=Best
 /build:audio/sfx_kenney_laserSmall_000.ogg
 
-#begin configs/emitterConfig.json
-/copy:configs/emitterConfig.json
+#begin configs/emitters.json
+/copy:configs/emitters.json
 
-#begin configs/enemyConfig.json
-/copy:configs/enemyConfig.json
+#begin configs/enemies.json
+/copy:configs/enemies.json
 
 #begin configs/gameConfig.json
 /copy:configs/gameConfig.json
 
-#begin configs/pathConfig.json
-/copy:configs/pathConfig.json
+#begin configs/paths.json
+/copy:configs/paths.json
 
 #begin configs/spawnConfig.json
 /copy:configs/spawnConfig.json
