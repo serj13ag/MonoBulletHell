@@ -100,7 +100,7 @@ public class ContentService : IContentService
     private void ValidateData()
     {
         ValidatePaths();
-        ValidateWaves();
+        ValidateLevel();
         ValidateEmitters();
         ValidateEnemies();
     }
@@ -123,7 +123,7 @@ public class ContentService : IContentService
             }
 
             var isUsed = _levelConfig.Waves.Any(x => x.PathName == path.Name) ||
-                         _levelConfig.Boss.Stages.Any(x => x.PathName == path.Name);
+                         _levelConfig.Boss?.Stages.Any(x => x.PathName == path.Name) == true;
             if (!isUsed)
             {
                 Console.WriteLine($"Warning: Unused path: {path.Name}");
@@ -131,13 +131,21 @@ public class ContentService : IContentService
         }
     }
 
-    private void ValidateWaves()
+    private void ValidateLevel()
     {
         foreach (var waveData in _levelConfig.Waves)
         {
             if (!_pathConfigs.ContainsKey(waveData.PathName))
             {
                 throw new Exception("Path not found: " + waveData.PathName);
+            }
+        }
+
+        if (_levelConfig.Boss != null)
+        {
+            if (_levelConfig.Boss.Stages == null || _levelConfig.Boss.Stages.Count == 0)
+            {
+                throw new Exception("Boss must have at least 1 stage");
             }
         }
     }
@@ -147,7 +155,7 @@ public class ContentService : IContentService
         foreach (var emitter in _emitterConfigs.Values)
         {
             var isUsed = _levelConfig.Waves.Any(x => x.EmitterName == emitter.Name) ||
-                         _levelConfig.Boss.Stages.Any(x => x.EmitterName == emitter.Name);
+                         _levelConfig.Boss?.Stages.Any(x => x.EmitterName == emitter.Name) == true;
             if (!isUsed)
             {
                 Console.WriteLine($"Warning: Unused emitter: {emitter.Name}");
@@ -160,7 +168,7 @@ public class ContentService : IContentService
         foreach (var enemy in _enemyConfigs.Values)
         {
             var isUsed = _levelConfig.Waves.Any(x => x.EnemyName == enemy.Name) ||
-                         _levelConfig.Boss.EnemyName == enemy.Name;
+                         _levelConfig.Boss?.EnemyName == enemy.Name;
             if (!isUsed)
             {
                 Console.WriteLine($"Warning: Unused enemy: {enemy.Name}");
