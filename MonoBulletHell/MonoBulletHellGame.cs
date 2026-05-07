@@ -13,6 +13,9 @@ namespace MonoBulletHell;
 
 public class MonoBulletHellGame : Game
 {
+    public const int VirtualWidth = 320;
+    public const int VirtualHeight = 480;
+
     private const double TargetFps = 144.0;
 
     private readonly CompositionRoot _root;
@@ -111,7 +114,7 @@ public class MonoBulletHellGame : Game
         FrameworkElement.TabReverseKeyCombos.Add(new KeyCombo() { PushedKey = Keys.Up });
         FrameworkElement.TabKeyCombos.Add(new KeyCombo() { PushedKey = Keys.Down });
 
-        _gumService.CanvasWidth = Constants.VirtualWidth;
-        _gumService.CanvasHeight = Constants.VirtualHeight;
+        _gumService.CanvasWidth = VirtualWidth;
+        _gumService.CanvasHeight = VirtualHeight;
     }
 }

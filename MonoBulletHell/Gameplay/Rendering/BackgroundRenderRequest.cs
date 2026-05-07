@@ -6,7 +6,7 @@ namespace MonoBulletHell.Gameplay.Rendering;
 public class BackgroundRenderRequest
 {
     private static readonly Rectangle DestinationRectangle =
-        new Rectangle(Point.Zero, new Point(Constants.VirtualWidth, Constants.VirtualHeight));
+        new Rectangle(Point.Zero, new Point(MonoBulletHellGame.VirtualWidth, MonoBulletHellGame.VirtualHeight));
 
     private readonly Texture2D _texture;
     private readonly int _verticalOffset;

@@ -26,7 +26,7 @@ public class Bullet : BaseEntity
     private float _speed;
     private Vector2 _direction;
 
-    public int Damage { get; private set; }
+    public int Damage => 1;
     public bool IsPlayer { get; private set; }
 
     public CircleCollider Collider => _collider;
@@ -45,7 +45,6 @@ public class Bullet : BaseEntity
 
         Position = bulletDto.Position;
         _speed = bulletDto.Speed;
-        Damage = bulletDto.Damage;
         IsPlayer = bulletDto.IsPlayer;
         _acceleration = bulletDto.Acceleration;
         _angularVelocity = bulletDto.AngularVelocity;

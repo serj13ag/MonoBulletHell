@@ -137,7 +137,6 @@ public class Ship : BaseEntity
                 Position = Position + _bulletSpawnOffset,
                 Direction = -Vector2.UnitY,
                 Speed = _playerConfig.BulletSpeed,
-                Damage = Constants.BulletDamage,
                 IsPlayer = true,
             };
             _bulletService.SpawnBullet(in bulletDto);

@@ -108,7 +108,6 @@ public class BulletEmitter : BaseEntity, IBulletEmitter
             Position = Position + _offset,
             Direction = GameMathHelper.DegreeToDirection(angle),
             Speed = _bulletSpeed.Evaluate(_elapsedTime),
-            Damage = Constants.BulletDamage,
             IsPlayer = false,
             Acceleration = _bulletAcceleration.Evaluate(_elapsedTime),
             AngularVelocity = _bulletAngularVelocity.Evaluate(_elapsedTime),
