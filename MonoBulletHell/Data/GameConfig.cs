@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 
 namespace MonoBulletHell.Data;
 
@@ -26,19 +27,34 @@ public class PlayerConfig
 [Serializable]
 public class ColorConfig
 {
-    public string UiPanel { get; set; }
-    public string UiButton { get; set; }
+    public ColorData UiPanel { get; set; }
+    public ColorData UiButton { get; set; }
 
-    public string TitleSceneBackground { get; set; }
-    public string GameplaySceneBackground { get; set; }
-    public string GameplayBackgroundTexture { get; set; }
+    public ColorData TitleSceneBackground { get; set; }
+    public ColorData GameplaySceneBackground { get; set; }
+    public ColorData GameplayBackgroundTexture { get; set; }
 
-    public string PlayerShip { get; set; }
-    public string PlayerShipCore { get; set; }
+    public ColorData PlayerShip { get; set; }
+    public ColorData PlayerShipCore { get; set; }
 
-    public string Enemy { get; set; }
+    public ColorData Enemy { get; set; }
 
-    public string PlayerBullet { get; set; }
-    public string EnemyBullet { get; set; }
-    public string BulletImpact { get; set; }
+    public ColorData PlayerBullet { get; set; }
+    public ColorData EnemyBullet { get; set; }
+    public ColorData BulletImpact { get; set; }
+}
+
+[Serializable]
+public class ColorData
+{
+    public string Hex { get; set; }
+
+    public static implicit operator Color(ColorData data)
+    {
+        var hex = data.Hex.Replace("#", "");
+        var r = Convert.ToInt32(hex.Substring(0, 2), 16);
+        var g = Convert.ToInt32(hex.Substring(2, 2), 16);
+        var b = Convert.ToInt32(hex.Substring(4, 2), 16);
+        return new Color(r, g, b);
+    }
 }

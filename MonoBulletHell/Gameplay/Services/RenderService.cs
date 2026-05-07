@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Gameplay.Rendering;
-using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Services;
@@ -42,7 +41,7 @@ public class RenderService : IRenderService
 
     public void SetBackgroundBatch(Texture2D texture, int verticalOffset)
     {
-        _backgroundBatch = new BackgroundRenderRequest(texture, verticalOffset, ColorHelper.FromHex(_contentService.GetColorConfig().GameplayBackgroundTexture));
+        _backgroundBatch = new BackgroundRenderRequest(texture, verticalOffset, _contentService.GetColorConfig().GameplayBackgroundTexture);
     }
 
     public void AddSprite(Sprite sprite, Vector2 position, float rotation, Layer layer, Effect effect = null)

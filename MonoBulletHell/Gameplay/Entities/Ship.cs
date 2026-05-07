@@ -210,7 +210,7 @@ public class Ship : BaseEntity
     {
         var sprite = contentService.CreateShipSprite(playerConfig.SpriteName);
         sprite.CenterOrigin();
-        sprite.Color = ColorHelper.FromHex(contentService.GetColorConfig().PlayerShip);
+        sprite.Color = contentService.GetColorConfig().PlayerShip;
         return sprite;
     }
 
@@ -218,7 +218,7 @@ public class Ship : BaseEntity
     {
         var sprite = contentService.CreateShipSprite(playerConfig.CoreSpriteName);
         sprite.CenterOrigin();
-        sprite.Color = ColorHelper.FromHex(contentService.GetColorConfig().PlayerShipCore);
+        sprite.Color = contentService.GetColorConfig().PlayerShipCore;
         return sprite;
     }
 }

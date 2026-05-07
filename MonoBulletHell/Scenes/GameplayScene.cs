@@ -139,7 +139,7 @@ public class GameplayScene : BaseScene
     {
         base.Draw(gameTime);
 
-        GraphicsDevice.Clear(ColorHelper.FromHex(_contentService.GetColorConfig().GameplaySceneBackground));
+        GraphicsDevice.Clear(_contentService.GetColorConfig().GameplaySceneBackground);
 
         _backgroundService.Render(_renderService);
         _ship.Render(_renderService);

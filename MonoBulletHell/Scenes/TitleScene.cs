@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Input;
 using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Enums;
-using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 using MonoBulletHell.Ui;
 using MonoBulletHell.Ui.Elements.Panels;
@@ -75,7 +74,7 @@ public class TitleScene : BaseScene
     {
         base.Draw(gameTime);
 
-        GraphicsDevice.Clear(ColorHelper.FromHex(_contentService.GetColorConfig().TitleSceneBackground));
+        GraphicsDevice.Clear(_contentService.GetColorConfig().TitleSceneBackground);
 
         _gumService.Draw();
     }

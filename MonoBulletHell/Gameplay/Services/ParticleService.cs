@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Gameplay.Entities;
-using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Services;
@@ -61,7 +60,7 @@ public class ParticleService : IParticleService
     {
         var animatedSprite = _contentService.CreateBulletAnimatedSprite("bulletImpact");
         animatedSprite.CenterOrigin();
-        animatedSprite.Color = ColorHelper.FromHex(_contentService.GetColorConfig().BulletImpact);
+        animatedSprite.Color = _contentService.GetColorConfig().BulletImpact;
 
         var particle = new Particle(animatedSprite);
         particle.Position = position;

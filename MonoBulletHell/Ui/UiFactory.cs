@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 using MonoBulletHell.Ui.Elements;
 using MonoBulletHell.Ui.Elements.Panels;
@@ -20,8 +19,8 @@ public class UiFactory : IUiFactory
     private readonly IContentService _contentService;
     private readonly IUiMediator _uiMediator;
 
-    private Color PanelColor => ColorHelper.FromHex(_contentService.GetColorConfig().UiPanel);
-    private Color ButtonColor => ColorHelper.FromHex(_contentService.GetColorConfig().UiButton);
+    private Color PanelColor => _contentService.GetColorConfig().UiPanel;
+    private Color ButtonColor => _contentService.GetColorConfig().UiButton;
 
     public UiFactory(IContentService contentService, IUiMediator uiMediator)
     {

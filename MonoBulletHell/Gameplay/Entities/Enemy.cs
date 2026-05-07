@@ -10,7 +10,6 @@ using MonoBulletHell.Gameplay.Entities.Emitters;
 using MonoBulletHell.Gameplay.Entities.PathBlocks;
 using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
-using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Entities;
@@ -136,7 +135,7 @@ public class Enemy : BaseEntity
     {
         var sprite = contentService.CreateShipSprite(spriteName);
         sprite.CenterOrigin();
-        sprite.Color = ColorHelper.FromHex(contentService.GetColorConfig().Enemy);
+        sprite.Color = contentService.GetColorConfig().Enemy;
         return sprite;
     }
 }
