@@ -101,6 +101,8 @@ public class ContentService : IContentService
     {
         ValidatePaths();
         ValidateWaves();
+        ValidateEmitters();
+        ValidateEnemies();
     }
 
     private void ValidatePaths()
@@ -119,6 +121,13 @@ public class ContentService : IContentService
                     throw new Exception("Path must have max 2 control points");
                 }
             }
+
+            var isUsed = _spawnConfig.Waves.Any(x => x.PathName == path.Name) ||
+                         _spawnConfig.Boss.Stages.Any(x => x.PathName == path.Name);
+            if (!isUsed)
+            {
+                Console.WriteLine($"Warning: Unused path: {path.Name}");
+            }
         }
     }
 
@@ -129,6 +138,32 @@ public class ContentService : IContentService
             if (!_pathConfigs.ContainsKey(waveData.PathName))
             {
                 throw new Exception("Path not found: " + waveData.PathName);
+            }
+        }
+    }
+
+    private void ValidateEmitters()
+    {
+        foreach (var emitter in _emitterConfigs.Values)
+        {
+            var isUsed = _spawnConfig.Waves.Any(x => x.EmitterName == emitter.Name) ||
+                         _spawnConfig.Boss.Stages.Any(x => x.EmitterName == emitter.Name);
+            if (!isUsed)
+            {
+                Console.WriteLine($"Warning: Unused emitter: {emitter.Name}");
+            }
+        }
+    }
+
+    private void ValidateEnemies()
+    {
+        foreach (var enemy in _enemyConfigs.Values)
+        {
+            var isUsed = _spawnConfig.Waves.Any(x => x.EnemyName == enemy.Name) ||
+                         _spawnConfig.Boss.EnemyName == enemy.Name;
+            if (!isUsed)
+            {
+                Console.WriteLine($"Warning: Unused enemy: {enemy.Name}");
             }
         }
     }
