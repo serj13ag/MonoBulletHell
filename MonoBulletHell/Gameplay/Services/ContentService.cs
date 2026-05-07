@@ -37,7 +37,7 @@ public class ContentService : IContentService
 
     private Effect _flashEffect;
 
-    private PlayerConfig _playerConfig;
+    private GameConfig _gameConfig;
     private SpawnConfig _spawnConfig;
     private Dictionary<string, EnemyData> _enemyConfigs;
     private Dictionary<string, PathData> _pathConfigs;
@@ -53,7 +53,7 @@ public class ContentService : IContentService
         BackgroundTexture = content.Load<Texture2D>("images/background");
         _flashEffect = content.Load<Effect>("shaders/flashEffect");
 
-        _playerConfig = LoadJsonData<PlayerConfig>(content, "configs/playerConfig.json");
+        _gameConfig = LoadJsonData<GameConfig>(content, "configs/gameConfig.json");
         _spawnConfig = LoadJsonData<SpawnConfig>(content, "configs/spawnConfig.json");
 
         var enemyConfig = LoadJsonData<EnemyConfig>(content, "configs/enemyConfig.json");
@@ -74,7 +74,7 @@ public class ContentService : IContentService
 
     public FlashEffect GetFlashEffect() => new FlashEffect(_flashEffect.Clone());
 
-    public PlayerConfig GetPlayerConfig() => _playerConfig;
+    public PlayerConfig GetPlayerConfig() => _gameConfig.Player;
     public SpawnConfig GetSpawnConfig() => _spawnConfig;
 
     public EnemyData GetEnemyData(string enemyName) => _enemyConfigs[enemyName];

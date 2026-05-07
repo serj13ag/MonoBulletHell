@@ -61,11 +61,11 @@
 #begin configs/enemyConfig.json
 /copy:configs/enemyConfig.json
 
+#begin configs/gameConfig.json
+/copy:configs/gameConfig.json
+
 #begin configs/pathConfig.json
 /copy:configs/pathConfig.json
-
-#begin configs/playerConfig.json
-/copy:configs/playerConfig.json
 
 #begin configs/spawnConfig.json
 /copy:configs/spawnConfig.json

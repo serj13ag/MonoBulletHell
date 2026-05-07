@@ -1,0 +1,12 @@
+{
+  "Player": {
+    "Health": 3,
+    "Speed": 250,
+    "FocusSpeed": 150,
+    "ShootCooldown": 0.08,
+    "BulletSpeed": 800,
+    "DamageImmuneCooldown": 2,
+    "SpriteName": "ship",
+    "CoreSpriteName": "ship_core"
+  }
+}

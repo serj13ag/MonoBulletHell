@@ -3,6 +3,12 @@ using System;
 namespace MonoBulletHell.Data;
 
 [Serializable]
+public class GameConfig
+{
+    public PlayerConfig Player { get; set; }
+}
+
+[Serializable]
 public class PlayerConfig
 {
     public int Health { get; set; }
