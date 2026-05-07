@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using Newtonsoft.Json;
 
 namespace MonoBulletHell.Services;
 
@@ -17,6 +16,13 @@ public class SaveService : ISaveService
     private static readonly string AppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
     private static readonly string GameDataFolder = Path.Combine(AppDataFolder, GameFolderName);
 
+    private readonly ISerializationService _serializationService;
+
+    public SaveService(ISerializationService serializationService)
+    {
+        _serializationService = serializationService;
+    }
+
     public bool TryLoad<T>(string filename, out T data) where T : class
     {
         data = null;
@@ -31,7 +37,7 @@ public class SaveService : ISaveService
         try
         {
             var file = File.ReadAllText(pathToFile);
-            data = JsonConvert.DeserializeObject<T>(file);
+            data = _serializationService.DeserializeObject<T>(file);
             return data != null;
         }
         catch (Exception e)
@@ -46,7 +52,7 @@ public class SaveService : ISaveService
         Directory.CreateDirectory(GameDataFolder);
 
         var pathToFile = Path.Combine(GameDataFolder, filename);
-        var json = JsonConvert.SerializeObject(data, Formatting.Indented);
+        var json = _serializationService.SerializeObject(data);
         File.WriteAllText(pathToFile, json);
     }
 }

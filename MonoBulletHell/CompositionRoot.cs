@@ -47,6 +47,7 @@ public class CompositionRoot
 
         _container.RegisterInstance<IGameService>(new GameService(game));
 
+        _container.Register<ISerializationService, SerializationService>(new PerContainerLifetime());
         _container.Register<IInputService, InputService>(new PerContainerLifetime());
         _container.Register<IScreenService, ScreenService>(new PerContainerLifetime());
         _container.Register<ISceneService, SceneService>(new PerContainerLifetime());

@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Data.Configs;
 using MonoBulletHell.Gameplay.Effects;
-using Newtonsoft.Json;
 
 namespace MonoBulletHell.Services;
 
@@ -33,6 +32,8 @@ public interface IContentService
 
 public class ContentService : IContentService
 {
+    private readonly ISerializationService _serializationService;
+
     private TextureAtlas _shipsAtlas;
     private TextureAtlas _bulletsAtlas;
 
@@ -46,10 +47,15 @@ public class ContentService : IContentService
 
     public Texture2D BackgroundTexture { get; private set; }
 
+    public ContentService(ISerializationService serializationService)
+    {
+        _serializationService = serializationService;
+    }
+
     public void Load(ContentManager content)
     {
-        _shipsAtlas = TextureAtlas.FromFile(content, "images/ships-atlas.json");
-        _bulletsAtlas = TextureAtlas.FromFile(content, "images/bullets-atlas.json");
+        _shipsAtlas = TextureAtlas.FromFile(content, _serializationService, "images/ships-atlas.json");
+        _bulletsAtlas = TextureAtlas.FromFile(content, _serializationService, "images/bullets-atlas.json");
 
         BackgroundTexture = content.Load<Texture2D>("images/background");
         _flashEffect = content.Load<Effect>("shaders/flashEffect");
@@ -84,17 +90,11 @@ public class ContentService : IContentService
     public PathData GetPath(string pathName) => _pathConfigs[pathName];
     public EmitterData GetEmitterData(string emitterName) => _emitterConfigs[emitterName];
 
-    private static T LoadJsonData<T>(ContentManager content, string fileName)
+    private T LoadJsonData<T>(ContentManager content, string fileName)
     {
         var filePath = Path.Combine(content.RootDirectory, fileName);
         var json = File.ReadAllText(filePath);
-
-        var spawnData = JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings() // TODO: to service
-        {
-            MissingMemberHandling = MissingMemberHandling.Error,
-        });
-
-        return spawnData;
+        return _serializationService.DeserializeObject<T>(json);
     }
 
     private void ValidateData()
