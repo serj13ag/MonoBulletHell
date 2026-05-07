@@ -26,6 +26,7 @@ public class Enemy : BaseEntity
     private readonly CircleCollider _collider;
 
     private readonly Sprite _sprite;
+    private readonly Vector2 _spriteOffset;
     private readonly FlashEffect _flashEffect;
 
     private IPathBlock _pathBlock;
@@ -61,6 +62,7 @@ public class Enemy : BaseEntity
         _bulletEmitter.SetShootingDisabled(_pathBlock.ShootingDisabled);
 
         _sprite = GetEnemySprite(contentService, enemyData.SpriteName);
+        _spriteOffset = enemyData.SpriteOffset;
         _flashEffect = contentService.GetFlashEffect();
     }
 
@@ -80,8 +82,7 @@ public class Enemy : BaseEntity
 
     public void Render(IRenderService renderService)
     {
-        var spriteOffset = new Vector2(0f, -10f); // TODO: refactor
-        renderService.AddSprite(_sprite, Position + spriteOffset, Rotation, Layer.Enemies, _flashEffect.ActiveEffect);
+        renderService.AddSprite(_sprite, Position + _spriteOffset, Rotation, Layer.Enemies, _flashEffect.ActiveEffect);
     }
 
     public void TakeDamage(int damage)
