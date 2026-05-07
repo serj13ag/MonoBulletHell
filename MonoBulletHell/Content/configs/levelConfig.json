@@ -71,17 +71,17 @@
       {
         "HealthPercent": 1,
         "PathName": "path_boss_1",
-        "EmitterName": "straightDown_rotating"
+        "EmitterName": "emitter_boss_1"
       },
       {
         "HealthPercent": 0.7,
         "PathName": "path_boss_2",
-        "EmitterName": "straightDown_3_lines"
+        "EmitterName": "emitter_boss_2"
       },
       {
         "HealthPercent": 0.4,
         "PathName": "path_boss_3",
-        "EmitterName": "straightDown_rotating_curve_loop"
+        "EmitterName": "emitter_boss_3"
       }
     ]
   }

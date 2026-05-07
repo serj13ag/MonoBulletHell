@@ -14,16 +14,6 @@
     "AngleBetweenLines": 20
   },
   {
-    "Name": "straightDown_3_lines_3_bullets",
-    "RoundsPerSecond": 1,
-    "BulletSpeed": 200,
-    "StartingAngle": 245,
-    "NumberOfLines": 3,
-    "AngleBetweenLines": 20,
-    "NumberOfBulletsPerLine": 3,
-    "AngleBetweenBulletsInLine": 5
-  },
-  {
     "Name": "straightDown_rotating",
     "RoundsPerSecond": 5,
     "BulletSpeed": 300,
@@ -31,17 +21,60 @@
     "SpinPerSecond": 45
   },
   {
-    "Name": "straightDown_accelerated_rotated",
-    "RoundsPerSecond": 1,
+    "Name": "emitter_boss_1",
+    "RoundsPerSecond": 5,
     "BulletSpeed": 100,
-    "BulletAcceleration": 100,
-    "BulletAngularVelocity": 30,
-    "StartingAngle": 270
+    "NumberOfLines": 3,
+    "AngleBetweenLines": 20,
+    "StartingAngle": 180,
+    "SpinPerSecond": {
+      "Duration": 5,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 45
+        },
+        {
+          "Time": 4,
+          "Value": 45
+        },
+        {
+          "Time": 4,
+          "Value": 180
+        },
+        {
+          "Time": 5,
+          "Value": 180
+        },
+        {
+          "Time": 5,
+          "Value": 45
+        }
+      ]
+    }
   },
   {
-    "Name": "straightDown_rotating_curve_loop",
+    "Name": "emitter_boss_2",
     "RoundsPerSecond": 5,
-    "BulletSpeed": 300,
+    "BulletSpeed": {
+      "Duration": 20,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 300
+        },
+        {
+          "Time": 10,
+          "Value": 50
+        },
+        {
+          "Time": 20,
+          "Value": 300
+        }
+      ]
+    },
     "StartingAngle": {
       "Duration": 2,
       "Looped": true,
@@ -60,5 +93,14 @@
         }
       ]
     }
+  },
+  {
+    "Name": "emitter_boss_3",
+    "RoundsPerSecond": 2,
+    "BulletSpeed": 100,
+    "NumberOfLines": 36,
+    "AngleBetweenLines": 10,
+    "StartingAngle": 0,
+    "BulletAcceleration": 10
   }
 ]
