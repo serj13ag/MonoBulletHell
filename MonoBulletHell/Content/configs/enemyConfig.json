@@ -11,7 +11,6 @@
     "Health": 5,
     "ColliderOffset": "0, -5",
     "ColliderRadius": 20,
-    "EmitterName": "straightDown",
     "SpriteName": "alien"
   },
   {

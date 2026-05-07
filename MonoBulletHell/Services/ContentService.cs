@@ -89,7 +89,10 @@ public class ContentService : IContentService
         var filePath = Path.Combine(content.RootDirectory, fileName);
         var json = File.ReadAllText(filePath);
 
-        var spawnData = JsonConvert.DeserializeObject<T>(json);
+        var spawnData = JsonConvert.DeserializeObject<T>(json, new JsonSerializerSettings() // TODO: to service
+        {
+            MissingMemberHandling = MissingMemberHandling.Error,
+        });
 
         return spawnData;
     }
