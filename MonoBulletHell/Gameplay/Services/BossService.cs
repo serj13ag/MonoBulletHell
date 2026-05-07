@@ -59,7 +59,7 @@ public class BossService : IBossService, IDisposable
     public void SpawnBoss()
     {
         var firstStage = _stages.Dequeue();
-        _nextStage = _stages.Dequeue();
+        SetNextStage();
 
         _boss = _enemyService.SpawnBoss(_bossData.EnemyName, _bossData.Position, firstStage.PathName, firstStage.EmitterName);
 
@@ -88,8 +88,13 @@ public class BossService : IBossService, IDisposable
             var emitter = _gameFactory.CreateEmitter(_nextStage.EmitterName);
             _boss.ChangeEmitter(emitter);
 
-            _nextStage = _stages.Count > 0 ? _stages.Dequeue() : null;
+            SetNextStage();
         }
+    }
+
+    private void SetNextStage()
+    {
+        _nextStage = _stages.Count > 0 ? _stages.Dequeue() : null;
     }
 
     public void Dispose()
