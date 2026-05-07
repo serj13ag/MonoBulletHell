@@ -14,13 +14,6 @@
     "AngleBetweenLines": 20
   },
   {
-    "Name": "straightDown_rotating",
-    "RoundsPerSecond": 5,
-    "BulletSpeed": 300,
-    "StartingAngle": 270,
-    "SpinPerSecond": 45
-  },
-  {
     "Name": "emitter_boss_1",
     "RoundsPerSecond": 5,
     "BulletSpeed": 100,
