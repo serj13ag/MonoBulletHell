@@ -1,5 +1,6 @@
 using System;
 using Gum.Forms.Controls;
+using Microsoft.Xna.Framework;
 using MonoGameGum.GueDeriving;
 
 namespace MonoBulletHell.Ui.Elements.Panels;
@@ -15,7 +16,7 @@ public class PausePanel : BasePanel
     public event Action OnOptionsButtonClicked;
     public event Action OnQuitButtonClicked;
 
-    public PausePanel(IUiFactory uiFactory)
+    public PausePanel(IUiFactory uiFactory, Color color)
     {
         Anchor(Gum.Wireframe.Anchor.Center);
         Width = 100f;
@@ -24,7 +25,7 @@ public class PausePanel : BasePanel
         var background = new ColoredRectangleRuntime();
         AddChild(background);
         background.Dock(Gum.Wireframe.Dock.Fill);
-        background.Color = Constants.Colors.UiPanel;
+        background.Color = color;
 
         var titleText = new CustomLabel();
         AddChild(titleText);

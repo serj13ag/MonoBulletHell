@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Input;
 using MonoBulletHell.Core.Scenes;
 using MonoBulletHell.Enums;
+using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 using MonoBulletHell.Ui;
 using MonoBulletHell.Ui.Elements.Panels;
@@ -19,12 +20,13 @@ public class TitleScene : BaseScene
     private readonly IInputService _inputService;
     private readonly ISceneService _sceneService;
     private readonly ISoundService _soundService;
+    private readonly IContentService _contentService;
 
     private OptionsPanel _optionsPanel;
 
     public TitleScene(IGameService gameService, ContentManager contentManager, GraphicsDevice graphicsDevice,
         SpriteBatch spriteBatch, GumService gumService, IUiFactory uiFactory, IInputService inputService,
-        ISceneService sceneService, ISoundService soundService)
+        ISceneService sceneService, ISoundService soundService, IContentService contentService)
         : base(contentManager, graphicsDevice, spriteBatch)
     {
         _gameService = gameService;
@@ -33,6 +35,7 @@ public class TitleScene : BaseScene
         _inputService = inputService;
         _sceneService = sceneService;
         _soundService = soundService;
+        _contentService = contentService;
     }
 
     public override void Initialize()
@@ -72,7 +75,7 @@ public class TitleScene : BaseScene
     {
         base.Draw(gameTime);
 
-        GraphicsDevice.Clear(Constants.Colors.SceneTitleBackground);
+        GraphicsDevice.Clear(ColorHelper.FromHex(_contentService.GetColorConfig().TitleSceneBackground));
 
         _gumService.Draw();
     }

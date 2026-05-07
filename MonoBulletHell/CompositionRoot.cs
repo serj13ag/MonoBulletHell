@@ -54,6 +54,7 @@ public class CompositionRoot
         _container.Register<ISettingsService, SettingsService>(new PerContainerLifetime());
         _container.Register<ISoundService, SoundService>(new PerContainerLifetime());
         _container.Register<ISaveService, SaveService>(new PerContainerLifetime());
+        _container.Register<IContentService, ContentService>(new PerContainerLifetime());
 
         _container.Register<IUiMediator, UiMediator>(new PerContainerLifetime());
         _container.Register<IUiFactory, UiFactory>(new PerContainerLifetime());
@@ -70,7 +71,6 @@ public class CompositionRoot
 
     private void RegisterGameplay()
     {
-        _container.Register<IContentService, ContentService>(new PerScopeLifetime());
         _container.Register<IInputActionService, InputActionService>(new PerScopeLifetime());
         _container.Register<ITimeService, TimeService>(new PerScopeLifetime());
         _container.Register<ILevelFlowService, LevelFlowService>(new PerScopeLifetime());

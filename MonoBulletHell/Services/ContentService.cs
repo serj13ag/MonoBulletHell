@@ -9,7 +9,7 @@ using MonoBulletHell.Data;
 using MonoBulletHell.Gameplay.Effects;
 using Newtonsoft.Json;
 
-namespace MonoBulletHell.Gameplay.Services;
+namespace MonoBulletHell.Services;
 
 public interface IContentService
 {
@@ -22,6 +22,7 @@ public interface IContentService
     FlashEffect GetFlashEffect();
 
     PlayerConfig GetPlayerConfig();
+    ColorConfig GetColorConfig();
     SpawnConfig GetSpawnConfig();
     EnemyData GetEnemyData(string enemyName);
     PathData GetPath(string pathName);
@@ -75,6 +76,8 @@ public class ContentService : IContentService
     public FlashEffect GetFlashEffect() => new FlashEffect(_flashEffect.Clone());
 
     public PlayerConfig GetPlayerConfig() => _gameConfig.Player;
+    public ColorConfig GetColorConfig() => _gameConfig.Colors;
+
     public SpawnConfig GetSpawnConfig() => _spawnConfig;
 
     public EnemyData GetEnemyData(string enemyName) => _enemyConfigs[enemyName];

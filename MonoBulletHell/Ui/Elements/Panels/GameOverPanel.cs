@@ -1,5 +1,6 @@
 using System;
 using Gum.Forms.Controls;
+using Microsoft.Xna.Framework;
 using MonoGameGum.GueDeriving;
 
 namespace MonoBulletHell.Ui.Elements.Panels;
@@ -14,7 +15,7 @@ public class GameOverPanel : BasePanel
     public event Action OnRestartButtonClicked;
     public event Action OnQuitButtonClicked;
 
-    public GameOverPanel(IUiFactory uiFactory)
+    public GameOverPanel(IUiFactory uiFactory, Color color)
     {
         Anchor(Gum.Wireframe.Anchor.Center);
         Width = 100f;
@@ -23,7 +24,7 @@ public class GameOverPanel : BasePanel
         var background = new ColoredRectangleRuntime();
         AddChild(background);
         background.Dock(Gum.Wireframe.Dock.Fill);
-        background.Color = Constants.Colors.UiPanel;
+        background.Color = color;
 
         _titleText = new CustomLabel();
         AddChild(_titleText);

@@ -87,8 +87,6 @@ public class GameplayScene : BaseScene
     {
         base.LoadContent();
 
-        _contentService.Load(Content);
-
         _bulletFactory.LoadContent();
     }
 
@@ -141,7 +139,7 @@ public class GameplayScene : BaseScene
     {
         base.Draw(gameTime);
 
-        GraphicsDevice.Clear(Constants.Colors.SceneGameplayBackground);
+        GraphicsDevice.Clear(ColorHelper.FromHex(_contentService.GetColorConfig().GameplaySceneBackground));
 
         _backgroundService.Render(_renderService);
         _ship.Render(_renderService);

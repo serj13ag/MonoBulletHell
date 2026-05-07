@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Gameplay.Rendering;
+using MonoBulletHell.Helpers;
+using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Services;
 
@@ -18,6 +20,8 @@ public interface IRenderService
 
 public class RenderService : IRenderService
 {
+    private readonly IContentService _contentService;
+
     private static readonly SamplerState CurrentSamplerState = SamplerState.PointClamp;
 
     private static readonly Dictionary<Layer, int> LayerOrderLookup = new Dictionary<Layer, int>()
@@ -31,9 +35,14 @@ public class RenderService : IRenderService
     private BackgroundRenderRequest _backgroundBatch;
     private readonly List<SpriteRenderRequest> _spriteRequests = new List<SpriteRenderRequest>(512);
 
+    public RenderService(IContentService contentService)
+    {
+        _contentService = contentService;
+    }
+
     public void SetBackgroundBatch(Texture2D texture, int verticalOffset)
     {
-        _backgroundBatch = new BackgroundRenderRequest(texture, verticalOffset);
+        _backgroundBatch = new BackgroundRenderRequest(texture, verticalOffset, ColorHelper.FromHex(_contentService.GetColorConfig().GameplayBackgroundTexture));
     }
 
     public void AddSprite(Sprite sprite, Vector2 position, float rotation, Layer layer, Effect effect = null)

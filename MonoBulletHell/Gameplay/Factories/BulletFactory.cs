@@ -3,6 +3,7 @@ using MonoBulletHell.Core.Graphics;
 using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Services;
+using MonoBulletHell.Helpers;
 using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Gameplay.Factories;
@@ -41,11 +42,11 @@ public class BulletFactory : IBulletFactory
     {
         _playerBulletSprite = _contentService.CreateBulletSprite("shipBullet");
         _playerBulletSprite.CenterOrigin();
-        _playerBulletSprite.Color = Constants.Colors.PlayerBullet;
+        _playerBulletSprite.Color = ColorHelper.FromHex(_contentService.GetColorConfig().PlayerBullet);
 
         _enemyBulletSprite = _contentService.CreateBulletSprite("enemyBullet");
         _enemyBulletSprite.CenterOrigin();
-        _enemyBulletSprite.Color = Constants.Colors.EnemyBullet;
+        _enemyBulletSprite.Color = ColorHelper.FromHex(_contentService.GetColorConfig().EnemyBullet);
     }
 
     public void Prewarm()

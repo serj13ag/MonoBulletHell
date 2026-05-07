@@ -61,6 +61,14 @@ public class MonoBulletHellGame : Game
         _sceneService.ChangeScene(SceneType.Title);
     }
 
+    protected override void LoadContent()
+    {
+        base.LoadContent();
+
+        var contentService = _root.GetInstance<IContentService>();
+        contentService.Load(Content);
+    }
+
     protected override void Update(GameTime gameTime)
     {
         _inputService.Update();

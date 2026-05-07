@@ -45,8 +45,7 @@ public class Ship : BaseEntity
     public event EventHandler<EventArgs> OnDestroyed;
 
     public Ship(IInputActionService inputActionService, IDebugService debugService, ITimeService timeService,
-        IBulletService bulletService,
-        IContentService contentService, ISoundService soundService, PlayerConfig playerConfig)
+        IBulletService bulletService, IContentService contentService, ISoundService soundService, PlayerConfig playerConfig)
     {
         _inputActionService = inputActionService;
         _debugService = debugService;
@@ -212,7 +211,7 @@ public class Ship : BaseEntity
     {
         var sprite = contentService.CreateShipSprite(playerConfig.SpriteName);
         sprite.CenterOrigin();
-        sprite.Color = Constants.Colors.PlayerShip;
+        sprite.Color = ColorHelper.FromHex(contentService.GetColorConfig().PlayerShip);
         return sprite;
     }
 
@@ -220,7 +219,7 @@ public class Ship : BaseEntity
     {
         var sprite = contentService.CreateShipSprite(playerConfig.CoreSpriteName);
         sprite.CenterOrigin();
-        sprite.Color = Constants.Colors.PlayerShipCore;
+        sprite.Color = ColorHelper.FromHex(contentService.GetColorConfig().PlayerShipCore);
         return sprite;
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using Gum.Forms.Controls;
 using Gum.Wireframe;
+using Microsoft.Xna.Framework;
 using MonoBulletHell.Enums;
 using MonoGameGum.GueDeriving;
 
@@ -18,7 +19,7 @@ public class OptionsPanel : BasePanel
 
     public event Action OnBackButtonClicked;
 
-    public OptionsPanel(IUiFactory uiFactory, IUiMediator uiMediator)
+    public OptionsPanel(IUiFactory uiFactory, IUiMediator uiMediator, Color color)
     {
         _uiMediator = uiMediator;
 
@@ -29,7 +30,7 @@ public class OptionsPanel : BasePanel
         var background = new ColoredRectangleRuntime();
         AddChild(background);
         background.Dock(Gum.Wireframe.Dock.Fill);
-        background.Color = Constants.Colors.UiPanel;
+        background.Color = color;
 
         var titleText = new CustomLabel();
         AddChild(titleText);

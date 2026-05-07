@@ -5,7 +5,7 @@ namespace MonoBulletHell.Helpers;
 
 public static class ColorHelper
 {
-    public static Color FromHex(string hex)
+    public static Color FromHex(string hex) // TODO: cache as colors on load
     {
         hex = hex.Replace("#", "");
         var r = Convert.ToInt32(hex.Substring(0, 2), 16);

@@ -8,5 +8,18 @@
     "DamageImmuneCooldown": 2,
     "SpriteName": "ship",
     "CoreSpriteName": "ship_core"
+  },
+  "Colors": {
+    "UiPanel": "#0d170d",
+    "UiButton": "#3f5f3f",
+    "TitleSceneBackground": "#1B2F1B",
+    "GameplaySceneBackground": "#1B2F1B",
+    "GameplayBackgroundTexture": "#0d170d",
+    "PlayerShip": "#3F5F3F",
+    "PlayerShipCore": "#c45c0c",
+    "Enemy": "#3F5F3F",
+    "PlayerBullet": "#E8FFE8",
+    "EnemyBullet": "#c45c0c",
+    "BulletImpact": "#E8FFE8"
   }
 }
