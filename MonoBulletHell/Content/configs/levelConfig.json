@@ -17,7 +17,7 @@
       "Position": "280, 0",
       "PathName": "path_down",
       "EnemyName": "enemy_follower",
-      "EmitterName": "straightDown",
+      "EmitterName": "emitter_straightDown",
       "Formation": {
         "Type": "Line",
         "Count": 3,
@@ -42,7 +42,7 @@
       "Position": "0, 0",
       "PathName": "path_downRight",
       "EnemyName": "enemy_shooter",
-      "EmitterName": "straightDown_3_lines",
+      "EmitterName": "emitter_straightDown_3_lines",
       "Formation": {
         "Type": "Line",
         "Count": 3,
@@ -55,7 +55,7 @@
       "Position": "320, 0",
       "PathName": "path_downLeft",
       "EnemyName": "enemy_shooter",
-      "EmitterName": "straightDown_3_lines",
+      "EmitterName": "emitter_straightDown_3_lines",
       "Formation": {
         "Type": "Line",
         "Count": 3,

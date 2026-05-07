@@ -1,12 +1,12 @@
 [
   {
-    "Name": "straightDown",
+    "Name": "emitter_straightDown",
     "RoundsPerSecond": 1,
     "BulletSpeed": 300,
     "StartingAngle": 270
   },
   {
-    "Name": "straightDown_3_lines",
+    "Name": "emitter_straightDown_3_lines",
     "RoundsPerSecond": 1,
     "BulletSpeed": 100,
     "StartingAngle": 250,
