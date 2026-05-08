@@ -17,6 +17,5 @@ Global
 		{7EEBC88D-A43D-4517-998D-5697119BB6C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7EEBC88D-A43D-4517-998D-5697119BB6C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7EEBC88D-A43D-4517-998D-5697119BB6C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7EEBC88D-A43D-4517-998D-5697119BB6C6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
