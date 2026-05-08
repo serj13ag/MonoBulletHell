@@ -11,8 +11,6 @@ using MonoGameGum;
 
 namespace MonoBulletHell;
 
-// TODO: add gifs or images to readme
-
 public class MonoBulletHellGame : Game
 {
     public const int VirtualWidth = 320;
