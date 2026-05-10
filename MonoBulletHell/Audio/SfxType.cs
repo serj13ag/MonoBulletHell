@@ -1,4 +1,4 @@
-namespace MonoBulletHell.Enums;
+namespace MonoBulletHell.Audio;
 
 public enum SfxType
 {

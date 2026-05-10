@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MonoBulletHell.Data.Saves;
-using MonoBulletHell.Enums;
+using MonoBulletHell.Screen;
 
 namespace MonoBulletHell.Services;
 

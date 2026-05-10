@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Microsoft.Xna.Framework;
+using MonoBulletHell.Audio;
 using MonoBulletHell.Data;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Entities.Emitters;

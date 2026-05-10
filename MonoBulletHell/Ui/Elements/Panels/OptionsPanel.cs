@@ -2,7 +2,7 @@ using System;
 using Gum.Forms.Controls;
 using Gum.Wireframe;
 using Microsoft.Xna.Framework;
-using MonoBulletHell.Enums;
+using MonoBulletHell.Screen;
 using MonoGameGum.GueDeriving;
 
 namespace MonoBulletHell.Ui.Elements.Panels;

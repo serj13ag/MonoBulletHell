@@ -1,5 +1,5 @@
 using System;
-using MonoBulletHell.Enums;
+using MonoBulletHell.Screen;
 
 namespace MonoBulletHell.Data.Saves;
 

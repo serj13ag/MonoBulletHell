@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using MonoBulletHell.Enums;
+using MonoBulletHell.Audio;
+using MonoBulletHell.Screen;
 using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Ui;

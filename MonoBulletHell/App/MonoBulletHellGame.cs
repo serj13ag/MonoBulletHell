@@ -4,8 +4,10 @@ using Gum.Forms.Controls;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Input;
+using MonoBulletHell.Audio;
 using MonoBulletHell.Core.Input;
 using MonoBulletHell.Scenes;
+using MonoBulletHell.Screen;
 using MonoBulletHell.Services;
 using MonoGameGum;
 

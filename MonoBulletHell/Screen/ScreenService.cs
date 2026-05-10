@@ -2,9 +2,9 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.App;
-using MonoBulletHell.Enums;
+using MonoBulletHell.Services;
 
-namespace MonoBulletHell.Services;
+namespace MonoBulletHell.Screen;
 
 public interface IScreenService
 {
