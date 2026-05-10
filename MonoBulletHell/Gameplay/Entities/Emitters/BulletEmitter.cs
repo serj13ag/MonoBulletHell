@@ -54,7 +54,7 @@ public class BulletEmitter : BaseEntity, IBulletEmitter
         _spinPerSecond = emitterData.SpinPerSecond;
     }
 
-    public void SetShootingDisabled(bool value) => _shootingDisabled = value;
+    public void SetShootingDisabled(bool shootingDisabled) => _shootingDisabled = shootingDisabled;
 
     public void Update(float deltaTime)
     {

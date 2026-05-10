@@ -5,7 +5,7 @@ using MonoBulletHell.Audio;
 using MonoBulletHell.Data;
 using MonoBulletHell.Gameplay.Entities;
 using MonoBulletHell.Gameplay.Entities.Emitters;
-using MonoBulletHell.Gameplay.Entities.PathBlocks;
+using MonoBulletHell.Gameplay.Movement;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
 
@@ -15,7 +15,7 @@ public interface IGameFactory
 {
     Ship CreateShip();
     Enemy CreateEnemy(Vector2 position, string pathName, string enemyName, string emitterName);
-    IPathBlock CreatePathBlock(string pathName, Vector2 position);
+    IMovement CreateMovement(string pathName, Vector2 position);
     IBulletEmitter CreateEmitter(string emitterName);
 }
 
@@ -54,18 +54,18 @@ public class GameFactory : IGameFactory
     {
         var enemyData = _contentService.GetEnemyData(enemyName);
 
-        var pathBlock = CreatePathBlock(pathName, position);
+        var movement = CreateMovement(pathName, position);
         var bulletEmitter = CreateEmitter(emitterName);
 
-        var enemy = new Enemy(_debugService, _timeService, _contentService, _soundService, enemyData, pathBlock, bulletEmitter);
+        var enemy = new Enemy(_debugService, _timeService, _contentService, _soundService, enemyData, movement, bulletEmitter);
         return enemy;
     }
 
-    public IPathBlock CreatePathBlock(string pathName, Vector2 position)
+    public IMovement CreateMovement(string pathName, Vector2 position)
     {
         if (string.IsNullOrEmpty(pathName))
         {
-            return new StaticPathBlock(position);
+            return new StaticMovement(position);
         }
 
         var path = _contentService.GetPath(pathName);
@@ -76,14 +76,14 @@ public class GameFactory : IGameFactory
                 var pathPoints = path.Points
                     .Select(pathPointData => pathPointData.Clone(pathPointData.Position + position))
                     .ToList();
-                return new PathBlock(path.Speed, path.InfinitelyLooped, path.Loops, pathPoints);
+                return new PathMovement(path.Speed, path.InfinitelyLooped, path.Loops, pathPoints);
             }
             case PathType.Absolute:
             {
                 var pathPoints = path.Points
                     .Select(pathPointData => pathPointData.Clone(pathPointData.Position))
                     .ToList();
-                return new PathBlock(path.Speed, path.InfinitelyLooped, path.Loops, pathPoints, position);
+                return new PathMovement(path.Speed, path.InfinitelyLooped, path.Loops, pathPoints, position);
             }
             case PathType.Undefined:
             default:

@@ -1,9 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace MonoBulletHell.Gameplay.Entities.PathBlocks;
+namespace MonoBulletHell.Gameplay.Movement;
 
-public class StaticPathBlock : IPathBlock
+public class StaticMovement : IMovement
 {
     public Vector2 Position { get; }
 
@@ -12,7 +12,7 @@ public class StaticPathBlock : IPathBlock
 
     public event Action<bool> ShootingDisabledChanged;
 
-    public StaticPathBlock(Vector2 position)
+    public StaticMovement(Vector2 position)
     {
         Position = position;
     }

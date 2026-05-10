@@ -82,8 +82,8 @@ public class BossService : IBossService, IDisposable
         var healthPercent = healthChangedDto.NewHealth / (float)healthChangedDto.MaxHealth;
         if (healthPercent <= _nextStage.HealthPercent)
         {
-            var pathBlock = _gameFactory.CreatePathBlock(_nextStage.PathName, _boss.Position);
-            _boss.ChangePathBlock(pathBlock);
+            var movement = _gameFactory.CreateMovement(_nextStage.PathName, _boss.Position);
+            _boss.ChangeMovement(movement);
 
             var emitter = _gameFactory.CreateEmitter(_nextStage.EmitterName);
             _boss.ChangeEmitter(emitter);

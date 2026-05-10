@@ -4,9 +4,9 @@ using Microsoft.Xna.Framework;
 using MonoBulletHell.Data.Configs;
 using MonoBulletHell.Helpers;
 
-namespace MonoBulletHell.Gameplay.Entities.PathBlocks;
+namespace MonoBulletHell.Gameplay.Movement;
 
-public class PathBlock : IPathBlock
+public class PathMovement : IMovement
 {
     private readonly List<PathPointData> _pathPoints;
     private readonly float _speed;
@@ -44,7 +44,7 @@ public class PathBlock : IPathBlock
 
     public event Action<bool> ShootingDisabledChanged;
 
-    public PathBlock(float speed, bool infinitelyLooped, int loops, List<PathPointData> pathPoints, Vector2? startPosition = null)
+    public PathMovement(float speed, bool infinitelyLooped, int loops, List<PathPointData> pathPoints, Vector2? startPosition = null)
     {
         _pathPoints = pathPoints;
         _speed = speed;

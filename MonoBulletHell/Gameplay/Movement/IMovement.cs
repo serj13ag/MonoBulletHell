@@ -1,9 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
 
-namespace MonoBulletHell.Gameplay.Entities.PathBlocks;
+namespace MonoBulletHell.Gameplay.Movement;
 
-public interface IPathBlock
+public interface IMovement
 {
     Vector2 Position { get; }
 

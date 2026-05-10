@@ -7,7 +7,7 @@ using MonoBulletHell.Data.Configs;
 using MonoBulletHell.Data.DTOs;
 using MonoBulletHell.Gameplay.Effects;
 using MonoBulletHell.Gameplay.Entities.Emitters;
-using MonoBulletHell.Gameplay.Entities.PathBlocks;
+using MonoBulletHell.Gameplay.Movement;
 using MonoBulletHell.Gameplay.Rendering;
 using MonoBulletHell.Gameplay.Services;
 using MonoBulletHell.Services;
@@ -29,7 +29,7 @@ public class Enemy : BaseEntity
     private readonly Vector2 _spriteOffset;
     private readonly FlashEffect _flashEffect;
 
-    private IPathBlock _pathBlock;
+    private IMovement _movement;
     private IBulletEmitter _bulletEmitter;
 
     private int _currentHealth;
@@ -37,12 +37,12 @@ public class Enemy : BaseEntity
     public CircleCollider Collider => _collider;
 
     public bool IsDead => _currentHealth <= 0;
-    public bool PathIsFinished => _pathBlock.IsFinished;
+    public bool PathIsFinished => _movement.IsFinished;
 
     public event Action<HealthChangedDTO> HealthChanged;
 
     public Enemy(IDebugService debugService, ITimeService timeService, IContentService contentService, ISoundService soundService,
-        EnemyData enemyData, IPathBlock pathBlock, IBulletEmitter bulletEmitter)
+        EnemyData enemyData, IMovement movement, IBulletEmitter bulletEmitter)
     {
         _debugService = debugService;
         _timeService = timeService;
@@ -51,15 +51,15 @@ public class Enemy : BaseEntity
         _health = enemyData.Health;
         _currentHealth = enemyData.Health;
 
-        _pathBlock = pathBlock;
-        Position = _pathBlock.Position;
-        _pathBlock.ShootingDisabledChanged += OnPathShootingDisabledChanged;
+        _movement = movement;
+        Position = _movement.Position;
+        _movement.ShootingDisabledChanged += OnMovementShootingDisabledChanged;
 
         _collider = new CircleCollider(enemyData.ColliderOffset, enemyData.ColliderRadius);
 
         _bulletEmitter = bulletEmitter;
         _bulletEmitter.Position = Position;
-        _bulletEmitter.SetShootingDisabled(_pathBlock.ShootingDisabled);
+        _bulletEmitter.SetShootingDisabled(_movement.ShootingDisabled);
 
         _sprite = GetEnemySprite(contentService, enemyData.SpriteName);
         _spriteOffset = enemyData.SpriteOffset;
@@ -68,8 +68,8 @@ public class Enemy : BaseEntity
 
     public void Update()
     {
-        _pathBlock.Update(_timeService.DeltaTime);
-        Position = _pathBlock.Position;
+        _movement.Update(_timeService.DeltaTime);
+        Position = _movement.Position;
 
         _collider.Update(Position);
         _debugService.DrawCircle(_collider.Center, _collider.Radius, Color.GreenYellow, 2f, 10);
@@ -106,28 +106,28 @@ public class Enemy : BaseEntity
         });
     }
 
-    public void ChangePathBlock(IPathBlock pathBlock)
+    public void ChangeMovement(IMovement movement)
     {
-        if (_pathBlock != null)
+        if (_movement != null)
         {
-            _pathBlock.ShootingDisabledChanged -= OnPathShootingDisabledChanged;
+            _movement.ShootingDisabledChanged -= OnMovementShootingDisabledChanged;
         }
 
-        _pathBlock = pathBlock;
-        Position = _pathBlock.Position;
-        _bulletEmitter.SetShootingDisabled(_pathBlock.ShootingDisabled);
+        _movement = movement;
+        Position = _movement.Position;
+        _bulletEmitter.SetShootingDisabled(_movement.ShootingDisabled);
 
-        _pathBlock.ShootingDisabledChanged += OnPathShootingDisabledChanged;
+        _movement.ShootingDisabledChanged += OnMovementShootingDisabledChanged;
     }
 
     public void ChangeEmitter(IBulletEmitter emitter)
     {
         _bulletEmitter = emitter;
         _bulletEmitter.Position = Position;
-        _bulletEmitter.SetShootingDisabled(_pathBlock.ShootingDisabled);
+        _bulletEmitter.SetShootingDisabled(_movement.ShootingDisabled);
     }
 
-    private void OnPathShootingDisabledChanged(bool shootingDisabled)
+    private void OnMovementShootingDisabledChanged(bool shootingDisabled)
     {
         _bulletEmitter?.SetShootingDisabled(shootingDisabled);
     }

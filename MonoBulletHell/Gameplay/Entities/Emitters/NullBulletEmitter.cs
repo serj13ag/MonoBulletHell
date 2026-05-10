@@ -9,7 +9,7 @@ public class NullBulletEmitter : IBulletEmitter
     public Vector2 Position { get; set; }
     public float Rotation { get; set; }
 
-    public void SetShootingDisabled(bool pathBlockShootingDisabled)
+    public void SetShootingDisabled(bool shootingDisabled)
     {
     }
 
