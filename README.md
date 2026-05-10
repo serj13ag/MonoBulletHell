@@ -1,6 +1,7 @@
 # Mono Bullet Hell
 
-A small bullet hell game built with C#, MonoGame, and Gum UI. The project focuses on data-driven enemy waves, reusable gameplay services, deterministic update flow, and a clean separation between rendering, input, audio, scene management, and gameplay logic.
+A small bullet hell game built with C#, MonoGame, and Gum UI. The project focuses on data-driven enemy waves, reusable gameplay
+services, deterministic update flow, and a clean separation between rendering, input, audio, scene management, and gameplay logic.
 
 This repository is intended as a project demonstrating practical game architecture in C# rather than only a gameplay prototype.
 
@@ -22,31 +23,37 @@ Survive enemy waves, dodge incoming bullet patterns, destroy enemies, and defeat
 
 Controls:
 
-| Action | Input |
-| --- | --- |
-| Move | `WASD` or arrow keys |
-| Fire | `Space` |
-| Focus / slow movement | `Left Shift` |
-| Pause / back | `Escape` |
-| Debug overlay | `F1` |
+| Action                | Input                |
+|-----------------------|----------------------|
+| Move                  | `WASD` or arrow keys |
+| Fire                  | `Space`              |
+| Focus / slow movement | `Left Shift`         |
+| Pause / back          | `Escape`             |
+| Debug overlay         | `F1`                 |
 
 ## Architecture
 
 The codebase is organized around small systems with clear responsibilities:
 
-| Area | Responsibility |
-| --- | --- |
-| `Scenes` | High-level scene lifecycle and screen flow |
-| `Gameplay/Services` | Runtime gameplay systems such as bullets, enemies, spawning, boss flow, particles, rendering, and time |
-| `Gameplay/Entities` | Player ship, enemies, bullets, particles, emitters, and path blocks |
-| `Core` | Reusable lower-level building blocks for input, graphics, physics, and scenes |
-| `Data` | Config models, DTOs, and save data |
-| `Services` | Global services for content, scene switching, screen scaling, audio, settings, saves, and serialization |
-| `Ui` | Gum UI factories, panels, and custom controls |
-| `Content/configs` | JSON-driven gameplay and presentation tuning |
-| `MonoBulletHell.Tests` | NUnit test project for test coverage |
+| Area                   | Responsibility                                                                                         |
+|------------------------|--------------------------------------------------------------------------------------------------------|
+| `App`                  | MonoGame application lifecycle, dependency registration, and app-wide constants                        |
+| `Scenes`               | Scene implementations, scene lifecycle coordination                                                    |
+| `Gameplay/Services`    | Runtime gameplay systems such as bullets, enemies, spawning, boss flow, particles, rendering, and time |
+| `Gameplay/Entities`    | Player ship, enemies, bullets, particles, and emitters                                                 |
+| `Gameplay/Movement`    | Entity movement behaviors such as path-based and static movement                                       |
+| `Audio`                | Music and sound-effect playback, plus audio type definitions                                           |
+| `Screen`               | Virtual-resolution scaling and screen-size options                                                     |
+| `Core`                 | Reusable lower-level building blocks for input, graphics, physics, and scenes                          |
+| `Data`                 | Config models, DTOs, and save data                                                                     |
+| `Services`             | App services for content, settings, saves, debug tools, game access, and serialization                 |
+| `Ui`                   | Gum UI factories, panels, and custom controls                                                          |
+| `Content/configs`      | JSON-driven gameplay and presentation tuning                                                           |
+| `MonoBulletHell.Tests` | NUnit test project for test coverage                                                                   |
 
-The main runtime composition happens in `CompositionRoot`, where global services are registered once and gameplay services are scoped per scene. This keeps scene-specific state isolated while allowing shared services such as content, settings, sound, and screen rendering to remain available across the application.
+The main runtime composition happens in `App/CompositionRoot`, where app-wide services are registered once and gameplay services
+are scoped per scene. This keeps scene-specific state isolated while allowing shared services such as content, settings, sound,
+and screen rendering to remain available across the application.
 
 ### Runtime Flow
 
@@ -54,7 +61,7 @@ The main runtime composition happens in `CompositionRoot`, where global services
 Program
   -> MonoBulletHellGame
       -> CompositionRoot
-          -> Global services
+          -> App-wide services
           -> SceneService
               -> TitleScene
               -> GameplayScene
@@ -67,7 +74,8 @@ Program
                       -> RenderService
 ```
 
-`MonoBulletHellGame` owns the MonoGame lifecycle and delegates update/draw work to the active scene. `SceneService` handles scene transitions and creates scene-scoped services through LightInject, keeping gameplay state isolated from menu state.
+`App/MonoBulletHellGame` owns the MonoGame lifecycle and delegates update/draw work to the active scene. `Scenes/SceneService`
+handles scene transitions and creates scene-scoped services through LightInject, keeping gameplay state isolated from menu state.
 
 ## Technical Details
 
@@ -80,19 +88,20 @@ Program
 
 ## Testing
 
-The solution includes `MonoBulletHell.Tests`, an NUnit test project that references the main game project. Current coverage focuses on math in `GameMathHelper`.
+The solution includes `MonoBulletHell.Tests`, an NUnit test project that references the main game project. Current coverage
+focuses on math in `GameMathHelper`.
 
 ## Content Configuration
 
 Most gameplay tuning lives in JSON files under `MonoBulletHell/Content/configs`:
 
-| File | Purpose |
-| --- | --- |
-| `gameConfig.json` | Player tuning and color palette |
-| `levelConfig.json` | Enemy waves and boss setup |
-| `enemies.json` | Enemy health, sprite, and collider settings |
-| `paths.json` | Movement paths and path behavior |
-| `emitters.json` | Bullet pattern definitions |
+| File               | Purpose                                     |
+|--------------------|---------------------------------------------|
+| `gameConfig.json`  | Player tuning and color palette             |
+| `levelConfig.json` | Enemy waves and boss setup                  |
+| `enemies.json`     | Enemy health, sprite, and collider settings |
+| `paths.json`       | Movement paths and path behavior            |
+| `emitters.json`    | Bullet pattern definitions                  |
 
 This makes it possible to iterate on wave design, enemy behavior, colors, and boss stages without changing gameplay code.
 
@@ -111,7 +120,8 @@ This project demonstrates:
 
 Source code: MIT License
 
-Audio: 
+Audio:
+
 - Kenney (https://kenney.nl)
 - fmceretta (https://freesound.org/people/fmceretta/)
 - FoolBoyMedia (https://freesound.org/people/FoolBoyMedia/)
