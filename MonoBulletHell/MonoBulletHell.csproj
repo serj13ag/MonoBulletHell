@@ -12,9 +12,9 @@
         <Company>SG</Company>
         <Authors>Sergei Agafonov</Authors>
 
-        <Version>0.1.0</Version>
+        <Version>0.1.1</Version>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
-        <FileVersion>0.1.0.0</FileVersion>
+        <FileVersion>0.1.1.0</FileVersion>
 
         <Description>2D action game made with MonoGame</Description>
         <Copyright>Copyright © 2026</Copyright>
