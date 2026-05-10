@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoBulletHell.App;
 using MonoBulletHell.Enums;
 
 namespace MonoBulletHell.Services;
@@ -36,7 +37,7 @@ public class ScreenService : IScreenService, IDisposable
 
     public void Initialize()
     {
-        _nativeRenderTarget = new RenderTarget2D(_graphicsDevice, MonoBulletHellGame.VirtualWidth, MonoBulletHellGame.VirtualHeight);
+        _nativeRenderTarget = new RenderTarget2D(_graphicsDevice, GameConstants.VirtualWidth, GameConstants.VirtualHeight);
 
         _graphicsDeviceManager.IsFullScreen = false;
         ApplyScale(_settingsService.ScreenScale);
@@ -61,8 +62,8 @@ public class ScreenService : IScreenService, IDisposable
     {
         var translation = Matrix.CreateTranslation(-_actualScreenRectangle.X, -_actualScreenRectangle.Y, 0);
 
-        var xScale = MonoBulletHellGame.VirtualWidth / (float)_actualScreenRectangle.Width;
-        var yScale = MonoBulletHellGame.VirtualHeight / (float)_actualScreenRectangle.Height;
+        var xScale = GameConstants.VirtualWidth / (float)_actualScreenRectangle.Width;
+        var yScale = GameConstants.VirtualHeight / (float)_actualScreenRectangle.Height;
         var scale = Matrix.CreateScale(xScale, yScale, 1f);
 
         return translation * scale;
@@ -77,8 +78,8 @@ public class ScreenService : IScreenService, IDisposable
     {
         var scaleValue = GetScaleValue(scale);
 
-        var newWidth = (int)(MonoBulletHellGame.VirtualWidth * scaleValue);
-        var newHeight = (int)(MonoBulletHellGame.VirtualHeight * scaleValue);
+        var newWidth = (int)(GameConstants.VirtualWidth * scaleValue);
+        var newHeight = (int)(GameConstants.VirtualHeight * scaleValue);
 
         _graphicsDeviceManager.PreferredBackBufferWidth = newWidth;
         _graphicsDeviceManager.PreferredBackBufferHeight = newHeight;

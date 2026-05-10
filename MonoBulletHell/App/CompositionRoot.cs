@@ -12,7 +12,7 @@ using MonoBulletHell.Services;
 using MonoBulletHell.Ui;
 using MonoGameGum;
 
-namespace MonoBulletHell;
+namespace MonoBulletHell.App;
 
 public class CompositionRoot
 {

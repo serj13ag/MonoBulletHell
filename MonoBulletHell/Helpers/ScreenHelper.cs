@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using MonoBulletHell.App;
 
 namespace MonoBulletHell.Helpers;
 
@@ -6,21 +7,21 @@ public static class ScreenHelper
 {
     public static Vector2 GetLerpScreenVirtualPosition(float x, float y)
     {
-        var virtualWidth = MathHelper.Lerp(0, MonoBulletHellGame.VirtualWidth, x);
-        var virtualHeight = MathHelper.Lerp(0, MonoBulletHellGame.VirtualHeight, y);
+        var virtualWidth = MathHelper.Lerp(0, GameConstants.VirtualWidth, x);
+        var virtualHeight = MathHelper.Lerp(0, GameConstants.VirtualHeight, y);
         return new Vector2(virtualWidth, virtualHeight);
     }
 
     public static Vector2 ToVirtualPosition(Vector2 normalized)
     {
-        var pixelX = normalized.X * MonoBulletHellGame.VirtualWidth;
-        var pixelY = normalized.Y * MonoBulletHellGame.VirtualHeight;
+        var pixelX = normalized.X * GameConstants.VirtualWidth;
+        var pixelY = normalized.Y * GameConstants.VirtualHeight;
         return new Vector2(pixelX, pixelY);
     }
 
     public static bool IsOutOfVirtualBounds(Vector2 position)
     {
-        return position.X < 0 || position.Y < 0 || position.X > MonoBulletHellGame.VirtualWidth || position.Y > MonoBulletHellGame.VirtualHeight;
+        return position.X < 0 || position.Y < 0 || position.X > GameConstants.VirtualWidth || position.Y > GameConstants.VirtualHeight;
     }
 
     public static void ClampToVirtualBounds(ref Vector2 position)
@@ -35,14 +36,14 @@ public static class ScreenHelper
             position.Y = 0;
         }
 
-        if (position.X > MonoBulletHellGame.VirtualWidth)
+        if (position.X > GameConstants.VirtualWidth)
         {
-            position.X = MonoBulletHellGame.VirtualWidth;
+            position.X = GameConstants.VirtualWidth;
         }
 
-        if (position.Y > MonoBulletHellGame.VirtualHeight)
+        if (position.Y > GameConstants.VirtualHeight)
         {
-            position.Y = MonoBulletHellGame.VirtualHeight;
+            position.Y = GameConstants.VirtualHeight;
         }
     }
 }

@@ -1,3 +1,5 @@
+using MonoBulletHell.App;
+
 namespace MonoBulletHell.Services;
 
 public interface IGameService

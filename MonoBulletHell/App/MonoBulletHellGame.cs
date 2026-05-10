@@ -9,15 +9,10 @@ using MonoBulletHell.Scenes;
 using MonoBulletHell.Services;
 using MonoGameGum;
 
-namespace MonoBulletHell;
+namespace MonoBulletHell.App;
 
 public class MonoBulletHellGame : Game
 {
-    public const int VirtualWidth = 320;
-    public const int VirtualHeight = 480;
-
-    private const double TargetFps = 144.0;
-
     private readonly CompositionRoot _root;
 
     private GumService _gumService;
@@ -38,7 +33,7 @@ public class MonoBulletHellGame : Game
         Window.AllowUserResizing = false;
 
         IsFixedTimeStep = true;
-        TargetElapsedTime = TimeSpan.FromSeconds(1.0 / TargetFps);
+        TargetElapsedTime = TimeSpan.FromSeconds(1.0 / GameConstants.TargetFps);
     }
 
     protected override void Initialize()
@@ -114,7 +109,7 @@ public class MonoBulletHellGame : Game
         FrameworkElement.TabReverseKeyCombos.Add(new KeyCombo() { PushedKey = Keys.Up });
         FrameworkElement.TabKeyCombos.Add(new KeyCombo() { PushedKey = Keys.Down });
 
-        _gumService.CanvasWidth = VirtualWidth;
-        _gumService.CanvasHeight = VirtualHeight;
+        _gumService.CanvasWidth = GameConstants.VirtualWidth;
+        _gumService.CanvasHeight = GameConstants.VirtualHeight;
     }
 }
