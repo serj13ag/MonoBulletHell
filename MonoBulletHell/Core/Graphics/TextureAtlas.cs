@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics.Data;
-using MonoBulletHell.Services;
 
 namespace MonoBulletHell.Core.Graphics;
 
@@ -32,13 +30,8 @@ public class TextureAtlas
         return new AnimatedSprite(animation);
     }
 
-    public static TextureAtlas FromFile(ContentManager content, ISerializationService serializationService, string fileName)
+    public static TextureAtlas FromFile(ContentManager content, TextureAtlasData atlasData)
     {
-        var filePath = Path.Combine(content.RootDirectory, fileName);
-        var json = File.ReadAllText(filePath);
-
-        var atlasData = serializationService.DeserializeObject<TextureAtlasData>(json);
-
         var texture = content.Load<Texture2D>(atlasData.Texture);
 
         var atlas = new TextureAtlas(texture);

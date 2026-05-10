@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MonoBulletHell.Core.Graphics;
+using MonoBulletHell.Core.Graphics.Data;
 using MonoBulletHell.Data.Configs;
 using MonoBulletHell.Gameplay.Effects;
 
@@ -54,8 +55,10 @@ public class ContentService : IContentService
 
     public void Load(ContentManager content)
     {
-        _shipsAtlas = TextureAtlas.FromFile(content, _serializationService, "images/ships-atlas.json");
-        _bulletsAtlas = TextureAtlas.FromFile(content, _serializationService, "images/bullets-atlas.json");
+        var shipsAtlasData = LoadJsonData<TextureAtlasData>(content, "images/ships-atlas.json");
+        _shipsAtlas = TextureAtlas.FromFile(content, shipsAtlasData);
+        var bulletsAtlasData = LoadJsonData<TextureAtlasData>(content, "images/bullets-atlas.json");
+        _bulletsAtlas = TextureAtlas.FromFile(content, bulletsAtlasData);
 
         BackgroundTexture = content.Load<Texture2D>("images/background");
         _flashEffect = content.Load<Effect>("shaders/flashEffect");
