@@ -2,9 +2,8 @@ using System;
 using LightInject;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Core.Scenes;
-using MonoBulletHell.Scenes;
 
-namespace MonoBulletHell.Services;
+namespace MonoBulletHell.Scenes;
 
 public interface ISceneService
 {
