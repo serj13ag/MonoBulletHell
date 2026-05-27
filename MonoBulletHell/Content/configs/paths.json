@@ -112,5 +112,129 @@
         ]
       }
     ]
+  },
+  {
+    "Name": "path_s_curve_left",
+    "Speed": 55,
+    "Type": "Relative",
+    "Points": [
+      {
+        "Position": "0, 0"
+      },
+      {
+        "Position": "-120, 220",
+        "ControlPoints": [
+          "-180, 80"
+        ]
+      },
+      {
+        "Position": "80, 480",
+        "ControlPoints": [
+          "120, 320"
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "path_s_curve_right",
+    "Speed": 55,
+    "Type": "Relative",
+    "Points": [
+      {
+        "Position": "0, 0"
+      },
+      {
+        "Position": "120, 220",
+        "ControlPoints": [
+          "180, 80"
+        ]
+      },
+      {
+        "Position": "-80, 480",
+        "ControlPoints": [
+          "-120, 320"
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "path_zigzag",
+    "Speed": 80,
+    "Type": "Relative",
+    "Points": [
+      {
+        "Position": "0, 0"
+      },
+      {
+        "Position": "100, 120"
+      },
+      {
+        "Position": "-100, 240"
+      },
+      {
+        "Position": "100, 360"
+      },
+      {
+        "Position": "0, 480"
+      }
+    ]
+  },
+  {
+    "Name": "path_circle_boss",
+    "Speed": 45,
+    "Type": "Absolute",
+    "InfinitelyLooped": true,
+    "Points": [
+      {
+        "Position": "160, 40",
+        "ControlPoints": [
+          "280, 40"
+        ]
+      },
+      {
+        "Position": "280, 140",
+        "ControlPoints": [
+          "280, 40"
+        ]
+      },
+      {
+        "Position": "160, 240",
+        "ControlPoints": [
+          "280, 240"
+        ]
+      },
+      {
+        "Position": "40, 140",
+        "ControlPoints": [
+          "40, 240"
+        ]
+      },
+      {
+        "Position": "160, 40",
+        "ControlPoints": [
+          "40, 40"
+        ]
+      }
+    ]
+  },
+  {
+    "Name": "path_boss_dash",
+    "Speed": 120,
+    "Type": "Absolute",
+    "InfinitelyLooped": true,
+    "Points": [
+      {
+        "Position": "40, 60",
+        "WaitTime": 0.5
+      },
+      {
+        "Position": "280, 60",
+        "WaitTime": 0.5
+      },
+      {
+        "Position": "160, 120",
+        "WaitTime": 1
+      }
+    ]
   }
 ]

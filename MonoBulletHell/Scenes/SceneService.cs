@@ -7,7 +7,7 @@ namespace MonoBulletHell.Scenes;
 
 public interface ISceneService
 {
-    void ChangeScene(SceneType sceneType);
+    void ChangeScene(SceneType sceneType, object args = null);
     void Update(GameTime gameTime);
     void Draw(GameTime gameTime);
 }
@@ -18,6 +18,7 @@ public class SceneService : ISceneService
 
     private Scope _sceneScope;
 
+    private object _nextSceneArgs;
     private SceneType? _nextSceneType;
     private SceneType? _activeSceneType;
     private BaseScene _activeScene;
@@ -27,10 +28,11 @@ public class SceneService : ISceneService
         _scopeFactory = scopeFactory;
     }
 
-    public void ChangeScene(SceneType sceneType)
+    public void ChangeScene(SceneType sceneType, object args = null)
     {
         if (_activeSceneType != sceneType)
         {
+            _nextSceneArgs = args;
             _nextSceneType = sceneType;
         }
     }
@@ -39,8 +41,9 @@ public class SceneService : ISceneService
     {
         if (_nextSceneType.HasValue)
         {
-            TransitionScene(_nextSceneType.Value);
+            TransitionScene(_nextSceneType.Value, _nextSceneArgs);
             _nextSceneType = null;
+            _nextSceneArgs = null;
         }
 
         _activeScene?.Update(gameTime);
@@ -51,7 +54,7 @@ public class SceneService : ISceneService
         _activeScene?.Draw(gameTime);
     }
 
-    private void TransitionScene(SceneType nextSceneType)
+    private void TransitionScene(SceneType nextSceneType, object args)
     {
         _activeScene?.UnloadContent();
         _activeScene?.Exit();
@@ -65,7 +68,7 @@ public class SceneService : ISceneService
 
         _activeScene?.Initialize();
         _activeScene?.LoadContent();
-        _activeScene?.Enter();
+        _activeScene?.Enter(args);
     }
 
     private static BaseScene GetNextScene(SceneType sceneType, Scope sceneScope)

@@ -64,8 +64,11 @@
 #begin configs/gameConfig.json
 /copy:configs/gameConfig.json
 
-#begin configs/levelConfig.json
-/copy:configs/levelConfig.json
+#begin configs/levels/level2Config.json
+/copy:configs/levels/level2Config.json
+
+#begin configs/levels/levelConfig.json
+/copy:configs/levels/levelConfig.json
 
 #begin configs/paths.json
 /copy:configs/paths.json

@@ -95,5 +95,169 @@
     "AngleBetweenLines": 10,
     "StartingAngle": 0,
     "BulletAcceleration": 10
+  },
+  {
+    "Name": "emitter_spiral_slow",
+    "RoundsPerSecond": 8,
+    "BulletSpeed": 120,
+    "NumberOfLines": 2,
+    "AngleBetweenLines": 180,
+    "StartingAngle": {
+      "Duration": 6,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 0
+        },
+        {
+          "Time": 6,
+          "Value": 720
+        }
+      ]
+    }
+  },
+  {
+    "Name": "emitter_reverse_spiral",
+    "RoundsPerSecond": 8,
+    "BulletSpeed": 120,
+    "NumberOfLines": 2,
+    "AngleBetweenLines": 180,
+    "StartingAngle": {
+      "Duration": 6,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 720
+        },
+        {
+          "Time": 6,
+          "Value": 0
+        }
+      ]
+    }
+  },
+  {
+    "Name": "emitter_flower",
+    "RoundsPerSecond": 5,
+    "BulletSpeed": 90,
+    "NumberOfLines": 12,
+    "AngleBetweenLines": 30,
+    "StartingAngle": {
+      "Duration": 4,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 0
+        },
+        {
+          "Time": 2,
+          "Value": 15
+        },
+        {
+          "Time": 4,
+          "Value": 0
+        }
+      ]
+    }
+  },
+  {
+    "Name": "emitter_sniper_fan",
+    "RoundsPerSecond": 1.5,
+    "BulletSpeed": 320,
+    "NumberOfLines": 5,
+    "AngleBetweenLines": 8,
+    "StartingAngle": 270
+  },
+  {
+    "Name": "emitter_wave_arc",
+    "RoundsPerSecond": 6,
+    "BulletSpeed": {
+      "Duration": 4,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 80
+        },
+        {
+          "Time": 2,
+          "Value": 220
+        },
+        {
+          "Time": 4,
+          "Value": 80
+        }
+      ]
+    },
+    "NumberOfLines": 7,
+    "AngleBetweenLines": 12,
+    "StartingAngle": {
+      "Duration": 3,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 240
+        },
+        {
+          "Time": 1.5,
+          "Value": 300
+        },
+        {
+          "Time": 3,
+          "Value": 240
+        }
+      ]
+    }
+  },
+  {
+    "Name": "emitter_cross_burst",
+    "RoundsPerSecond": 3,
+    "BulletSpeed": 180,
+    "NumberOfLines": 4,
+    "AngleBetweenLines": 90,
+    "StartingAngle": {
+      "Duration": 2,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 0
+        },
+        {
+          "Time": 2,
+          "Value": 45
+        }
+      ]
+    }
+  },
+  {
+    "Name": "emitter_boss_final",
+    "RoundsPerSecond": 10,
+    "BulletSpeed": 140,
+    "BulletAcceleration": 15,
+    "NumberOfLines": 24,
+    "AngleBetweenLines": 15,
+    "StartingAngle": {
+      "Duration": 8,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 0
+        },
+        {
+          "Time": 4,
+          "Value": 360
+        },
+        {
+          "Time": 8,
+          "Value": 720
+        }
+      ]
+    }
   }
 ]

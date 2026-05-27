@@ -43,6 +43,7 @@ public class GameplayScene : BaseScene
     private readonly IBossService _bossService;
     private readonly ILevelFlowService _levelFlowService;
 
+    private int _currentLevelIndex;
     private GameState _gameState;
 
     private GameplayUi _ui;
@@ -90,9 +91,14 @@ public class GameplayScene : BaseScene
         _bulletFactory.LoadContent();
     }
 
-    public override void Enter()
+    public override void Enter(object args)
     {
-        base.Enter();
+        base.Enter(args);
+
+        if (args is GameplaySceneArgs gameplaySceneArgs)
+        {
+            _currentLevelIndex = gameplaySceneArgs.LevelIndex;
+        }
 
         _bulletFactory.Prewarm();
 
@@ -175,7 +181,7 @@ public class GameplayScene : BaseScene
 
         _backgroundService.Initialize(_contentService.BackgroundTexture);
 
-        var levelConfig = _contentService.GetLevelConfig();
+        var levelConfig = _contentService.GetLevelConfig(_currentLevelIndex);
         _enemySpawnService.Initialize(levelConfig);
         _bossService.Initialize(levelConfig);
 

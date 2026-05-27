@@ -9,6 +9,10 @@
     "SpriteName": "ship",
     "CoreSpriteName": "ship_core"
   },
+  "LevelConfigPaths": [
+    "configs/levels/levelConfig.json",
+    "configs/levels/level2Config.json"
+  ],
   "Colors": {
     "UiPanel": {
       "Hex": "#0d170d"

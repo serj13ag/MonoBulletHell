@@ -46,9 +46,9 @@ public class TitleScene : BaseScene
         InitializeUi();
     }
 
-    public override void Enter()
+    public override void Enter(object args)
     {
-        base.Enter();
+        base.Enter(args);
 
         _soundService.PlaySong(SongType.Menu);
     }
@@ -112,7 +112,7 @@ public class TitleScene : BaseScene
 
     private void StartButtonClicked()
     {
-        _sceneService.ChangeScene(SceneType.Gameplay);
+        _sceneService.ChangeScene(SceneType.Gameplay, new GameplaySceneArgs(0));
     }
 
     private void OptionsButtonClicked()

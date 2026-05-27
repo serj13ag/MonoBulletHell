@@ -1,0 +1,128 @@
+{
+  "Waves": [
+    {
+      "SpawnTime": 1,
+      "Position": "40, 0",
+      "PathName": "path_s_curve_right",
+      "EnemyName": "enemy_follower",
+      "Formation": {
+        "Type": "Line",
+        "Count": 5,
+        "Spacing": 40,
+        "Rotation": 90
+      }
+    },
+    {
+      "SpawnTime": 3,
+      "Position": "280, 0",
+      "PathName": "path_s_curve_left",
+      "EnemyName": "enemy_follower",
+      "Formation": {
+        "Type": "Line",
+        "Count": 5,
+        "Spacing": 40,
+        "Rotation": 90
+      }
+    },
+    {
+      "SpawnTime": 6,
+      "Position": "80, 0",
+      "PathName": "path_zigzag",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_sniper_fan"
+    },
+    {
+      "SpawnTime": 7,
+      "Position": "240, 0",
+      "PathName": "path_zigzag",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_sniper_fan"
+    },
+    {
+      "SpawnTime": 10,
+      "Position": "40, 0",
+      "PathName": "path_downRight",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_spiral_slow",
+      "Formation": {
+        "Type": "Line",
+        "Count": 3,
+        "Spacing": 60,
+        "Rotation": 135
+      }
+    },
+    {
+      "SpawnTime": 10,
+      "Position": "280, 0",
+      "PathName": "path_downLeft",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_reverse_spiral",
+      "Formation": {
+        "Type": "Line",
+        "Count": 3,
+        "Spacing": 60,
+        "Rotation": 45
+      }
+    },
+    {
+      "SpawnTime": 15,
+      "Position": "160, 0",
+      "PathName": "path_down",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_flower",
+      "Formation": {
+        "Type": "VShape",
+        "Rows": 4,
+        "SpacingX": 45,
+        "SpacingY": 45
+      }
+    },
+    {
+      "SpawnTime": 22,
+      "Position": "0, 40",
+      "PathName": "path_downRight",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_cross_burst",
+      "Formation": {
+        "Type": "Line",
+        "Count": 4,
+        "Spacing": 50,
+        "Rotation": 135
+      }
+    },
+    {
+      "SpawnTime": 22,
+      "Position": "320, 40",
+      "PathName": "path_downLeft",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_cross_burst",
+      "Formation": {
+        "Type": "Line",
+        "Count": 4,
+        "Spacing": 50,
+        "Rotation": 45
+      }
+    }
+  ],
+  "Boss": {
+    "EnemyName": "enemy_boss",
+    "Position": "160, -40",
+    "Stages": [
+      {
+        "HealthPercent": 1,
+        "PathName": "path_circle_boss",
+        "EmitterName": "emitter_wave_arc"
+      },
+      {
+        "HealthPercent": 0.7,
+        "PathName": "path_boss_dash",
+        "EmitterName": "emitter_flower"
+      },
+      {
+        "HealthPercent": 0.4,
+        "PathName": "path_circle_boss",
+        "EmitterName": "emitter_boss_final"
+      }
+    ]
+  }
+}

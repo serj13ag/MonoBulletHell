@@ -27,7 +27,7 @@ public abstract class BaseScene
     {
     }
 
-    public virtual void Enter()
+    public virtual void Enter(object args)
     {
     }
 
