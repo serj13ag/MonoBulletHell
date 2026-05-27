@@ -22,16 +22,18 @@ public class BulletService : IBulletService
     private readonly IBulletFactory _bulletFactory;
     private readonly IParticleService _particleService;
     private readonly IDebugService _debugService;
+    private readonly ISettingsService _settingsService;
 
     private readonly List<Bullet> _bullets = new List<Bullet>(512);
 
     public BulletService(IGameContext gameContext, IBulletFactory bulletFactory, IParticleService particleService,
-        IDebugService debugService)
+        IDebugService debugService, ISettingsService settingsService)
     {
         _gameContext = gameContext;
         _bulletFactory = bulletFactory;
         _particleService = particleService;
         _debugService = debugService;
+        _settingsService = settingsService;
     }
 
     public void Update()
@@ -114,6 +116,11 @@ public class BulletService : IBulletService
 
     private bool HandleEnemyBulletCollision(Bullet bullet)
     {
+        if (_settingsService.GodModeEnabled)
+        {
+            return false;
+        }
+
         var ship = _gameContext.Ship;
         if (ship.IsImmune || !bullet.Collider.Intersects(ship.Collider))
         {

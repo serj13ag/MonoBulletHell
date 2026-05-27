@@ -8,4 +8,5 @@ public class SettingsSaveData
 {
     public ScreenScale ScreenScale { get; set; }
     public float Volume { get; set; }
+    public bool GodModeEnabled { get; set; }
 }

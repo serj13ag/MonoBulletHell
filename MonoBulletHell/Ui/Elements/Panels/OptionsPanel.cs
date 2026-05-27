@@ -1,9 +1,11 @@
 using System;
+using Gum.Converters;
 using Gum.Forms.Controls;
 using Gum.Wireframe;
 using Microsoft.Xna.Framework;
 using MonoBulletHell.Screen;
 using MonoGameGum.GueDeriving;
+using RenderingLibrary.Graphics;
 
 namespace MonoBulletHell.Ui.Elements.Panels;
 
@@ -74,6 +76,27 @@ public class OptionsPanel : BasePanel
         _volumeSlider.IsSnapToTickEnabled = true;
         _volumeSlider.ValueChanged += OnVolumeSliderValueChanged;
         _volumeSlider.ValueChangeCompleted += OnVolumeSliderValueChangeCompleted;
+
+        var godModePanel = new StackPanel();
+        buttonsPanel.AddChild(godModePanel);
+        godModePanel.Anchor(Gum.Wireframe.Anchor.Top);
+        godModePanel.Orientation = Orientation.Horizontal;
+        godModePanel.Spacing = 5f;
+        godModePanel.XUnits = GeneralUnitType.PixelsFromMiddle;
+        godModePanel.XOrigin = HorizontalAlignment.Center;
+        godModePanel.X = 0;
+
+        var godModeText = new CustomLabel();
+        godModePanel.AddChild(godModeText);
+        godModeText.Text = UiConstants.GodModeText;
+
+        var godModeCheckBox = new CheckBox();
+        godModePanel.AddChild(godModeCheckBox);
+        godModeCheckBox.Width = 25;
+        godModeCheckBox.Text = string.Empty;
+        godModeCheckBox.IsChecked = uiMediator.GetGodModeEnabled();
+        godModeCheckBox.Checked += (_,_) => _uiMediator.GodModeChanged(true);
+        godModeCheckBox.Unchecked += (_,_) => _uiMediator.GodModeChanged(false);
 
         _backButton = uiFactory.CreateCustomButton();
         buttonsPanel.AddChild(_backButton);

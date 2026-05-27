@@ -14,6 +14,9 @@ public interface IUiMediator
     float GetCurrentVolume();
     void VolumeChanged(double sliderValue);
 
+    bool GetGodModeEnabled();
+    void GodModeChanged(bool isEnabled);
+
     void ButtonClicked();
 }
 
@@ -34,6 +37,9 @@ public class UiMediator : IUiMediator
 
     public float GetCurrentVolume() => _settingsService.Volume;
     public void VolumeChanged(double sliderValue) => _settingsService.SetVolume((float)sliderValue);
+
+    public bool GetGodModeEnabled() => _settingsService.GodModeEnabled;
+    public void GodModeChanged(bool isEnabled) => _settingsService.SetGodMode(isEnabled);
 
     public void ButtonClicked()
     {

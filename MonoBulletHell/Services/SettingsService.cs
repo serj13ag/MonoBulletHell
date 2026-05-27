@@ -13,6 +13,8 @@ public interface ISettingsService
 
     float Volume { get; }
 
+    bool GodModeEnabled { get; }
+
     event Action<ScreenScale> ScreenScaleChanged;
     event Action<float> VolumeChanged;
 
@@ -20,6 +22,8 @@ public interface ISettingsService
 
     void SetScreenScaleByIndex(int scaleIndex);
     void SetVolume(float value);
+
+    void SetGodMode(bool isEnabled);
 }
 
 public class SettingsService : ISettingsService
@@ -39,6 +43,7 @@ public class SettingsService : ISettingsService
 
     private ScreenScale _screenScale;
     private float _volume;
+    private bool _godModeEnabled;
 
     public ScreenScale ScreenScale
     {
@@ -69,6 +74,8 @@ public class SettingsService : ISettingsService
         }
     }
 
+    public bool GodModeEnabled => _godModeEnabled;
+
     public event Action<ScreenScale> ScreenScaleChanged;
     public event Action<float> VolumeChanged;
 
@@ -83,11 +90,13 @@ public class SettingsService : ISettingsService
         {
             _screenScale = data.ScreenScale;
             _volume = data.Volume;
+            _godModeEnabled = data.GodModeEnabled;
         }
         else
         {
             _screenScale = ScreenScale.X2;
             _volume = 0.5f;
+            _godModeEnabled = false;
             Save();
         }
     }
@@ -104,12 +113,19 @@ public class SettingsService : ISettingsService
         Save();
     }
 
+    public void SetGodMode(bool isEnabled)
+    {
+        _godModeEnabled = isEnabled;
+        Save();
+    }
+
     private void Save()
     {
         var settingsSave = new SettingsSaveData()
         {
             ScreenScale = _screenScale,
             Volume = _volume,
+            GodModeEnabled = _godModeEnabled,
         };
 
         _saveService.Save(settingsSave, SaveFileName);

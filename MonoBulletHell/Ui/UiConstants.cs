@@ -21,4 +21,5 @@ public static class UiConstants
     public const string RestartButtonText = "RESTART";
 
     public const string LevelText = "LEVEL";
+    public const string GodModeText = "GOD MODE";
 }
