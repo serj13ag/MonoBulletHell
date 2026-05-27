@@ -114,7 +114,7 @@ public class TitleScene : BaseScene
         var controlsLabel = new CustomLabel();
         controlsLabel.AddToRoot();
         controlsLabel.Anchor(Anchor.Bottom);
-        controlsLabel.Y = -20;
+        controlsLabel.Y = 0;
         controlsLabel.Text = "MOVE: WASD\nFOCUS: SHIFT\nFIRE: SPACE";
     }
 
