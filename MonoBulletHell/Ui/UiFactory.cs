@@ -12,6 +12,7 @@ public interface IUiFactory
     PausePanel CreatePausePanel();
     GameOverPanel CreateGameOverPanel();
     CustomButton CreateCustomButton();
+    LevelsPanel CreateLevelsPanel(int levelsCount);
 }
 
 public class UiFactory : IUiFactory
@@ -51,5 +52,10 @@ public class UiFactory : IUiFactory
     public CustomButton CreateCustomButton()
     {
         return new CustomButton(_uiMediator, ButtonColor);
+    }
+
+    public LevelsPanel CreateLevelsPanel(int levelsCount)
+    {
+        return new LevelsPanel(this, PanelColor, levelsCount);
     }
 }

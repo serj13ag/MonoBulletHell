@@ -23,7 +23,10 @@ public interface IContentService
 
     PlayerConfig GetPlayerConfig();
     ColorConfig GetColorConfig();
+
+    int GetNumberOfLevels();
     LevelConfig GetLevelConfig(int levelIndex);
+
     EnemyData GetEnemyData(string enemyName);
     PathData GetPath(string pathName);
     EmitterData GetEmitterData(string emitterName);
@@ -64,7 +67,9 @@ public class ContentService : IContentService
         _flashEffect = content.Load<Effect>("shaders/flashEffect");
 
         _gameConfig = LoadJsonData<GameConfig>(content, "configs/gameConfig.json");
-        _levelConfigs = _gameConfig.LevelConfigPaths.Select(levelConfigPath => LoadJsonData<LevelConfig>(content, levelConfigPath)).ToList();
+        _levelConfigs = _gameConfig.LevelConfigPaths
+            .Select(levelConfigPath => LoadJsonData<LevelConfig>(content, levelConfigPath))
+            .ToList();
 
         var enemies = LoadJsonData<List<EnemyData>>(content, "configs/enemies.json");
         _enemyConfigs = enemies.ToDictionary(x => x.Name);
@@ -87,6 +92,7 @@ public class ContentService : IContentService
     public PlayerConfig GetPlayerConfig() => _gameConfig.Player;
     public ColorConfig GetColorConfig() => _gameConfig.Colors;
 
+    public int GetNumberOfLevels() => _levelConfigs.Count;
     public LevelConfig GetLevelConfig(int levelIndex) => _levelConfigs[levelIndex];
 
     public EnemyData GetEnemyData(string enemyName) => _enemyConfigs[enemyName];

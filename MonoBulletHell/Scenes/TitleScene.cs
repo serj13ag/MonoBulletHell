@@ -24,6 +24,7 @@ public class TitleScene : BaseScene
     private readonly IContentService _contentService;
 
     private OptionsPanel _optionsPanel;
+    private LevelsPanel _levelsPanel;
 
     public TitleScene(IGameService gameService, ContentManager contentManager, GraphicsDevice graphicsDevice,
         SpriteBatch spriteBatch, GumService gumService, IUiFactory uiFactory, IInputService inputService,
@@ -98,6 +99,13 @@ public class TitleScene : BaseScene
         titlePanel.OnOptionsButtonClicked += OptionsButtonClicked;
         titlePanel.OnQuitButtonClicked += QuitButtonClicked;
 
+        var levelsCount = _contentService.GetNumberOfLevels();
+        _levelsPanel = _uiFactory.CreateLevelsPanel(levelsCount);
+        _levelsPanel.AddToRoot();
+        _levelsPanel.OnLevelButtonClicked += OnLevelsSelectLevelButtonClicked;
+        _levelsPanel.OnBackButtonClicked += OnLevelsBackButtonClicked;
+        _levelsPanel.Disable();
+
         _optionsPanel = _uiFactory.CreateOptionsPanel();
         _optionsPanel.AddToRoot();
         _optionsPanel.OnBackButtonClicked += OnOptionsBackButtonClicked;
@@ -112,7 +120,7 @@ public class TitleScene : BaseScene
 
     private void StartButtonClicked()
     {
-        _sceneService.ChangeScene(SceneType.Gameplay, new GameplaySceneArgs(0));
+        _levelsPanel.Enable();
     }
 
     private void OptionsButtonClicked()
@@ -123,6 +131,16 @@ public class TitleScene : BaseScene
     private void OnOptionsBackButtonClicked()
     {
         _optionsPanel.Disable();
+    }
+
+    private void OnLevelsSelectLevelButtonClicked(int levelIndex)
+    {
+        _sceneService.ChangeScene(SceneType.Gameplay, new GameplaySceneArgs(levelIndex));
+    }
+
+    private void OnLevelsBackButtonClicked()
+    {
+        _levelsPanel.Disable();
     }
 
     private void QuitButtonClicked()
