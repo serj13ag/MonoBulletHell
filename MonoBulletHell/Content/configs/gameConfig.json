@@ -11,7 +11,8 @@
   },
   "LevelConfigPaths": [
     "configs/levels/levelConfig.json",
-    "configs/levels/level2Config.json"
+    "configs/levels/level2Config.json",
+    "configs/levels/level3Config.json"
   ],
   "Colors": {
     "UiPanel": {

@@ -236,5 +236,86 @@
         "WaitTime": 1
       }
     ]
+  },
+  {
+    "Name": "path_wave_sine_left",
+    "Speed": 60,
+    "Type": "Relative",
+    "Points": [
+      {
+        "Position": "0, 0"
+      },
+      {
+        "Position": "-120, 120"
+      },
+      {
+        "Position": "120, 240"
+      },
+      {
+        "Position": "-120, 360"
+      },
+      {
+        "Position": "0, 480"
+      }
+    ]
+  },
+  {
+    "Name": "path_wave_sine_right",
+    "Speed": 60,
+    "Type": "Relative",
+    "Points": [
+      {
+        "Position": "0, 0"
+      },
+      {
+        "Position": "120, 120"
+      },
+      {
+        "Position": "-120, 240"
+      },
+      {
+        "Position": "120, 360"
+      },
+      {
+        "Position": "0, 480"
+      }
+    ]
+  },
+  {
+    "Name": "path_center_hold",
+    "Speed": 20,
+    "Type": "Absolute",
+    "InfinitelyLooped": true,
+    "Points": [
+      {
+        "Position": "160, 80",
+        "WaitTime": 2
+      },
+      {
+        "Position": "120, 120",
+        "WaitTime": 2
+      },
+      {
+        "Position": "200, 120",
+        "WaitTime": 2
+      },
+      {
+        "Position": "160, 80",
+        "WaitTime": 2
+      }
+    ]
+  },
+  {
+    "Name": "path_edge_drop",
+    "Speed": 90,
+    "Type": "Relative",
+    "Points": [
+      {
+        "Position": "0, 0"
+      },
+      {
+        "Position": "0, 480"
+      }
+    ]
   }
 ]

@@ -67,6 +67,9 @@
 #begin configs/levels/level2Config.json
 /copy:configs/levels/level2Config.json
 
+#begin configs/levels/level3Config.json
+/copy:configs/levels/level3Config.json
+
 #begin configs/levels/levelConfig.json
 /copy:configs/levels/levelConfig.json
 

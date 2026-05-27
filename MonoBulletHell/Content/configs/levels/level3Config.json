@@ -1,0 +1,114 @@
+{
+  "Waves": [
+    {
+      "SpawnTime": 1,
+      "Position": "40, 0",
+      "PathName": "path_wave_sine_right",
+      "EnemyName": "enemy_follower",
+      "Formation": {
+        "Type": "Line",
+        "Count": 4,
+        "Spacing": 45,
+        "Rotation": 90
+      }
+    },
+    {
+      "SpawnTime": 2,
+      "Position": "280, 0",
+      "PathName": "path_wave_sine_left",
+      "EnemyName": "enemy_follower",
+      "Formation": {
+        "Type": "Line",
+        "Count": 4,
+        "Spacing": 45,
+        "Rotation": 90
+      }
+    },
+    {
+      "SpawnTime": 5,
+      "Position": "160, 0",
+      "PathName": "path_down",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_lane_lock",
+      "Formation": {
+        "Type": "VShape",
+        "Rows": 3,
+        "SpacingX": 50,
+        "SpacingY": 50
+      }
+    },
+    {
+      "SpawnTime": 8,
+      "Position": "80, 0",
+      "PathName": "path_edge_drop",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_diagonal_rain"
+    },
+    {
+      "SpawnTime": 8,
+      "Position": "240, 0",
+      "PathName": "path_edge_drop",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_diagonal_rain"
+    },
+    {
+      "SpawnTime": 12,
+      "Position": "160, 0",
+      "PathName": "path_center_hold",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_rotating_snake"
+    },
+    {
+      "SpawnTime": 16,
+      "Position": "40, 0",
+      "PathName": "path_downRight",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_burst_pulse",
+      "Formation": {
+        "Type": "Line",
+        "Count": 3,
+        "Spacing": 60,
+        "Rotation": 135
+      }
+    },
+    {
+      "SpawnTime": 16,
+      "Position": "280, 0",
+      "PathName": "path_downLeft",
+      "EnemyName": "enemy_shooter",
+      "EmitterName": "emitter_burst_pulse",
+      "Formation": {
+        "Type": "Line",
+        "Count": 3,
+        "Spacing": 60,
+        "Rotation": 45
+      }
+    }
+  ],
+  "Boss": {
+    "EnemyName": "enemy_boss",
+    "Position": "160, 0",
+    "Stages": [
+      {
+        "HealthPercent": 1,
+        "PathName": "path_center_hold",
+        "EmitterName": "emitter_lane_lock"
+      },
+      {
+        "HealthPercent": 0.75,
+        "PathName": "path_wave_sine_left",
+        "EmitterName": "emitter_diagonal_rain"
+      },
+      {
+        "HealthPercent": 0.5,
+        "PathName": "path_wave_sine_right",
+        "EmitterName": "emitter_rotating_snake"
+      },
+      {
+        "HealthPercent": 0.25,
+        "PathName": "path_center_hold",
+        "EmitterName": "emitter_burst_pulse"
+      }
+    ]
+  }
+}

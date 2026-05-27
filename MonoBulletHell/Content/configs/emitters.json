@@ -259,5 +259,83 @@
         }
       ]
     }
+  },
+  {
+    "Name": "emitter_lane_lock",
+    "RoundsPerSecond": 2,
+    "BulletSpeed": 180,
+    "NumberOfLines": 6,
+    "AngleBetweenLines": 12,
+    "StartingAngle": 270
+  },
+  {
+    "Name": "emitter_rotating_snake",
+    "RoundsPerSecond": 6,
+    "BulletSpeed": 90,
+    "NumberOfLines": 1,
+    "StartingAngle": {
+      "Duration": 5,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 0
+        },
+        {
+          "Time": 5,
+          "Value": 360
+        }
+      ]
+    }
+  },
+  {
+    "Name": "emitter_burst_pulse",
+    "RoundsPerSecond": 10,
+    "BulletSpeed": {
+      "Duration": 3,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 60
+        },
+        {
+          "Time": 1.5,
+          "Value": 260
+        },
+        {
+          "Time": 3,
+          "Value": 60
+        }
+      ]
+    },
+    "NumberOfLines": 8,
+    "AngleBetweenLines": 15,
+    "StartingAngle": 180
+  },
+  {
+    "Name": "emitter_diagonal_rain",
+    "RoundsPerSecond": 3,
+    "BulletSpeed": 220,
+    "NumberOfLines": 4,
+    "AngleBetweenLines": 10,
+    "StartingAngle": {
+      "Duration": 4,
+      "Looped": true,
+      "Keyframes": [
+        {
+          "Time": 0,
+          "Value": 225
+        },
+        {
+          "Time": 2,
+          "Value": 270
+        },
+        {
+          "Time": 4,
+          "Value": 225
+        }
+      ]
+    }
   }
 ]
