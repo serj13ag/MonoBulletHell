@@ -2,6 +2,7 @@ using Gum.Wireframe;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MonoBulletHell.App;
 using MonoBulletHell.Audio;
 using MonoBulletHell.Core.Input;
 using MonoBulletHell.Core.Scenes;
@@ -114,8 +115,13 @@ public class TitleScene : BaseScene
         var controlsLabel = new CustomLabel();
         controlsLabel.AddToRoot();
         controlsLabel.Anchor(Anchor.Bottom);
-        controlsLabel.Y = 0;
         controlsLabel.Text = "MOVE: WASD\nFOCUS: SHIFT\nFIRE: SPACE";
+
+        var versionLabel = new CustomLabel();
+        versionLabel.AddToRoot();
+        versionLabel.Anchor(Anchor.TopLeft);
+        versionLabel.X = 5;
+        versionLabel.Text = BuildInfo.GetVersion(true);
     }
 
     private void StartButtonClicked()
